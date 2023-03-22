@@ -1,0 +1,207 @@
+@font-face {
+  font-family: "mont-lt";
+  src: url("../fonts/Montserrat-Light.ttf");
+}
+
+@font-face {
+  font-family: "mont-lt-it";
+  src: url("../fonts/Montserrat-LightItalic.ttf");
+}
+
+@font-face {
+  font-family: "mont-rg";
+  src: url("../fonts/Montserrat-Regular.ttf");
+}
+
+@font-face {
+  font-family: "mont-smb";
+  src: url("../fonts/Montserrat-SemiBold.ttf");
+}
+
+:root {
+  --h1-fsz: 3rem;
+  --h2-fsz: 2.5rem;
+  --h3-fsz: 2rem;
+  --p-fsz: 1.6rem;
+  --bt-fsz: 1.4rem;
+  --lt: "mont-lt";
+  --lt-it: "mont-lt-it";
+  --rg: "mont-rg";
+  --smb: "mont-smb";
+  --rd: #925252;
+  --gn: #4a6e43;
+  --bk: #000000;
+  --bl: #111829;
+  --gr: #292929;
+  --grl: #b0b4b4;
+  --wt: #ffffff;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: var(--bl);
+}
+
+.App {
+  width: 100%;
+  margin: 3.5rem 0;
+}
+
+.task-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  min-width: 30rem;
+  width: 100%;
+  max-width: 72rem;
+  height: auto;
+  margin: auto;
+}
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 95%;
+  height: auto;
+}
+
+.task-form input,
+.task-form textarea {
+  width: 90%;
+  font-family: var(--lt);
+  font-size: var(--bt-fsz);
+  color: var(--grl);
+  padding: 1rem;
+  border: none;
+  outline: none;
+  border-radius: 1rem;
+  background-color: var(--gr);
+}
+
+.task-form input {
+  height: 2.5rem;
+}
+
+.task-form textarea {
+  height: 15rem;
+  resize: none;
+}
+
+.task-form input::placeholder,
+.task-form textarea::placeholder {
+  font-family: var(--lt-it);
+  font-size: var(--bt-fsz);
+  color: var(--grl);
+}
+
+.task-form button {
+  font-family: var(--smb);
+  font-size: var(--bt-fsz);
+  color: var(--wt);
+  letter-spacing: 0.1rem;
+  width: 14rem;
+  height: 4rem;
+  background-color: var(--gn);
+  border: none;
+  box-shadow: none;
+  border-radius: 0.5rem;
+  transition: box-shadow 0.3s;
+}
+
+.task-form button:hover {
+  box-shadow: 0 0 1rem 0.01rem var(--bk);
+  transition: box-shadow 0.3s;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  width: 95%;
+  height: auto;
+  padding: 0;
+}
+
+h1 {
+  font-family: var(--smb);
+  font-size: var(--h1-fsz);
+  color: var(--wt);
+  letter-spacing: 0.1rem;
+  text-align: center;
+  width: fit-content;
+  margin: 2rem auto 1rem;
+}
+
+h2 {
+  font-family: var(--rg);
+  font-size: var(--h2-fsz);
+  color: var(--wt);
+  letter-spacing: 0.1rem;
+  text-align: center;
+  width: fit-content;
+  margin: 1rem 0;
+}
+
+h3 {
+  font-family: var(--rg);
+  font-size: var(--h3-fsz);
+  color: var(--wt);
+  letter-spacing: 0.1rem;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  height: auto;
+  list-style: none;
+  gap: 1rem;
+  padding: 2rem 1rem;
+  border-radius: 1rem;
+  background-color: var(--gr);
+}
+
+li p {
+  font-family: var(--lt-it);
+  font-size: var(--p-fsz);
+  color: var(--grl);
+  letter-spacing: 0.1rem;
+  text-align: justify;
+  width: 95%;
+  height: auto;
+  margin: 1rem 0;
+  background-color: var(--gr);
+}
+
+li button {
+  font-family: var(--smb);
+  font-size: var(--bt-fsz);
+  color: var(--wt);
+  letter-spacing: 0.1rem;
+  width: 15rem;
+  height: 4rem;
+  margin: 1rem 0;
+  border: none;
+  box-shadow: none;
+  border-radius: 0.5rem;
+  background-color: var(--rd);
+  transition: box-shadow 0.3s;
+}
+
+li button:hover {
+  box-shadow: 0 0 1rem 0.01rem var(--bl);
+  transition: box-shadow 0.3s;
+}
