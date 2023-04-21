@@ -1,4 +1,4 @@
-import { TaskSection } from "./components/TaskSection";
+import TaskSection from "./components/TaskSection";
 import { TaskContextProvider } from "./context/TaskContext";
 
 function App() {

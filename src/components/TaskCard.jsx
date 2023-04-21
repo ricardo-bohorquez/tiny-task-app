@@ -1,26 +1,23 @@
-import { useContext } from "react";
-import { TaskContext } from "../context/TaskContext";
+import ModalDelete from "./ModalDelete";
+import "animate.css";
 
-export function TaskCard({ task }) {
-  const { deleteTask } = useContext(TaskContext);
+export function displayModal(indexModal) {
+  document.getElementById(`${indexModal}-modal`).style.display === "none"
+    ? (document.getElementById(`${indexModal}-modal`).style.display = "flex")
+    : (document.getElementById(`${indexModal}-modal`).style.display = "none");
+}
 
+function TaskCard({ task, index }) {
   return (
-    <>
-      <li>
-        <h3>{task.title}</h3>
-        <p>{task.description}</p>
-        <button
-          onClick={() => {
-            confirm(
-              `¿Está seguro que desea eliminar la siguiente tarea? \n "${task.title}"`
-            ) === true
-              ? deleteTask(task.id)
-              : {};
-          }}
-        >
-          Eliminar tarea
-        </button>
-      </li>
-    </>
+    <li className="animate__animated" id={index + `-element`}>
+      <h3>{task.title}</h3>
+      <p>{task.description}</p>
+      <button onClick={() => displayModal(index)}>Eliminar tarea</button>
+      <span>
+        Se creó el {task.creationDate} ({task.creationHour})
+      </span>
+      <ModalDelete task={task} index={index} />
+    </li>
   );
 }
+export default TaskCard;

@@ -1,7 +1,7 @@
-import { TaskForm } from "./TaskForm";
-import { TaskList } from "./TaskList";
+import TaskForm from "./TaskForm";
+import TaskList from "./TaskList";
 
-export function TaskSection() {
+function TaskSection() {
   return (
     <section className="task-section">
       <TaskForm />
@@ -9,3 +9,5 @@ export function TaskSection() {
     </section>
   );
 }
+
+export default TaskSection;

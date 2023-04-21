@@ -5,13 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "host": "vite --host",
     "build": "vite build",
     "preview": "vite preview --port 8080",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "animate.css": "^4.1.1",
+    "dayjs": "^1.11.7",
+    "firebase": "^9.19.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",

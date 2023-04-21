@@ -1,19 +1,21 @@
 import { useState, useContext } from "react";
 import { TaskContext } from "../context/TaskContext";
 
-export function TaskForm() {
+function TaskForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const { createTask } = useContext(TaskContext);
 
   function handleSubmit(e) {
-    title === `` || description === ``
-      ? (e.preventDefault(),
-        alert(`No puede crear tareas con títulos o descripciones vacías`))
-      : (e.preventDefault(),
-        createTask(title, description),
-        setTitle(""),
-        setDescription(""));
+    if (title === `` || description === ``) {
+      e.preventDefault();
+      alert(`No puede crear tareas con títulos o descripciones vacías`);
+    } else {
+      e.preventDefault();
+      createTask(title, description);
+      setTitle("");
+      setDescription("");
+    }
   }
 
   return (
@@ -22,6 +24,7 @@ export function TaskForm() {
         placeholder="Escribe el título de la nueva tarea"
         onChange={(e) => setTitle(e.target.value)}
         value={title}
+        autoFocus
       />
       <textarea
         placeholder="Escribe una descripción para la nueva tarea"
@@ -32,3 +35,5 @@ export function TaskForm() {
     </form>
   );
 }
+
+export default TaskForm;
