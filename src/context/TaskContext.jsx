@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { tasks as data } from "../data/task";
 import { months } from "../data/months";
 import { v4 as uuidv4 } from "uuid";
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 
 export const TaskContext = createContext();
 
