@@ -12,7 +12,7 @@ deploy.sh
 
 node_modules
 public
-dist-ssr
+dist
 *.local
 
 # Editor directories and files

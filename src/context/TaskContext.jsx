@@ -3,6 +3,9 @@ import { tasks as data } from "../data/task";
 import { months } from "../data/months";
 import { v4 as uuidv4 } from "uuid";
 import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+dayjs.extend(customParseFormat);
+dayjs.locale("es");
 
 export const TaskContext = createContext();
 
@@ -12,8 +15,7 @@ export function TaskContextProvider(props) {
 
   function createTask(title, description) {
     const id = uuidv4();
-    const creationDate = `${dayjs().date()} de ${months[dayjs().month()].name}, ${dayjs().year()}`;
-    const creationHour = `${dayjs().hour()}:${dayjs().minute()}`;
+    const creationDate = dayjs().format("DD/MM/YYYY hh:mm a");
     setTask([
       ...tasks,
       {
@@ -21,20 +23,24 @@ export function TaskContextProvider(props) {
         title,
         description,
         creationDate,
-        creationHour
-      },
+      }
     ]);
-    localStorage.setItem(id, JSON.stringify({ title, description, creationDate, creationHour }));
+    localStorage.setItem(
+      id,
+      JSON.stringify({ title, description, creationDate })
+    );
   }
 
-  function deleteTask(id, indexElement, indexModal) {
-    document.getElementById(`${indexModal}-modal`).style.display = "none";
-    document.getElementById(`${indexElement}-element`).classList.add(`animate__backOutRight`);
+  function deleteTask(id, index) {
+    document.getElementById(`${index}-modal`).style.display = "none";
+    document
+      .getElementById(`${index}-element`)
+      .classList.add(`animate__backOutRight`);
     setTimeout(() => {
       localStorage.removeItem(id);
       setTask(tasks.filter((tsk) => tsk.id !== id));
       document
-        .getElementById(`${indexElement}-element`)
+        .getElementById(`${index}-element`)
         .classList.remove(`animate__backOutRight`);
     }, 800);
   }

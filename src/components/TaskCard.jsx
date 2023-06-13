@@ -13,9 +13,7 @@ function TaskCard({ task, index }) {
       <h3>{task.title}</h3>
       <p>{task.description}</p>
       <button onClick={() => displayModal(index)}>Eliminar tarea</button>
-      <span>
-        Se creó el {task.creationDate} ({task.creationHour})
-      </span>
+      <span>Se creó el {task.creationDate}</span>
       <ModalDelete task={task} index={index} />
     </li>
   );

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { TaskContext } from "../context/TaskContext";
 import { displayModal } from "./TaskCard";
 
-function ModalDelete({ task, index, id }) {
+function ModalDelete({ task, index }) {
   const { deleteTask } = useContext(TaskContext);
   return (
     <section
@@ -16,7 +16,7 @@ function ModalDelete({ task, index, id }) {
         <div className="selection-container">
           <button
             id="confirmDelete"
-            onClick={() => deleteTask(task.id, index, index)}
+            onClick={() => deleteTask(task.id, index)}
           >
             Confirmar
           </button>

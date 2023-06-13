@@ -79,6 +79,7 @@ body {
 .task-form input,
 .task-form textarea {
   width: 90%;
+  max-width: 68rem;
   font-family: var(--lt);
   font-size: var(--bt-fsz);
   color: var(--grl);
@@ -116,12 +117,6 @@ body {
   border: none;
   box-shadow: none;
   border-radius: 0.5rem;
-  transition: box-shadow 0.3s;
-}
-
-.task-form button:hover {
-  box-shadow: 0 0 1rem 0.01rem var(--bk);
-  transition: box-shadow 0.3s;
 }
 
 .task-list {
@@ -203,12 +198,6 @@ li button {
   box-shadow: none;
   border-radius: 0.5rem;
   background-color: var(--rd);
-  transition: box-shadow 0.3s;
-}
-
-li button:hover {
-  box-shadow: 0 0 1rem 0.01rem var(--bl);
-  transition: box-shadow 0.3s;
 }
 
 span {
@@ -251,7 +240,7 @@ span {
   margin: 0.5rem 0;
 }
 
-.modal-content label{
+.modal-content label {
   font-family: var(--smb);
   font-size: var(--bt-fsz);
   margin: 0 0 1rem;
@@ -270,7 +259,20 @@ span {
   margin: 0;
 }
 
-#cancelDelete{
+#cancelDelete {
   background-color: var(--bl);
   margin: 0;
+}
+
+#acceptError {
+  font-family: var(--smb);
+  font-size: var(--bt-fsz);
+  color: var(--wt);
+  letter-spacing: 0.1rem;
+  width: 15rem;
+  height: 4rem;
+  border: none;
+  box-shadow: none;
+  border-radius: 0.5rem;
+  background-color: var(--bl);
 }
