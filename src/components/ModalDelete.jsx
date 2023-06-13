@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { TaskContext } from "../context/TaskContext";
-import { displayModal } from "./TaskCard";
+import { displayModalDelete } from "./TaskCard";
 
 function ModalDelete({ task, index }) {
   const { deleteTask } = useContext(TaskContext);
@@ -11,7 +11,7 @@ function ModalDelete({ task, index }) {
       style={{ display: "none" }}
     >
       <div className="modal-content">
-        <h4>¿Está seguro que desea eliminar la siguiente tarea?</h4>
+        <h3>¿Está seguro que desea eliminar la siguiente tarea?</h3>
         <label>{task.title}</label>
         <div className="selection-container">
           <button
@@ -20,7 +20,7 @@ function ModalDelete({ task, index }) {
           >
             Confirmar
           </button>
-          <button id="cancelDelete" onClick={() => displayModal(index)}>
+          <button id="cancelDelete" onClick={() => displayModalDelete(index)}>
             Cancelar
           </button>
         </div>

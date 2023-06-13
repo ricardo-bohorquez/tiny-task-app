@@ -21,10 +21,10 @@
 :root {
   --h1-fsz: 3rem;
   --h2-fsz: 2.5rem;
-  --h3-fsz: 2rem;
-  --h4-fsz: 1.8rem;
-  --p-fsz: 1.6rem;
-  --bt-fsz: 1.4rem;
+  --h3-fsz: 1.8rem;
+  --p-desc-fsz: 1.6rem;
+  --p-fsz: 1.4rem;
+  --bt-fsz: 1.2rem;
   --min-fsz: 1rem;
   --lt: "mont-lt";
   --lt-it: "mont-lt-it";
@@ -60,7 +60,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3rem;
+  gap: 1rem;
   height: auto;
   margin: auto;
   padding: 1.5rem;
@@ -81,8 +81,8 @@ body {
   width: 90%;
   max-width: 68rem;
   font-family: var(--lt);
-  font-size: var(--bt-fsz);
-  color: var(--grl);
+  font-size: var(--p-fsz);
+  color: var(--wt);
   padding: 1rem;
   border: none;
   outline: none;
@@ -102,7 +102,7 @@ body {
 .task-form input::placeholder,
 .task-form textarea::placeholder {
   font-family: var(--lt-it);
-  font-size: var(--bt-fsz);
+  font-size: var(--p-fsz);
   color: var(--grl);
 }
 
@@ -110,24 +110,24 @@ body {
   font-family: var(--smb);
   font-size: var(--bt-fsz);
   color: var(--wt);
-  letter-spacing: 0.1rem;
-  width: 14rem;
-  height: 4rem;
+  width: 12rem;
+  height: 3rem;
   background-color: var(--gn);
   border: none;
   box-shadow: none;
   border-radius: 0.5rem;
+  cursor: pointer;
 }
 
 .task-list {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  grid-template-columns: repeat(auto-fill, minmax(26rem, 35rem));
   justify-items: center;
   justify-content: center;
-  gap: 3rem;
-  width: 95%;
-  max-width: 150rem;
+  gap: 2rem;
+  width: 90%;
+  max-width: 102.4rem;
   height: auto;
   padding: 0;
 }
@@ -158,31 +158,27 @@ h3 {
   color: var(--wt);
   letter-spacing: 0.1rem;
   text-align: center;
-  margin: 1rem 0;
+  display: flex;
+  margin: 0;
+}
+
+h3 img {
+  width: 1.7rem;
+  margin: 0 0.5rem;
+  cursor: pointer;
 }
 
 li:not(li:last-child span) {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 92.5%;
-  height: auto;
+  justify-content: center;
+  align-items: flex-start;
+  width: 95%;
+  max-width: 102.4rem;
+  height: 6.5rem;
   list-style: none;
-  gap: 0.5rem;
   padding: 1rem;
   border-radius: 1rem;
-  background-color: var(--gr);
-}
-
-li p {
-  font-family: var(--lt-it);
-  font-size: var(--p-fsz);
-  color: var(--grl);
-  letter-spacing: 0.1rem;
-  text-align: justify;
-  width: 95%;
-  height: auto;
-  margin: 1rem 0;
   background-color: var(--gr);
 }
 
@@ -190,21 +186,24 @@ li button {
   font-family: var(--smb);
   font-size: var(--bt-fsz);
   color: var(--wt);
-  letter-spacing: 0.1rem;
-  width: 15rem;
-  height: 4rem;
-  margin: 1rem 0;
+  min-width: 10rem;
+  width: 20%;
+  max-width: 12rem;
+  height: 2.5rem;
+  margin: 0 0 0 auto;
   border: none;
   box-shadow: none;
   border-radius: 0.5rem;
   background-color: var(--rd);
+  cursor: pointer;
 }
 
-span {
+li span {
   font-family: var(--lt);
   font-size: var(--min-fsz);
   color: var(--wt);
-  width: 95%;
+  width: fit-content;
+  margin: 0.5rem 0 0;
 }
 
 .modal-body {
@@ -224,7 +223,7 @@ span {
   flex-direction: column;
   place-items: center;
   background-color: var(--wt);
-  width: 60%;
+  width: 75%;
   max-width: 62rem;
   height: auto;
   padding: 2rem;
@@ -232,17 +231,41 @@ span {
   border-radius: 1rem;
 }
 
-.modal-content h4 {
+.modal-content h3 {
   font-family: var(--smb);
-  font-size: var(--h4-fsz);
+  font-size: var(--h3-fsz);
   color: var(--bk);
   text-align: center;
+  letter-spacing: 0;
   margin: 0.5rem 0;
 }
 
 .modal-content label {
   font-family: var(--smb);
-  font-size: var(--bt-fsz);
+  font-size: var(--p-fsz);
+  margin: 0 0 1rem;
+}
+
+.modal-task-description {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+}
+
+.modal-task-description h3 {
+  color: var(--bk);
+  margin: 0 0 1rem;
+}
+
+.modal-task-description p {
+  font-family: var(--rg);
+  font-size: var(--p-desc-fsz);
+  color: var(--bk);
+  text-align: justify;
+  width: 100%;
+  height: auto;
   margin: 0 0 1rem;
 }
 
@@ -254,14 +277,8 @@ span {
   height: fit-content;
 }
 
-#confirmDelete {
-  background-color: var(--rd);
-  margin: 0;
-}
-
 #cancelDelete {
   background-color: var(--bl);
-  margin: 0;
 }
 
 #acceptError {
@@ -269,10 +286,44 @@ span {
   font-size: var(--bt-fsz);
   color: var(--wt);
   letter-spacing: 0.1rem;
-  width: 15rem;
-  height: 4rem;
+  width: 10rem;
+  height: 2.5rem;
   border: none;
   box-shadow: none;
   border-radius: 0.5rem;
   background-color: var(--bl);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+  h1 {
+    font-size: var(--h2-fsz);
+  }
+  h2 {
+    font-size: var(--h3-fsz);
+  }
+  h3 {
+    font-size: var(--p-desc-fsz);
+  }
+  .modal-task-description p,
+  .modal-task-description label {
+    font-size: var(--bt-fsz);
+    letter-spacing: 0;
+  }
+  .modal-content h4 {
+    font-size: var(--p-fsz);
+  }
+  .task-form input,
+  .task-form textarea,
+  .task-form input::placeholder,
+  .task-form textarea::placeholder {
+    font-size: var(--bt-fsz);
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .selection-container{
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 }

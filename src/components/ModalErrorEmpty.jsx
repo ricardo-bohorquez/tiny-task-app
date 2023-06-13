@@ -10,7 +10,7 @@ export function ModalErrorEmpty() {
       style={{ display: "none" }}
     >
       <div className="modal-content">
-        <h4>No puede crear tareas con títulos ni descripciones vacías</h4>
+        <h3>No puede crear tareas con títulos ni descripciones vacías</h3>
         <button onClick={() => displayErrorModal("none")} id="acceptError">
           Aceptar
         </button>

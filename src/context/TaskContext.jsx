@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect } from "react";
 import { tasks as data } from "../data/task";
-import { months } from "../data/months";
 import { v4 as uuidv4 } from "uuid";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
