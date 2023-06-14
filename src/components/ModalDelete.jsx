@@ -14,10 +14,7 @@ function ModalDelete({ task, index }) {
         <h3>¿Está seguro que desea eliminar la siguiente tarea?</h3>
         <label>{task.title}</label>
         <div className="selection-container">
-          <button
-            id="confirmDelete"
-            onClick={() => deleteTask(task.id, index)}
-          >
+          <button id="confirmDelete" onClick={() => deleteTask(task.id, index)}>
             Confirmar
           </button>
           <button id="cancelDelete" onClick={() => displayModalDelete(index)}>

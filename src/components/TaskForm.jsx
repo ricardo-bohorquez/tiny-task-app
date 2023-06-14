@@ -1,6 +1,9 @@
 import { useState, useContext } from "react";
 import { TaskContext } from "../context/TaskContext";
-import { ModalErrorEmpty, displayErrorModal } from "../components/ModalErrorEmpty";
+import {
+  ModalErrorEmpty,
+  displayErrorModal,
+} from "../components/ModalErrorEmpty";
 
 function TaskForm() {
   const [title, setTitle] = useState("");
