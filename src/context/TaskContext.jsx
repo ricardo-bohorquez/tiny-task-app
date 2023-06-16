@@ -9,7 +9,12 @@ dayjs.locale("es");
 export const TaskContext = createContext();
 
 export function TaskContextProvider(props) {
+  const [viewDelete, setViewDelete] = useState(false);
+  const [viewDescription, setViewDescription] = useState(false);
+  const [viewDataEmptyError, setViewDataEmptyError] = useState(false);
+
   const [tasks, setTask] = useState([]);
+
   useEffect(() => setTask(data), []);
 
   function createTask(title, description) {
@@ -22,7 +27,7 @@ export function TaskContextProvider(props) {
         title,
         description,
         creationDate,
-      }
+      },
     ]);
     localStorage.setItem(
       id,
@@ -45,7 +50,19 @@ export function TaskContextProvider(props) {
   }
 
   return (
-    <TaskContext.Provider value={{ tasks, createTask, deleteTask }}>
+    <TaskContext.Provider
+      value={{
+        tasks,
+        createTask,
+        deleteTask,
+        viewDelete,
+        setViewDelete,
+        viewDescription,
+        setViewDescription,
+        viewDataEmptyError,
+        setViewDataEmptyError,
+      }}
+    >
       {props.children}
     </TaskContext.Provider>
   );
