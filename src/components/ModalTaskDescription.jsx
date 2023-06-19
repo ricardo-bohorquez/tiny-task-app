@@ -13,7 +13,11 @@ function ModalTaskDescription({ task = {}, idx = "" }) {
         <h3>{task.title}</h3>
         <label>Descripción:</label>
         <p>{task.description}</p>
-        <button onClick={() => setViewDescription(false)}>Cerrar</button>
+        <button
+          onClick={() => setViewDescription({ state: false, id: 0 })}
+        >
+          Cerrar
+        </button>
       </div>
     </section>
   );

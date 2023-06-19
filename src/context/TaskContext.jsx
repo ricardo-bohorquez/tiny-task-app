@@ -9,8 +9,11 @@ dayjs.locale("es");
 export const TaskContext = createContext();
 
 export function TaskContextProvider(props) {
-  const [viewDelete, setViewDelete] = useState(false);
-  const [viewDescription, setViewDescription] = useState(false);
+  const [viewDelete, setViewDelete] = useState({ state: false, id: 0 });
+  const [viewDescription, setViewDescription] = useState({
+    state: false,
+    id: 0,
+  });
   const [viewDataEmptyError, setViewDataEmptyError] = useState(false);
 
   const [tasks, setTask] = useState([]);
