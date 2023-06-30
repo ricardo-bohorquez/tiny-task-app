@@ -27,11 +27,13 @@ function TaskForm() {
         onChange={(e) => setTitle(e.target.value)}
         value={title}
         autoFocus
+        maxLength={25}
       />
       <textarea
         placeholder="Escribe una descripción para la nueva tarea"
         onChange={(e) => setDescription(e.target.value)}
         value={description}
+        maxLength={250}
       ></textarea>
       <button>Agregar tarea</button>
       {viewDataEmptyError ? <ModalEmptyError /> : <></>}

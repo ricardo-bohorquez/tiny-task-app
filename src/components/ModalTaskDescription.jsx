@@ -10,12 +10,10 @@ function ModalTaskDescription({ task = {}, idx = "" }) {
       style={{ display: "flex" }}
     >
       <div className="modal-content modal-task-description">
-        <h3>{task.title}</h3>
+        <h4>{task.title}</h4>
         <label>Descripción:</label>
         <p>{task.description}</p>
-        <button
-          onClick={() => setViewDescription({ state: false, id: 0 })}
-        >
+        <button onClick={() => setViewDescription({ state: false, id: 0 })}>
           Cerrar
         </button>
       </div>

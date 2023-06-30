@@ -11,16 +11,36 @@ function TaskCard({ task = {}, index = "" }) {
 
   return (
     <li className="animate__animated" id={index + `-element`}>
-      <h3>
-        {task.title}
+      <div>
+        <h4>{task.title}</h4>
         <img
           src={dots}
           onClick={() => setViewDescription({ state: true, id: task.id })}
         />
-      </h3>
-      <button onClick={() => setViewDelete({ state: true, id: task.id })}>
-        Eliminar tarea
-      </button>
+      </div>
+      <div className="buttons-container">
+        <button
+          onClick={() => {
+            if (task.done == false) {
+              task.done = true;
+              localStorage.setItem(
+                task.id,
+                JSON.stringify({
+                  title: task.title,
+                  description: task.description,
+                  creationDate: task.creationDate,
+                  done: task.done,
+                })
+              );
+            }
+          }}
+        >
+          Marcar Lista
+        </button>
+        <button onClick={() => setViewDelete({ state: true, id: task.id })}>
+          Eliminar tarea
+        </button>
+      </div>
       <span>Se creó el {task.creationDate}</span>
       {viewDelete.state && viewDelete.id === task.id ? (
         <ModalDelete task={task} idx={index} />

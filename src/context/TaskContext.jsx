@@ -23,6 +23,7 @@ export function TaskContextProvider(props) {
   function createTask(title, description) {
     const id = uuidv4();
     const creationDate = dayjs().format("DD/MM/YYYY hh:mm a");
+    let done = false;
     setTask([
       ...tasks,
       {
@@ -30,11 +31,12 @@ export function TaskContextProvider(props) {
         title,
         description,
         creationDate,
+        done,
       },
     ]);
     localStorage.setItem(
       id,
-      JSON.stringify({ title, description, creationDate })
+      JSON.stringify({ title, description, creationDate, done })
     );
   }
 
