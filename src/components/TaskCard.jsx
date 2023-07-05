@@ -6,8 +6,14 @@ import dots from "../icons/ellipsis-solid.svg";
 import { TaskContext } from "../context/TaskContext";
 
 function TaskCard({ task = {}, index = "" }) {
-  const { viewDelete, setViewDelete, viewDescription, setViewDescription } =
-    useContext(TaskContext);
+  const {
+    viewDelete,
+    setViewDelete,
+    viewDescription,
+    setViewDescription,
+    markDone,
+    setChecked,
+  } = useContext(TaskContext);
 
   return (
     <li className="animate__animated" id={index + `-element`}>
@@ -19,23 +25,8 @@ function TaskCard({ task = {}, index = "" }) {
         />
       </div>
       <div className="buttons-container">
-        <button
-          onClick={() => {
-            if (task.done == false) {
-              task.done = true;
-              localStorage.setItem(
-                task.id,
-                JSON.stringify({
-                  title: task.title,
-                  description: task.description,
-                  creationDate: task.creationDate,
-                  done: task.done,
-                })
-              );
-            }
-          }}
-        >
-          Marcar Lista
+        <button onClick={() => setChecked(markDone(task))}>
+          {task.done === false ? `Marcar lista` : `Marcar pendiente`}
         </button>
         <button onClick={() => setViewDelete({ state: true, id: task.id })}>
           Eliminar tarea

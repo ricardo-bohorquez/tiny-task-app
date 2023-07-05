@@ -18,12 +18,14 @@ export function TaskContextProvider(props) {
 
   const [tasks, setTask] = useState([]);
 
+  const [cheked, setChecked] = useState(false);
+
   useEffect(() => setTask(data), []);
 
   function createTask(title, description) {
     const id = uuidv4();
     const creationDate = dayjs().format("DD/MM/YYYY hh:mm a");
-    let done = false;
+    const done = false;
     setTask([
       ...tasks,
       {
@@ -54,12 +56,43 @@ export function TaskContextProvider(props) {
     }, 800);
   }
 
+  function markDone(task) {
+    if (task.done === false) {
+      task.done = true;
+      localStorage.setItem(
+        task.id,
+        JSON.stringify({
+          title: task.title,
+          description: task.description,
+          creationDate: task.creationDate,
+          done: task.done,
+        })
+      );
+      return task.done;
+    } else if (task.done === true) {
+      task.done = false;
+      localStorage.setItem(
+        task.id,
+        JSON.stringify({
+          title: task.title,
+          description: task.description,
+          creationDate: task.creationDate,
+          done: task.done,
+        })
+      );
+      return task.done;
+    }
+  }
+
   return (
     <TaskContext.Provider
       value={{
         tasks,
         createTask,
         deleteTask,
+        markDone,
+        cheked,
+        setChecked,
         viewDelete,
         setViewDelete,
         viewDescription,
