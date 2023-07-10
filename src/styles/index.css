@@ -240,7 +240,7 @@ li:not(li:last-child span) {
   color: var(--wt);
   min-width: 12rem;
   width: 25%;
-  max-width: 14rem;
+  max-width: 15rem;
   height: 2.5rem;
   margin: 0;
   border: none;
@@ -255,6 +255,12 @@ li:not(li:last-child span) {
 
 .buttons-container button:last-child {
   background-color: var(--rd);
+}
+
+.buttons-container button:only-child {
+  color: var(--bk);
+  background-color: var(--grl);
+  width: 14.5rem;
 }
 
 li span {
@@ -385,6 +391,9 @@ li span {
     min-width: 10rem;
     width: 25%;
     max-width: 12rem;
+  }
+  .buttons-container button:only-child{
+    min-width: 13rem;
   }
 }
 

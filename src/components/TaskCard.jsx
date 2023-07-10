@@ -28,9 +28,13 @@ function TaskCard({ task = {}, index = "" }) {
         <button onClick={() => setChecked(markDone(task))}>
           {task.done === false ? `Marcar lista` : `Marcar pendiente`}
         </button>
-        <button onClick={() => setViewDelete({ state: true, id: task.id })}>
-          Eliminar tarea
-        </button>
+        {task.done === false ? (
+          <button onClick={() => setViewDelete({ state: true, id: task.id })}>
+            Eliminar tarea
+          </button>
+        ) : (
+          <></>
+        )}
       </div>
       <span>Se creó el {task.creationDate}</span>
       {viewDelete.state && viewDelete.id === task.id ? (

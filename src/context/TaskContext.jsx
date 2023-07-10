@@ -18,7 +18,7 @@ export function TaskContextProvider(props) {
 
   const [tasks, setTask] = useState([]);
 
-  const [cheked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => setTask(data), []);
 
@@ -59,6 +59,11 @@ export function TaskContextProvider(props) {
   function markDone(task) {
     if (task.done === false) {
       task.done = true;
+      setTask(
+        tasks.map((t) => {
+          t.id === task.id ? (t.done = task.done) : {};
+        })
+      );
       localStorage.setItem(
         task.id,
         JSON.stringify({
@@ -71,6 +76,11 @@ export function TaskContextProvider(props) {
       return task.done;
     } else if (task.done === true) {
       task.done = false;
+      setTask(
+        tasks.map((t) => {
+          t.id === task.id ? (t.done = task.done) : {};
+        })
+      );
       localStorage.setItem(
         task.id,
         JSON.stringify({
@@ -91,7 +101,7 @@ export function TaskContextProvider(props) {
         createTask,
         deleteTask,
         markDone,
-        cheked,
+        checked,
         setChecked,
         viewDelete,
         setViewDelete,
