@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect } from "react";
-import { tasks as data } from "../data/task";
 import { v4 as uuidv4 } from "uuid";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
@@ -9,6 +8,7 @@ dayjs.locale("es");
 export const TaskContext = createContext();
 
 export function TaskContextProvider(props) {
+  const keys = Object.keys(localStorage);
   const [viewDelete, setViewDelete] = useState({ state: false, id: 0 });
   const [viewDescription, setViewDescription] = useState({
     state: false,
@@ -16,11 +16,18 @@ export function TaskContextProvider(props) {
   });
   const [viewDataEmptyError, setViewDataEmptyError] = useState(false);
 
-  const [tasks, setTask] = useState([]);
+  const [tasks, setTask] = useState(
+    keys.map((key) => {
+      let { title, description, creationDate, done } = JSON.parse(
+        localStorage.getItem(key)
+      );
+      return { id: key, title, description, creationDate, done };
+    })
+  );
 
   const [checked, setChecked] = useState(false);
 
-  useEffect(() => setTask(data), []);
+  useEffect(() => setTask(tasks), []);
 
   function createTask(title, description) {
     const id = uuidv4();
@@ -59,11 +66,6 @@ export function TaskContextProvider(props) {
   function markDone(task) {
     if (task.done === false) {
       task.done = true;
-      setTask(
-        tasks.map((t) => {
-          t.id === task.id ? (t.done = task.done) : {};
-        })
-      );
       localStorage.setItem(
         task.id,
         JSON.stringify({
@@ -71,16 +73,16 @@ export function TaskContextProvider(props) {
           description: task.description,
           creationDate: task.creationDate,
           done: task.done,
+        })
+      );
+      setTask(
+        tasks.map((t) => {
+          t.id === task.id ?? (t.done = task.done);
         })
       );
       return task.done;
     } else if (task.done === true) {
       task.done = false;
-      setTask(
-        tasks.map((t) => {
-          t.id === task.id ? (t.done = task.done) : {};
-        })
-      );
       localStorage.setItem(
         task.id,
         JSON.stringify({
@@ -88,6 +90,11 @@ export function TaskContextProvider(props) {
           description: task.description,
           creationDate: task.creationDate,
           done: task.done,
+        })
+      );
+      setTask(
+        tasks.map((t) => {
+          t.id === task.id ?? (t.done = task.done);
         })
       );
       return task.done;

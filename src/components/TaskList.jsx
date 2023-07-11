@@ -5,12 +5,8 @@ import { TaskContext } from "../context/TaskContext";
 
 function TaskList() {
   const { tasks } = useContext(TaskContext);
-  const donedTasks = tasks.filter((t) =>
-    t === undefined ? {} : t.done === true
-  );
-  const pendingTasks = tasks.filter((t) =>
-    t === undefined ? {} : t.done === false
-  );
+  const donedTasks = tasks.filter((t) => t.done === true);
+  const pendingTasks = tasks.filter((t) => t.done === false);
 
   return tasks.length === 0 ? (
     <h2>No hay tareas agregadas</h2>
