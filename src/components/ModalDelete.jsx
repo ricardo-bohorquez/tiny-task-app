@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { TaskContext } from "../context/TaskContext";
 
 function ModalDelete({ task = {}, idx = "" }) {
-  const { deleteTask, setViewDelete } = useContext(TaskContext);
+  const { deleteTask, resetModalProps, setViewModal } = useContext(TaskContext);
   return (
     <section
       className="modal-body"
@@ -16,16 +16,13 @@ function ModalDelete({ task = {}, idx = "" }) {
           <button
             id="confirmDelete"
             onClick={() => {
-              setViewDelete({ state: false, id: 0 });
+              setViewModal(resetModalProps);
               deleteTask(task.id, idx);
             }}
           >
             Confirmar
           </button>
-          <button
-            id="cancelDelete"
-            onClick={() => setViewDelete({ state: false, id: 0 })}
-          >
+          <button id="cancelDelete" onClick={() => setViewModal(resetModalProps)}>
             Cancelar
           </button>
         </div>

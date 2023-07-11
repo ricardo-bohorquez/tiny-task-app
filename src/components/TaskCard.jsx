@@ -6,14 +6,7 @@ import dots from "../icons/ellipsis-solid.svg";
 import { TaskContext } from "../context/TaskContext";
 
 function TaskCard({ task = {}, index = "" }) {
-  const {
-    viewDelete,
-    setViewDelete,
-    viewDescription,
-    setViewDescription,
-    markDone,
-    setChecked,
-  } = useContext(TaskContext);
+  const { viewModal, setViewModal, markDone } = useContext(TaskContext);
 
   return (
     <li className="animate__animated" id={index + `-element`}>
@@ -21,15 +14,29 @@ function TaskCard({ task = {}, index = "" }) {
         <h4>{task.title}</h4>
         <img
           src={dots}
-          onClick={() => setViewDescription({ state: true, id: task.id })}
+          onClick={() =>
+            setViewModal({
+              state: true,
+              id: task.id,
+              type: `description`,
+            })
+          }
         />
       </div>
       <div className="buttons-container">
-        <button onClick={() => setChecked(markDone(task))}>
+        <button onClick={() => markDone(task)}>
           {task.done === false ? `Marcar lista` : `Marcar pendiente`}
         </button>
         {task.done === false ? (
-          <button onClick={() => setViewDelete({ state: true, id: task.id })}>
+          <button
+            onClick={() =>
+              setViewModal({
+                state: true,
+                id: task.id,
+                type: `delete`,
+              })
+            }
+          >
             Eliminar tarea
           </button>
         ) : (
@@ -37,12 +44,16 @@ function TaskCard({ task = {}, index = "" }) {
         )}
       </div>
       <span>Se creó el {task.creationDate}</span>
-      {viewDelete.state && viewDelete.id === task.id ? (
+      {viewModal.state &&
+      viewModal.id === task.id &&
+      viewModal.type === `delete` ? (
         <ModalDelete task={task} idx={index} />
       ) : (
         <></>
       )}
-      {viewDescription.state && viewDescription.id === task.id ? (
+      {viewModal.state &&
+      viewModal.id === task.id &&
+      viewModal.type === `description` ? (
         <ModalTaskDescription task={task} idx={index} />
       ) : (
         <></>

@@ -8,16 +8,8 @@ dayjs.locale("es");
 export const TaskContext = createContext();
 
 export function TaskContextProvider(props) {
-  const keys = Object.keys(localStorage);
-  const [viewDelete, setViewDelete] = useState({ state: false, id: 0 });
-  const [viewDescription, setViewDescription] = useState({
-    state: false,
-    id: 0,
-  });
-  const [viewDataEmptyError, setViewDataEmptyError] = useState(false);
-
   const [tasks, setTask] = useState(
-    keys.map((key) => {
+    Object.keys(localStorage).map((key) => {
       let { title, description, creationDate, done } = JSON.parse(
         localStorage.getItem(key)
       );
@@ -25,9 +17,15 @@ export function TaskContextProvider(props) {
     })
   );
 
-  const [checked, setChecked] = useState(false);
-
   useEffect(() => setTask(tasks), []);
+
+  const resetModalProps = {
+    state: false,
+    id: 0,
+    type: `none`,
+  };
+
+  const [viewModal, setViewModal] = useState(resetModalProps);
 
   function createTask(title, description) {
     const id = uuidv4();
@@ -64,41 +62,21 @@ export function TaskContextProvider(props) {
   }
 
   function markDone(task) {
-    if (task.done === false) {
-      task.done = true;
-      localStorage.setItem(
-        task.id,
-        JSON.stringify({
-          title: task.title,
-          description: task.description,
-          creationDate: task.creationDate,
-          done: task.done,
-        })
-      );
-      setTask(
-        tasks.map((t) => {
-          t.id === task.id ?? (t.done = task.done);
-        })
-      );
-      return task.done;
-    } else if (task.done === true) {
-      task.done = false;
-      localStorage.setItem(
-        task.id,
-        JSON.stringify({
-          title: task.title,
-          description: task.description,
-          creationDate: task.creationDate,
-          done: task.done,
-        })
-      );
-      setTask(
-        tasks.map((t) => {
-          t.id === task.id ?? (t.done = task.done);
-        })
-      );
-      return task.done;
-    }
+    task.done === false ? (task.done = true) : (task.done = false);
+    setTask(
+      tasks.map((t) => {
+        t.id === task.id ?? (t.done = task.done);
+      })
+    );
+    localStorage.setItem(
+      task.id,
+      JSON.stringify({
+        title: task.title,
+        description: task.description,
+        creationDate: task.creationDate,
+        done: task.done,
+      })
+    );
   }
 
   return (
@@ -108,14 +86,9 @@ export function TaskContextProvider(props) {
         createTask,
         deleteTask,
         markDone,
-        checked,
-        setChecked,
-        viewDelete,
-        setViewDelete,
-        viewDescription,
-        setViewDescription,
-        viewDataEmptyError,
-        setViewDataEmptyError,
+        resetModalProps,
+        viewModal,
+        setViewModal,
       }}
     >
       {props.children}

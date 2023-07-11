@@ -5,13 +5,12 @@ import ModalEmptyError from "./ModalEmptyError";
 function TaskForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const { createTask, viewDataEmptyError, setViewDataEmptyError } =
-    useContext(TaskContext);
+  const { createTask, viewModal, setViewModal } = useContext(TaskContext);
 
   function handleSubmit(e) {
     if (title === `` || description === ``) {
       e.preventDefault();
-      setViewDataEmptyError(true);
+      setViewModal({ ...viewModal, type: `error` });
     } else {
       e.preventDefault();
       createTask(title, description);
@@ -36,7 +35,7 @@ function TaskForm() {
         maxLength={250}
       ></textarea>
       <button>Agregar tarea</button>
-      {viewDataEmptyError ? <ModalEmptyError /> : <></>}
+      {viewModal.type === `error` ? <ModalEmptyError /> : <></>}
     </form>
   );
 }
