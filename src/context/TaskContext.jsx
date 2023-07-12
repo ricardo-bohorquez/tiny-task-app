@@ -1,4 +1,6 @@
 import { createContext, useState, useEffect } from "react";
+import { db } from "../configFirebase.js";
+import { doc, setDoc, getDoc, deleteDoc } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
@@ -8,6 +10,25 @@ dayjs.locale("es");
 export const TaskContext = createContext();
 
 export function TaskContextProvider(props) {
+  async function add(id, task) {
+    await setDoc(doc(db, "users", id), {
+      title: task.title,
+      description: task.description,
+      creationDate: task.creationDate,
+      done: task.done,
+    });
+  }
+
+  async function read(id) {
+    const docRef = doc(db, "users", id);
+    const docSnap = await getDoc(docRef);
+    return docSnap.data();
+  }
+
+  async function erase(id) {
+    await deleteDoc(doc(db, "users", id));
+  }
+
   const [tasks, setTask] = useState(
     Object.keys(localStorage).map((key) => {
       let { title, description, creationDate, done } = JSON.parse(
@@ -45,6 +66,8 @@ export function TaskContextProvider(props) {
       id,
       JSON.stringify({ title, description, creationDate, done })
     );
+    add(id, { title, description, creationDate, done });
+    read(id);
   }
 
   function deleteTask(id, index) {
@@ -59,6 +82,7 @@ export function TaskContextProvider(props) {
         .getElementById(`${index}-element`)
         .classList.remove(`animate__backOutRight`);
     }, 800);
+    erase(id);
   }
 
   function markDone(task) {
