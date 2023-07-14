@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { db } from "../configFirebase.js";
-import { doc, setDoc, getDoc, deleteDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
@@ -10,16 +10,7 @@ dayjs.locale("es");
 export const TaskContext = createContext();
 
 export function TaskContextProvider(props) {
-  async function add(id, task) {
-    await setDoc(doc(db, "users", id), {
-      title: task.title,
-      description: task.description,
-      creationDate: task.creationDate,
-      done: task.done,
-    });
-  }
-
-  async function read(id) {
+  async function readData(id) {
     const docRef = doc(db, "users", id);
     const docSnap = await getDoc(docRef);
     return docSnap.data();
@@ -29,14 +20,7 @@ export function TaskContextProvider(props) {
     await deleteDoc(doc(db, "users", id));
   }
 
-  const [tasks, setTask] = useState(
-    Object.keys(localStorage).map((key) => {
-      let { title, description, creationDate, done } = JSON.parse(
-        localStorage.getItem(key)
-      );
-      return { id: key, title, description, creationDate, done };
-    })
-  );
+  const [tasks, setTask] = useState([]);
 
   useEffect(() => setTask(tasks), []);
 
@@ -48,26 +32,16 @@ export function TaskContextProvider(props) {
 
   const [viewModal, setViewModal] = useState(resetModalProps);
 
-  function createTask(title, description) {
+  async function createTask(title, description) {
     const id = uuidv4();
     const creationDate = dayjs().format("DD/MM/YYYY hh:mm a");
     const done = false;
-    setTask([
-      ...tasks,
-      {
-        id,
-        title,
-        description,
-        creationDate,
-        done,
-      },
-    ]);
-    localStorage.setItem(
-      id,
-      JSON.stringify({ title, description, creationDate, done })
-    );
-    add(id, { title, description, creationDate, done });
-    read(id);
+    await setDoc(doc(db, "tasks", id), {
+      title,
+      description,
+      creationDate,
+      done,
+    });
   }
 
   function deleteTask(id, index) {
