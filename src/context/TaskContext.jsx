@@ -50,7 +50,6 @@ export function TaskContextProvider(props) {
       .getElementById(`${index}-element`)
       .classList.add(`animate__backOutRight`);
     setTimeout(() => {
-      localStorage.removeItem(id);
       setTask(tasks.filter((tsk) => tsk.id !== id));
       document
         .getElementById(`${index}-element`)
@@ -64,15 +63,6 @@ export function TaskContextProvider(props) {
     setTask(
       tasks.map((t) => {
         t.id === task.id ?? (t.done = task.done);
-      })
-    );
-    localStorage.setItem(
-      task.id,
-      JSON.stringify({
-        title: task.title,
-        description: task.description,
-        creationDate: task.creationDate,
-        done: task.done,
       })
     );
   }
