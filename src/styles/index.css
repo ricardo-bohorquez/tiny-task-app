@@ -58,6 +58,27 @@ body {
   margin: 3.5rem 0;
 }
 
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+}
+
+.app-header img {
+  width: 5rem;
+}
+
+.app-header h1 {
+  margin: 0;
+  height: fit-content;
+}
+
+.app-header div {
+  width: 5rem;
+  height: 5rem;
+}
+
 .task-section {
   display: flex;
   flex-direction: column;
@@ -68,6 +89,8 @@ body {
   padding: 1.5rem;
 }
 
+.register-form,
+.login-form,
 .task-form {
   display: flex;
   flex-direction: column;
@@ -76,8 +99,11 @@ body {
   width: 95%;
   max-width: 102.4rem;
   height: auto;
+  margin: auto;
 }
 
+.register-form input,
+.login-form input,
 .task-form input,
 .task-form textarea {
   width: 90%;
@@ -92,8 +118,17 @@ body {
   background-color: var(--gr);
 }
 
+.register-form input,
+.login-form input,
 .task-form input {
   height: 2.5rem;
+}
+
+.register-form input,
+.login-form input {
+  min-width: 25rem;
+  width: 60%;
+  max-width: 46rem;
 }
 
 .task-form textarea {
@@ -101,6 +136,8 @@ body {
   resize: none;
 }
 
+.register-form input::placeholder,
+.login-form input::placeholder,
 .task-form input::placeholder,
 .task-form textarea::placeholder {
   font-family: var(--lt-it);
@@ -108,6 +145,8 @@ body {
   color: var(--grl);
 }
 
+.register-form button,
+.login-form button,
 .task-form button {
   font-family: var(--smb);
   font-size: var(--bt-fsz);
@@ -154,16 +193,16 @@ body {
   padding: 0;
 }
 
-.list > li > div {
+.list>li>div {
   display: flex;
 }
 
-.list > li > div > h4 {
+.list>li>div>h4 {
   width: fit-content;
   margin: 0 0 0.5rem 0;
 }
 
-.list > li > div > img {
+.list>li>div>img {
   width: 1.7rem;
   height: 2.5rem;
   margin: 0 0 0 0.5rem;
@@ -373,17 +412,27 @@ li span {
   cursor: pointer;
 }
 
+.title-login-register {
+  height: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+
 @media screen and (max-width: 780px) {
   li:not(li:last-child span) {
     justify-content: space-around;
     height: 9rem;
   }
+
   .buttons-container {
     display: flex;
     justify-content: center;
     gap: 1rem;
     margin: 0 auto;
   }
+
   .buttons-container button,
   .selection-container button,
   .modal-task-description button {
@@ -392,7 +441,8 @@ li span {
     width: 25%;
     max-width: 12rem;
   }
-  .buttons-container button:only-child{
+
+  .buttons-container button:only-child {
     min-width: 13rem;
   }
 }
@@ -401,32 +451,41 @@ li span {
   h1 {
     font-size: var(--h2-fsz);
   }
+
   h2 {
     font-size: var(--h3-fsz);
   }
+
   h3 {
     font-size: var(--p-desc-fsz);
   }
+
   h4 {
     font-size: var(--p-inter-fsz);
   }
+
   h4 img {
     margin: 0 0 0 1rem;
   }
+
   .modal-content h3 {
     font-size: var(--h4-fsz);
   }
+
   .modal-content label {
     font-size: var(--p-inter-fsz);
   }
+
   .modal-task-description p,
   .modal-task-description label {
     font-size: var(--bt-fsz);
     letter-spacing: 0;
   }
+
   .modal-task-description h4 {
     font-size: var(--p-fsz);
   }
+
   .task-form input,
   .task-form textarea,
   .task-form input::placeholder,
@@ -445,9 +504,11 @@ li span {
   .task-list {
     flex-wrap: wrap;
   }
+
   li:not(li:last-child span) {
     height: 7.5rem;
   }
+
   .pending-task,
   .done-task {
     width: 100%;

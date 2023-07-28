@@ -1,9 +1,16 @@
-import icon from "../icons/list-check-solid-light.svg";
+import { useAuth } from "../context/AuthContext";
+
 export function Home() {
+  const { userLogin } = useAuth();
+  console.log(userLogin);
   return (
-    <header>
-      <img src={icon} />
-      <h1>NoTask</h1>
-    </header>
+    <main className="main-home">
+      <section className="m-h_section" style={{ color: "red" }}>
+        label 1
+      </section>
+      <section className="m-h_section" style={{ color: "white" }}>
+        label 2
+      </section>
+    </main>
   );
 }
