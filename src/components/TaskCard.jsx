@@ -1,15 +1,16 @@
-import { useContext } from "react";
-import ModalDelete from "./ModalDelete";
-import ModalTaskDescription from "./ModalTaskDescription";
-import "animate.css";
-import dots from "../icons/ellipsis-solid.svg";
-import { TaskContext } from "../context/TaskContext";
+import { useContext } from 'react'
+import ModalDelete from './modals/ModalDelete'
+import ModalTaskDescription from './modals/ModalTaskDescription'
+import 'animate.css'
+import dots from '../icons/ellipsis-solid.svg'
+import { TaskContext } from '../context/TaskContext'
+import { useAuth } from '../context/AuthContext'
 
-function TaskCard({ task = {}, index = "" }) {
-  const { viewModal, setViewModal, markDone } = useContext(TaskContext);
-
+function TaskCard ({ task = {}, index = '' }) {
+  const { markDone } = useContext(TaskContext)
+  const { viewModal, setViewModal } = useAuth()
   return (
-    <li className="animate__animated" id={index + `-element`}>
+    <li className='animate__animated' id={index + `-element`}>
       <div>
         <h4>{task.title}</h4>
         <img
@@ -18,12 +19,12 @@ function TaskCard({ task = {}, index = "" }) {
             setViewModal({
               state: true,
               id: task.id,
-              type: `description`,
+              type: `description`
             })
           }
         />
       </div>
-      <div className="buttons-container">
+      <div className='buttons-container'>
         <button onClick={() => markDone(task)}>
           {task.done === false ? `Marcar lista` : `Marcar pendiente`}
         </button>
@@ -33,7 +34,7 @@ function TaskCard({ task = {}, index = "" }) {
               setViewModal({
                 state: true,
                 id: task.id,
-                type: `delete`,
+                type: `delete`
               })
             }
           >
@@ -59,6 +60,6 @@ function TaskCard({ task = {}, index = "" }) {
         <></>
       )}
     </li>
-  );
+  )
 }
-export default TaskCard;
+export default TaskCard

@@ -1,13 +1,13 @@
-import TaskForm from "./TaskForm";
-import TaskList from "./TaskList";
+import TaskForm from './TaskForm'
+import TaskList from './TaskList'
 
-function TaskSection() {
+function TaskSection () {
   return (
-    <section className="task-section">
+    <section className='task-section'>
       <TaskForm />
       <TaskList />
     </section>
-  );
+  )
 }
 
-export default TaskSection;
+export default TaskSection

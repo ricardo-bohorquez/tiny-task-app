@@ -1,8 +1,7 @@
-import { useContext } from "react";
-import { TaskContext } from "../context/TaskContext";
+import { useAuth } from "../../context/AuthContext";
 
 function ModalEmptyError() {
-  const { resetModalProps, setViewModal } = useContext(TaskContext);
+  const { resetModalProps, setViewModal } = useAuth();
   return (
     <section
       className="modal-body"

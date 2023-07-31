@@ -160,6 +160,11 @@ body {
   cursor: pointer;
 }
 
+.modal-register-error button,
+.modal-success-register button {
+  background-color: var(--bl) !important;
+}
+
 .task-list {
   display: flex;
   align-items: flex-start;

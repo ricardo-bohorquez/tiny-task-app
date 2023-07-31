@@ -1,22 +1,58 @@
 import { useState } from 'react'
-import { doc, setDoc } from 'firebase/firestore'
-import { db } from '../configFirebase.js'
+import { doc, setDoc, getDoc } from 'firebase/firestore'
+import { db } from '../configFirebase'
+import { useAuth } from '../context/AuthContext'
+import ModalRegisterError from '../components/modals/ModalRegisterError'
+import ModalSuccesRegister from '../components/modals/ModalSuccessRegister'
+import ModalLoader from '../components/modals/ModalLoader'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+dayjs.extend(customParseFormat)
+dayjs.locale('es')
 
 export function Register () {
-  const [user, setUser] = useState({
+  const { viewModal, setViewModal } = useAuth()
+  const emptyParams = {
     email: '',
     confirmEmail: '',
     password: '',
-    confirmPasword: ''
-  })
+    confirmPassword: ''
+  }
+  const [userParams, setUserParams] = useState(emptyParams)
+
+  const emptyData = {
+    password: '',
+    accountCreationDate: '',
+    registrationConfirmed: false,
+    listOfTask: {
+      pending: [],
+      performed: []
+    }
+  }
+
+  const [userData, setUserData] = useState()
 
   function handleData ({ target: { name, value } }) {
-    setUser({ ...user, [name]: value })
+    setUserParams({ ...user, [name]: value })
   }
 
   async function handleRegister (e) {
-    e.preventDefault();
-    await setDoc(doc(db, 'data', 'users'), user)
+    e.preventDefault()
+    if (
+      userParams.email === userParams.confirmEmail &&
+      userParams.password === userParams.confirmPassword
+    ) {
+      setViewModal({ ...viewModal, state: true, type: 'loader' })
+      const docRef = doc(db, 'users', user.email)
+      const docSnap = await getDoc(docRef)
+      if (docSnap.exists())
+        setViewModal({ ...viewModal, state: true, type: 'reg-error' })
+      else {
+        setDoc(doc(db, 'users', user.email), user)
+        setViewModal({ ...viewModal, state: true, type: 'success-reg' })
+      }
+    } else {
+    }
   }
 
   return (
@@ -30,26 +66,45 @@ export function Register () {
           name='email'
           placeholder='Ingrese su correo de registro '
           onChange={handleData}
+          required
         />
         <input
           type='email'
           name='confirmEmail'
           placeholder='Repita su correo'
           onChange={handleData}
+          required
         />
         <input
           type='password'
           name='password'
           placeholder='Ingrese su clave'
           onChange={handleData}
+          required
         />
         <input
           type='password'
-          name='confirmPasword'
+          name='confirmPassword'
           placeholder='Repita su clave'
           onChange={handleData}
+          required
         />
         <button>Registrarse</button>
+        {viewModal.state === true && viewModal.type === 'reg-error' ? (
+          <ModalRegisterError />
+        ) : (
+          <></>
+        )}
+        {viewModal.state === true && viewModal.type === 'success-reg' ? (
+          <ModalSuccesRegister />
+        ) : (
+          <></>
+        )}
+        {viewModal.state === true && viewModal.type === 'loader' ? (
+          <ModalLoader />
+        ) : (
+          <></>
+        )}
       </form>
     </main>
   )

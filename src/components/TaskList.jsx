@@ -1,18 +1,18 @@
-import { useContext } from "react";
-import TaskCard from "./TaskCard";
+import { useContext } from 'react'
+import TaskCard from './TaskCard'
 
-import { TaskContext } from "../context/TaskContext";
+import { TaskContext } from '../context/TaskContext'
 
-function TaskList() {
-  const { tasks } = useContext(TaskContext);
+function TaskList () {
+  const { tasks } = useContext(TaskContext)
 
   return tasks.length === 0 ? (
     <h2>No hay tareas agregadas</h2>
   ) : (
-    <section className="task-list">
-      <div className="pending-task">
+    <section className='task-list'>
+      <div className='pending-task'>
         <h3>Tareas pendientes:</h3>
-        <ul className="list">
+        <ul className='list'>
           {pendingTasks.length === 0 ? (
             <h4>No hay tareas por realizar</h4>
           ) : (
@@ -22,9 +22,9 @@ function TaskList() {
           )}
         </ul>
       </div>
-      <div className="done-task">
+      <div className='done-task'>
         <h3>Tareas realizadas:</h3>
-        <ul className="list">
+        <ul className='list'>
           {donedTasks.length === 0 ? (
             <h4>No ha realizado ninguna tarea</h4>
           ) : (
@@ -33,7 +33,7 @@ function TaskList() {
         </ul>
       </div>
     </section>
-  );
+  )
 }
 
-export default TaskList;
+export default TaskList
