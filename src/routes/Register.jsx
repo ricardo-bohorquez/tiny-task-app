@@ -12,6 +12,7 @@ dayjs.locale('es')
 
 export function Register () {
   const { viewModal, setViewModal } = useAuth()
+
   const emptyParams = {
     email: '',
     confirmEmail: '',
@@ -29,11 +30,10 @@ export function Register () {
       performed: []
     }
   }
-
-  const [userData, setUserData] = useState()
+  const [userData, setUserData] = useState(emptyData)
 
   function handleData ({ target: { name, value } }) {
-    setUserParams({ ...user, [name]: value })
+    setUserParams({ ...userParams, [name]: value })
   }
 
   async function handleRegister (e) {
@@ -43,15 +43,22 @@ export function Register () {
       userParams.password === userParams.confirmPassword
     ) {
       setViewModal({ ...viewModal, state: true, type: 'loader' })
-      const docRef = doc(db, 'users', user.email)
+      const docRef = doc(db, 'users', userParams.email)
       const docSnap = await getDoc(docRef)
       if (docSnap.exists())
         setViewModal({ ...viewModal, state: true, type: 'reg-error' })
       else {
-        setDoc(doc(db, 'users', user.email), user)
+        const currentDate = dayjs().format('DD/MM/YYYY')
+        setUserData({
+          ...userData,
+          password: userParams.password,
+          accountCreationDate: currentDate
+        })
+        await setDoc(doc(db, 'users', userParams.email), userData)
         setViewModal({ ...viewModal, state: true, type: 'success-reg' })
       }
     } else {
+      alert('El correo y la contraseña deben coincidir')
     }
   }
 
@@ -81,6 +88,8 @@ export function Register () {
           placeholder='Ingrese su clave'
           onChange={handleData}
           required
+          minLength={6}
+          maxLength={6}
         />
         <input
           type='password'
@@ -88,6 +97,8 @@ export function Register () {
           placeholder='Repita su clave'
           onChange={handleData}
           required
+          minLength={6}
+          maxLength={6}
         />
         <button>Registrarse</button>
         {viewModal.state === true && viewModal.type === 'reg-error' ? (
