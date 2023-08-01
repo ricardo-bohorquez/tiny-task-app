@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { doc, setDoc, getDoc } from 'firebase/firestore'
 import { db } from '../configFirebase'
 import { useAuth } from '../context/AuthContext'
@@ -11,15 +11,23 @@ dayjs.extend(customParseFormat)
 dayjs.locale('es')
 
 export function Register () {
-  const { viewModal, setViewModal } = useAuth()
+  const { resetModalProps, viewModal, setViewModal } = useAuth()
 
-  const emptyParams = {
-    email: '',
-    confirmEmail: '',
-    password: '',
-    confirmPassword: ''
-  }
-  const [userParams, setUserParams] = useState(emptyParams)
+  const [userEmail, setUserEmail] = useState('')
+  const [userPass, setUserPass] = useState('')
+  const [confirmEmail, setConfirmEmail] = useState('')
+  const [confirmPass, setConfirmPass] = useState('')
+  const [errorEmail, setErrorEmail] = useState({})
+  const [errorPass, setErrorPass] = useState({})
+  const [errConfPass, setErrConfPass] = useState({})
+
+  const [ready, setReady] = useState({
+    em: false,
+    psw: false,
+    cpsw: false
+  })
+
+  const accountCreationDate = dayjs().format('DD/MM/YYYY')
 
   const emptyData = {
     password: '',
@@ -32,61 +40,122 @@ export function Register () {
   }
   const [userData, setUserData] = useState(emptyData)
 
-  function handleData ({ target: { name, value } }) {
-    setUserParams({ ...userParams, [name]: value })
+  const resetFields = () => {
+    setUserEmail('')
+    setConfirmEmail('')
+    setUserPass('')
+    setConfirmPass('')
   }
 
-  async function handleRegister (e) {
-    e.preventDefault()
-    if (
-      userParams.email === userParams.confirmEmail &&
-      userParams.password === userParams.confirmPassword
-    ) {
-      setViewModal({ ...viewModal, state: true, type: 'loader' })
-      const docRef = doc(db, 'users', userParams.email)
-      const docSnap = await getDoc(docRef)
-      if (docSnap.exists())
-        setViewModal({ ...viewModal, state: true, type: 'reg-error' })
-      else {
-        const currentDate = dayjs().format('DD/MM/YYYY')
-        setUserData({
-          ...userData,
-          password: userParams.password,
-          accountCreationDate: currentDate
-        })
-        await setDoc(doc(db, 'users', userParams.email), userData)
-        setViewModal({ ...viewModal, state: true, type: 'success-reg' })
-      }
-    } else {
-      alert('El correo y la contraseña deben coincidir')
+  const handleFields = ({ target: { name, value } }) => {
+    switch (name) {
+      case 'email':
+        setUserEmail(value)
+        break
+      case 'confirmEmail':
+        setConfirmEmail(value)
+        break
+      case 'password':
+        setUserPass(value)
+        break
+      case 'confirmPassword':
+        setConfirmPass(value)
+        break
     }
   }
+
+  const handleRegister = async (e, email, data) => {
+    e.preventDefault()
+    setViewModal({ ...viewModal, state: true, type: 'loader' })
+    const docRef = doc(db, 'users', email)
+    const docSnap = await getDoc(docRef)
+    if (docSnap.exists()) {
+      setViewModal(resetModalProps)
+      setViewModal({ ...viewModal, state: true, type: 'reg-error' })
+      resetFields()
+    } else {
+      await setDoc(doc(db, 'users', email), data)
+      setViewModal(resetModalProps)
+      setViewModal({ ...viewModal, state: true, type: 'success-reg' })
+    }
+  }
+
+  useEffect(() => {
+    if (userEmail === '' && confirmEmail === '')
+      setErrorEmail({ border: 'none' })
+    else if (userEmail !== confirmEmail) {
+      setErrorEmail({ border: '1px solid red' })
+      setReady({ ...ready, em: false })
+    } else {
+      setErrorEmail({ border: '1px solid green' })
+      setReady({ ...ready, em: true })
+    }
+  }, [userEmail, confirmEmail])
+
+  useEffect(() => {
+    if (userPass === '') setErrorPass({ border: 'none' })
+    else if (userPass.length < 6 || userPass.length > 6) {
+      setErrorPass({ border: '1px solid red' })
+      setReady({ ...ready, psw: false })
+    } else {
+      setErrorPass({ border: '1px solid green' })
+      setReady({ ...ready, psw: true })
+    }
+  }, [userPass, confirmPass])
+
+  useEffect(() => {
+    if (confirmPass === '') setErrConfPass({ border: 'none' })
+    else if (confirmPass !== userPass) {
+      setErrConfPass({ border: '1px solid red' })
+      setReady({ ...ready, cpsw: false })
+    } else {
+      setErrConfPass({ border: '1px solid green' })
+      setReady({ ...ready, cpsw: true })
+    }
+  }, [confirmPass, userPass])
+
+  useEffect(() => {
+    if (ready.em && ready.psw && ready.cpsw)
+      setUserData({
+        ...userData,
+        password: userPass,
+        accountCreationDate
+      })
+  }, [ready])
 
   return (
     <main>
       <section className='title-login-register'>
         <h2 style={{ height: 'fit-content', margin: 'auto' }}>Registrate</h2>
       </section>
-      <form className='register-form' onSubmit={handleRegister}>
+      <form
+        className='register-form'
+        onSubmit={e => handleRegister(e, userEmail, userData)}
+      >
         <input
           type='email'
           name='email'
           placeholder='Ingrese su correo de registro '
-          onChange={handleData}
+          onChange={handleFields}
+          value={userEmail}
           required
         />
         <input
           type='email'
           name='confirmEmail'
-          placeholder='Repita su correo'
-          onChange={handleData}
+          placeholder='Repita el correo ingresado'
+          onChange={handleFields}
+          value={confirmEmail}
+          style={errorEmail}
           required
         />
         <input
           type='password'
           name='password'
-          placeholder='Ingrese su clave'
-          onChange={handleData}
+          placeholder='Ingrese su clave de acceso'
+          onChange={handleFields}
+          value={userPass}
+          style={errorPass}
           required
           minLength={6}
           maxLength={6}
@@ -94,13 +163,19 @@ export function Register () {
         <input
           type='password'
           name='confirmPassword'
-          placeholder='Repita su clave'
-          onChange={handleData}
+          placeholder='Repita la clave ingresada'
+          onChange={handleFields}
+          value={confirmPass}
+          style={errConfPass}
           required
           minLength={6}
           maxLength={6}
         />
-        <button>Registrarse</button>
+        {ready.em && ready.psw && ready.cpsw ? (
+          <button>Registrarse</button>
+        ) : (
+          <label>Esperando datos correctos...</label>
+        )}
         {viewModal.state === true && viewModal.type === 'reg-error' ? (
           <ModalRegisterError />
         ) : (

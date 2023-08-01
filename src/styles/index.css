@@ -160,6 +160,12 @@ body {
   cursor: pointer;
 }
 
+.register-form>label {
+  font-family: var(--lt);
+  font-size: var(--bt-fsz);
+  color: var(--grl);
+}
+
 .modal-register-error button,
 .modal-success-register button {
   background-color: var(--bl) !important;
