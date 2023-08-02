@@ -1,4 +1,11 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from 'firebase/auth'
+import { auth } from '../configFirebase'
 
 export const AuthContext = createContext()
 
@@ -8,10 +15,6 @@ export const useAuth = () => {
 }
 
 export function AuthProvider ({ children }) {
-  const [userLogin, setUserLogin] = useState({
-    state: false
-  })
-
   const resetModalProps = {
     state: false,
     id: 0,
@@ -20,14 +23,32 @@ export function AuthProvider ({ children }) {
 
   const [viewModal, setViewModal] = useState(resetModalProps)
 
+  const [user, setUser] = useState(null)
+
+  const signUp = (email, password) =>
+    createUserWithEmailAndPassword(auth, email, password)
+
+  const signIn = (email, password) =>
+    signInWithEmailAndPassword(auth, email, password)
+
+  const logOut = () => signOut(auth)
+
+  useEffect(() => {
+    onAuthStateChanged(auth, currentUser => {
+      setUser(currentUser)
+    })
+  }, [])
+
   return (
     <AuthContext.Provider
       value={{
-        userLogin,
-        setUserLogin,
         viewModal,
         setViewModal,
-        resetModalProps
+        resetModalProps,
+        signUp,
+        signIn,
+        logOut,
+        user
       }}
     >
       {children}

@@ -1,8 +1,7 @@
 import { useAuth } from '../context/AuthContext'
 
 export function Home () {
-  const { userLogin } = useAuth()
-  console.log(userLogin)
+  const { user } = useAuth()
   return (
     <main className='main-home'>
       <section className='m-h_section' style={{ color: 'red' }}>

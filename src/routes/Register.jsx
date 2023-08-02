@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react'
-import { doc, setDoc, getDoc } from 'firebase/firestore'
-import { db } from '../configFirebase'
 import { useAuth } from '../context/AuthContext'
 import ModalRegisterError from '../components/modals/ModalRegisterError'
 import ModalSuccesRegister from '../components/modals/ModalSuccessRegister'
@@ -11,7 +9,7 @@ dayjs.extend(customParseFormat)
 dayjs.locale('es')
 
 export function Register () {
-  const { resetModalProps, viewModal, setViewModal } = useAuth()
+  const { signUp, resetModalProps, viewModal, setViewModal } = useAuth()
 
   const [userEmail, setUserEmail] = useState('')
   const [userPass, setUserPass] = useState('')
@@ -20,7 +18,7 @@ export function Register () {
   const [errorEmail, setErrorEmail] = useState({})
   const [errorPass, setErrorPass] = useState({})
   const [errConfPass, setErrConfPass] = useState({})
-
+  const [displayLabel, setDisplayLabel] = useState(false)
   const [ready, setReady] = useState({
     em: false,
     psw: false,
@@ -64,19 +62,22 @@ export function Register () {
     }
   }
 
-  const handleRegister = async (e, email, data) => {
+  const handleRegister = async (e, email, pass) => {
     e.preventDefault()
     setViewModal({ ...viewModal, state: true, type: 'loader' })
-    const docRef = doc(db, 'users', email)
-    const docSnap = await getDoc(docRef)
-    if (docSnap.exists()) {
-      setViewModal(resetModalProps)
-      setViewModal({ ...viewModal, state: true, type: 'reg-error' })
-      resetFields()
-    } else {
-      await setDoc(doc(db, 'users', email), data)
-      setViewModal(resetModalProps)
+    try {
+      await signUp(email, pass)
       setViewModal({ ...viewModal, state: true, type: 'success-reg' })
+    } catch ({ code }) {
+      setViewModal(resetModalProps)
+      code === 'auth/email-already-in-use' &&
+        setViewModal({ ...viewModal, state: true, type: 'reg-error' })
+      resetFields()
+      setReady({
+        em: false,
+        psw: false,
+        cpsw: false
+      })
     }
   }
 
@@ -105,7 +106,10 @@ export function Register () {
 
   useEffect(() => {
     if (confirmPass === '') setErrConfPass({ border: 'none' })
-    else if (confirmPass !== userPass) {
+    else if (confirmPass.length < 6 || confirmPass.length > 6) {
+      setErrConfPass({ border: '1px solid red' })
+      setReady({ ...ready, cpsw: false })
+    } else if (confirmPass !== userPass) {
       setErrConfPass({ border: '1px solid red' })
       setReady({ ...ready, cpsw: false })
     } else {
@@ -130,7 +134,7 @@ export function Register () {
       </section>
       <form
         className='register-form'
-        onSubmit={e => handleRegister(e, userEmail, userData)}
+        onSubmit={e => handleRegister(e, userEmail, userPass)}
       >
         <input
           type='email'
@@ -154,12 +158,19 @@ export function Register () {
           name='password'
           placeholder='Ingrese su clave de acceso'
           onChange={handleFields}
+          onFocus={() => setDisplayLabel(true)}
+          onBlur={() => setDisplayLabel(false)}
           value={userPass}
           style={errorPass}
           required
           minLength={6}
           maxLength={6}
         />
+        {displayLabel ? (
+          <label>La contraseña debe contar con 6 caracteres</label>
+        ) : (
+          <></>
+        )}
         <input
           type='password'
           name='confirmPassword'

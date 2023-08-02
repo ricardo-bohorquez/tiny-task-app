@@ -1,14 +1,16 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import { Home } from './routes/Home'
 import { Login } from './routes/Login'
 import { Register } from './routes/Register'
 import { Dashboard } from './routes/Dashboard'
-import { AuthProvider } from './context/AuthContext'
+import { useAuth } from './context/AuthContext'
 import { Header } from './components/Header'
 
 function App () {
+  const { user } = useAuth()
+  const navigate = useNavigate()
   return (
-    <AuthProvider>
+    <>
       <Header />
       <Routes>
         <Route path='/tiny-task-app/' element={<Home />} />
@@ -16,7 +18,7 @@ function App () {
         <Route path='/tiny-task-app/register' element={<Register />} />
         <Route path='/tiny-task-app/dashboard' element={<Dashboard />} />
       </Routes>
-    </AuthProvider>
+    </>
   )
 }
 

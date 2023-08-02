@@ -60,21 +60,39 @@ body {
 
 .app-header {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 15rem;
+  height: 15vh;
+  max-height: 20rem;
+}
+
+.app-header section {
+  display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem;
+  width: 100%;
 }
 
-.app-header img {
+.app-header section img {
   width: 5rem;
 }
 
-.app-header h1 {
+.app-header section h1 {
   margin: 0;
   height: fit-content;
 }
 
-.app-header div {
+.app-header>label {
+  font-family: var(--lt-it);
+  font-size: var(--p-fsz);
+  color: var(--grl);
+  width: fit-content;
+}
+
+.app-header section div {
   width: 5rem;
   height: 5rem;
 }
@@ -160,15 +178,47 @@ body {
   cursor: pointer;
 }
 
-.register-form>label {
+.register-form>label,
+.login-form>label {
   font-family: var(--lt);
   font-size: var(--bt-fsz);
   color: var(--grl);
 }
 
 .modal-register-error button,
-.modal-success-register button {
+.modal-success-register button,
+.modal-login-error button {
   background-color: var(--bl) !important;
+}
+
+.are-loged {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 35rem;
+  height: 65vh;
+  max-height: 68rem;
+}
+
+.are-loged h4 {
+  font-size: var(--h2-fsz);
+  text-align: center;
+}
+
+.are-loged p {
+  font-family: var(--lt);
+  font-size: var(--p-desc-fsz);
+  color: var(--grl);
+  text-align: center;
+}
+
+.are-loged a:link,
+.are-loged a:visited {
+  font-family: var(--rg);
+  font-size: var(--p-desc-fsz);
+  color: var(--gn);
+  text-align: center;
 }
 
 .task-list {
