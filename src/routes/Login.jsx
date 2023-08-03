@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import ModalLoginError from '../components/modals/ModalLoginError'
+import AreLogged from '../components/AreLoged'
 
 export function Login () {
   const { signIn, viewModal, setViewModal, user } = useAuth()
@@ -20,7 +21,6 @@ export function Login () {
       await signIn(userEmail, userPass)
       navigate('/tiny-task-app/dashboard')
     } catch ({ code }) {
-      console.log(code)
       if (code === 'auth/user-not-found') {
         setDisplayLabel(false)
         setErrorPass({ border: 'none' })
@@ -36,13 +36,7 @@ export function Login () {
   }
 
   return user ? (
-    <main>
-      <section className='are-loged'>
-        <h4>Ya tiene una sesión activa</h4>
-        <p>Haga click en el siguiente enlace para dirigirse al dashboard</p>
-        <Link to={'/tiny-task-app/dashboard'}>Dashboard</Link>
-      </section>
-    </main>
+    <AreLogged />
   ) : (
     <main>
       <section className='title-login-register'>

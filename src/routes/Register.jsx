@@ -5,11 +5,12 @@ import ModalSuccesRegister from '../components/modals/ModalSuccessRegister'
 import ModalLoader from '../components/modals/ModalLoader'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
+import AreLogged from '../components/AreLoged'
 dayjs.extend(customParseFormat)
 dayjs.locale('es')
 
 export function Register () {
-  const { signUp, resetModalProps, viewModal, setViewModal } = useAuth()
+  const { signUp, resetModalProps, viewModal, setViewModal, user } = useAuth()
 
   const [userEmail, setUserEmail] = useState('')
   const [userPass, setUserPass] = useState('')
@@ -127,7 +128,9 @@ export function Register () {
       })
   }, [ready])
 
-  return (
+  return user ? (
+    <AreLogged />
+  ) : (
     <main>
       <section className='title-login-register'>
         <h2 style={{ height: 'fit-content', margin: 'auto' }}>Registrate</h2>

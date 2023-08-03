@@ -44,7 +44,6 @@
 html {
   font-size: 62.5%;
   box-sizing: border-box;
-  overflow-x: hidden;
 }
 
 body {
@@ -53,16 +52,12 @@ body {
   background-color: var(--bl);
 }
 
-.App {
-  width: 100%;
-  margin: 3.5rem 0;
-}
-
 .app-header {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
   min-height: 15rem;
   height: 15vh;
   max-height: 20rem;
@@ -72,12 +67,14 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 90%;
+  max-width: 102.4rem;
   padding: 1.5rem;
-  width: 100%;
 }
 
 .app-header section img {
-  width: 5rem;
+  width: 4rem;
+  padding: 1rem 3.5rem;
 }
 
 .app-header section h1 {
@@ -90,11 +87,44 @@ body {
   font-size: var(--p-fsz);
   color: var(--grl);
   width: fit-content;
+  position: absolute;
+  transform: translateY(50px);
 }
 
 .app-header section div {
-  width: 5rem;
-  height: 5rem;
+  width: 11rem;
+  height: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  height: 65vh;
+}
+
+.app-home p {
+  font-family: var(--lt);
+  font-size: var(--h4-fsz);
+  color: var(--wt);
+  text-align: center;
+  width: 70%;
+  max-width: 72rem;
+  letter-spacing: 0.05rem;
+  line-height: 2.5rem;
+  margin: 0;
+}
+
+.app-home p>a:link,
+.app-home p>a:visited {
+  color: var(--rd);
+  text-decoration: none;
 }
 
 .task-section {
@@ -149,6 +179,11 @@ body {
   max-width: 46rem;
 }
 
+.dashboard {
+  width: 100%;
+  margin: 2rem 0;
+}
+
 .task-form textarea {
   height: 15rem;
   resize: none;
@@ -191,7 +226,7 @@ body {
   background-color: var(--bl) !important;
 }
 
-.are-loged {
+.are-logged {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -201,24 +236,37 @@ body {
   max-height: 68rem;
 }
 
-.are-loged h4 {
+.are-logged h4 {
   font-size: var(--h2-fsz);
   text-align: center;
 }
 
-.are-loged p {
+.are-logged p {
   font-family: var(--lt);
   font-size: var(--p-desc-fsz);
   color: var(--grl);
   text-align: center;
 }
 
-.are-loged a:link,
-.are-loged a:visited {
+.app-header section a:link,
+.app-header section a:visited,
+.are-logged a:link,
+.are-logged a:visited {
   font-family: var(--rg);
   font-size: var(--p-desc-fsz);
-  color: var(--gn);
   text-align: center;
+}
+
+.app-header section a:link,
+.app-header section a:visited {
+  color: var(--rd);
+  text-decoration: none;
+  width: 11rem;
+}
+
+.are-logged a:link,
+.are-logged a:visited {
+  color: var(--gn);
 }
 
 .task-list {

@@ -3,7 +3,7 @@ import { TaskContextProvider } from '../context/TaskContext'
 export function Dashboard () {
   return (
     <TaskContextProvider>
-      <main className='App'>
+      <main className='dashboard'>
         <h1>Lista de cosas por hacer</h1>
         <TaskSection />
       </main>
