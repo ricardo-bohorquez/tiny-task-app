@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
+import { db } from '../configFirebase'
+import { doc, setDoc } from 'firebase/firestore'
 import ModalRegisterError from '../components/modals/ModalRegisterError'
-import ModalSuccesRegister from '../components/modals/ModalSuccessRegister'
 import ModalLoader from '../components/modals/ModalLoader'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -11,14 +13,14 @@ dayjs.locale('es')
 
 export function Register () {
   const { signUp, resetModalProps, viewModal, setViewModal, user } = useAuth()
-
+  const navigate = useNavigate()
   const [userEmail, setUserEmail] = useState('')
   const [userPass, setUserPass] = useState('')
   const [confirmEmail, setConfirmEmail] = useState('')
   const [confirmPass, setConfirmPass] = useState('')
   const [errorEmail, setErrorEmail] = useState({})
   const [errorPass, setErrorPass] = useState({})
-  const [errConfPass, setErrConfPass] = useState({})
+  const [errorConfirmPass, setErrorConfirmPass] = useState({})
   const [displayLabel, setDisplayLabel] = useState(false)
   const [ready, setReady] = useState({
     em: false,
@@ -68,7 +70,9 @@ export function Register () {
     setViewModal({ ...viewModal, state: true, type: 'loader' })
     try {
       await signUp(email, pass)
-      setViewModal({ ...viewModal, state: true, type: 'success-reg' })
+      navigate('/tiny-task-app/dashboard')
+      await setDoc(doc(db, user.uid, 'cosas'))
+      setViewModal(resetModalProps)
     } catch ({ code }) {
       setViewModal(resetModalProps)
       code === 'auth/email-already-in-use' &&
@@ -106,15 +110,15 @@ export function Register () {
   }, [userPass, confirmPass])
 
   useEffect(() => {
-    if (confirmPass === '') setErrConfPass({ border: 'none' })
+    if (confirmPass === '') setErrorConfirmPass({ border: 'none' })
     else if (confirmPass.length < 6 || confirmPass.length > 6) {
-      setErrConfPass({ border: '1px solid red' })
+      setErrorConfirmPass({ border: '1px solid red' })
       setReady({ ...ready, cpsw: false })
     } else if (confirmPass !== userPass) {
-      setErrConfPass({ border: '1px solid red' })
+      setErrorConfirmPass({ border: '1px solid red' })
       setReady({ ...ready, cpsw: false })
     } else {
-      setErrConfPass({ border: '1px solid green' })
+      setErrorConfirmPass({ border: '1px solid green' })
       setReady({ ...ready, cpsw: true })
     }
   }, [confirmPass, userPass])
@@ -180,7 +184,7 @@ export function Register () {
           placeholder='Repita la clave ingresada'
           onChange={handleFields}
           value={confirmPass}
-          style={errConfPass}
+          style={errorConfirmPass}
           required
           minLength={6}
           maxLength={6}

@@ -184,6 +184,15 @@ body {
   margin: 2rem 0;
 }
 
+.dashboard-no-logged {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 70vh;
+  margin: 0;
+}
+
 .task-form textarea {
   height: 15rem;
   resize: none;
@@ -246,6 +255,7 @@ body {
   font-size: var(--p-desc-fsz);
   color: var(--grl);
   text-align: center;
+  margin: 1rem;
 }
 
 .app-header section a:link,
@@ -335,7 +345,7 @@ h2 {
   letter-spacing: 0.1rem;
   text-align: center;
   width: fit-content;
-  margin: 1rem 0;
+  margin: 1rem auto;
 }
 
 h3 {
@@ -530,6 +540,12 @@ li span {
 }
 
 @media screen and (max-width: 780px) {
+
+  .app-home {
+    margin: 1rem 0;
+    height: 70vh;
+  }
+
   li:not(li:last-child span) {
     justify-content: space-around;
     height: 9rem;
@@ -575,6 +591,24 @@ li span {
 
   h4 img {
     margin: 0 0 0 1rem;
+  }
+
+  .app-home {
+    margin: 1rem 0;
+    height: auto;
+  }
+
+  .app-home p {
+    font-size: var(--p-fsz);
+    width: 80%;
+  }
+
+  .are-logged h4 {
+    font-size: var(--h3-fsz);
+  }
+
+  .are-logged p {
+    font-size: var(--p-inter-fsz);
   }
 
   .modal-content h3 {

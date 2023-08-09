@@ -7,56 +7,68 @@ export function Header () {
   const { user, logOut } = useAuth()
   const location = useLocation()
   const [displayLogin, setDisplayLogin] = useState(false)
+  const [displayRegister, setDisplayRegister] = useState(false)
+
+  useEffect(() => {
+    if (location.pathname === '/tiny-task-app/login') {
+      setDisplayLogin(false)
+      setDisplayRegister(true)
+    } else {
+      setDisplayLogin(true)
+      setDisplayRegister(false)
+    }
+  })
 
   useEffect(() => {
     if (
-      location.pathname === '/tiny-task-app/login' ||
-      location.pathname === '/tiny-task-app/register'
-    )
+      location.pathname === '/tiny-task-app/register' ||
+      location.pathname === '/tiny-task-app/dashboard' ||
+      location.pathname === '/tiny-task-app/'
+    ) {
+      setDisplayRegister(false)
+      setDisplayLogin(true)
+    } else {
+      setDisplayRegister(true)
       setDisplayLogin(false)
-    else setDisplayLogin(true)
+    }
   })
 
   const handleLogout = async () => await logOut()
 
-  return (
+  return !user ? (
     <header className='app-header'>
       <section>
         <img src={icon} />
         <h1>Tiny Task</h1>
-        {!user ? (
-          <div>
-            {displayLogin ? (
-              <Link to={'/tiny-task-app/login'} style={{ color: 'white' }}>
-                Inicia sesión
-              </Link>
-            ) : (
-              <></>
-            )}
-          </div>
-        ) : (
-          <>
-            {displayLogin ? (
-              <Link to={'/tiny-task-app/login'} onClick={handleLogout}>
-                Cerrar sesión
-              </Link>
-            ) : (
-              <div></div>
-            )}
-          </>
-        )}
+        <div>
+          {!displayLogin && displayRegister ? (
+            <Link to={'/tiny-task-app/register'} style={{ color: 'white' }}>
+              Registrate
+            </Link>
+          ) : (
+            <Link to={'/tiny-task-app/login'} style={{ color: 'white' }}>
+              Iniciar sesión
+            </Link>
+          )}
+        </div>
       </section>
-      {user ? (
-        <>{!displayLogin ? <></> : <label>{user.email}</label>}</>
-      ) : (
-        <></>
-      )}
+    </header>
+  ) : (
+    <header className='app-header'>
+      <section>
+        <img src={icon} />
+        <h1>Tiny Task</h1>
+        <div>
+          <Link
+            to={'/tiny-task-app/login'}
+            style={{ color: '#925252' }}
+            onClick={handleLogout}
+          >
+            Cerrar sesión
+          </Link>
+        </div>
+      </section>
+      <label>{user.email}</label>
     </header>
   )
-}
-
-{
-  /* <Link to={'/tiny-task-app/login'} style={{ fontSize: '15px' }}>
-  Login
-</Link> */
 }
