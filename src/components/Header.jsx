@@ -22,7 +22,6 @@ export function Header () {
   useEffect(() => {
     if (
       location.pathname === '/tiny-task-app/register' ||
-      location.pathname === '/tiny-task-app/dashboard' ||
       location.pathname === '/tiny-task-app/'
     ) {
       setDisplayRegister(false)
@@ -68,7 +67,7 @@ export function Header () {
           </Link>
         </div>
       </section>
-      <label>{user.email}</label>
+      <label>{user.displayName || user.email}</label>
     </header>
   )
 }

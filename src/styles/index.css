@@ -179,6 +179,35 @@ body {
   max-width: 46rem;
 }
 
+.login-form ~ label  {
+  font-family: var(--rg);
+  font-size: var(--p-fsz);
+  color: var(--grl);
+  margin: 2rem auto;
+  width: fit-content;
+  display: flex;
+}
+
+.login-google-button {
+  font-family: var(--smb);
+  font-size: var(--bt-fsz);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4rem;
+  width: 18rem;
+  padding: 0.5rem 1rem;
+  margin: 1rem auto;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  gap: 0.5rem;
+}
+
+.login-google-button img {
+  width: 3rem;
+}
+
 .dashboard {
   width: 100%;
   margin: 2rem 0;

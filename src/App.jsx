@@ -1,14 +1,12 @@
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { Home } from './routes/Home'
 import { Login } from './routes/Login'
 import { Register } from './routes/Register'
 import { Dashboard } from './routes/Dashboard'
-import { useAuth } from './context/AuthContext'
 import { Header } from './components/Header'
+import ProtectedRoute from './routes/ProtectedRoute'
 
 function App () {
-  const { user } = useAuth()
-  const navigate = useNavigate()
   return (
     <>
       <Header />
@@ -16,7 +14,14 @@ function App () {
         <Route path='/tiny-task-app/' element={<Home />} />
         <Route path='/tiny-task-app/login' element={<Login />} />
         <Route path='/tiny-task-app/register' element={<Register />} />
-        <Route path='/tiny-task-app/dashboard' element={<Dashboard />} />
+        <Route
+          path='/tiny-task-app/dashboard'
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </>
   )

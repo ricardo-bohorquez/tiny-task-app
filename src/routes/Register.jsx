@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { db } from '../configFirebase'
 import { doc, setDoc } from 'firebase/firestore'
 import ModalRegisterError from '../components/modals/ModalRegisterError'
 import ModalLoader from '../components/modals/ModalLoader'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-import AreLogged from '../components/AreLoged'
 dayjs.extend(customParseFormat)
 dayjs.locale('es')
 
@@ -70,8 +69,6 @@ export function Register () {
     setViewModal({ ...viewModal, state: true, type: 'loader' })
     try {
       await signUp(email, pass)
-      navigate('/tiny-task-app/dashboard')
-      await setDoc(doc(db, user.uid, 'cosas'))
       setViewModal(resetModalProps)
     } catch ({ code }) {
       setViewModal(resetModalProps)
@@ -100,7 +97,7 @@ export function Register () {
 
   useEffect(() => {
     if (userPass === '') setErrorPass({ border: 'none' })
-    else if (userPass.length < 6 || userPass.length > 6) {
+    else if (userPass.length < 6 || userPass.length > 30) {
       setErrorPass({ border: '1px solid red' })
       setReady({ ...ready, psw: false })
     } else {
@@ -111,7 +108,7 @@ export function Register () {
 
   useEffect(() => {
     if (confirmPass === '') setErrorConfirmPass({ border: 'none' })
-    else if (confirmPass.length < 6 || confirmPass.length > 6) {
+    else if (confirmPass.length < 6 || confirmPass.length > 30) {
       setErrorConfirmPass({ border: '1px solid red' })
       setReady({ ...ready, cpsw: false })
     } else if (confirmPass !== userPass) {
@@ -133,7 +130,7 @@ export function Register () {
   }, [ready])
 
   return user ? (
-    <AreLogged />
+    <Navigate to='/tiny-task-app/dashboard' />
   ) : (
     <main>
       <section className='title-login-register'>
@@ -171,10 +168,10 @@ export function Register () {
           style={errorPass}
           required
           minLength={6}
-          maxLength={6}
+          maxLength={30}
         />
         {displayLabel ? (
-          <label>La contraseña debe contar con 6 caracteres</label>
+          <label>La contraseña debe contar con al menos 6 caracteres</label>
         ) : (
           <></>
         )}
@@ -187,7 +184,7 @@ export function Register () {
           style={errorConfirmPass}
           required
           minLength={6}
-          maxLength={6}
+          maxLength={30}
         />
         {ready.em && ready.psw && ready.cpsw ? (
           <button>Registrarse</button>

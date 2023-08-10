@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import ModalLoginError from '../components/modals/ModalLoginError'
-import AreLogged from '../components/AreLoged'
+import google from '../icons/google.svg'
 
 export function Login () {
-  const { signIn, viewModal, setViewModal, user } = useAuth()
+  const { signIn, viewModal, setViewModal, user, googleLogin } = useAuth()
 
   const [userEmail, setUserEmail] = useState('')
   const [userPass, setUserPass] = useState('')
@@ -19,7 +19,6 @@ export function Login () {
     e.preventDefault()
     try {
       await signIn(userEmail, userPass)
-      navigate('/tiny-task-app/dashboard')
     } catch ({ code }) {
       if (code === 'auth/user-not-found') {
         setDisplayLabel(false)
@@ -35,8 +34,14 @@ export function Login () {
     }
   }
 
+  const handleGoogleLogin = async () => {
+    const { _tokenResponse } = await googleLogin()
+    if (_tokenResponse.isNewUser) console.log(_tokenResponse.isNewUser)
+    else console.log(_tokenResponse)
+  }
+
   return user ? (
-    <AreLogged />
+    <Navigate to='/tiny-task-app/dashboard' />
   ) : (
     <main>
       <section className='title-login-register'>
@@ -60,7 +65,7 @@ export function Login () {
           placeholder='Contraseña'
           required
           minLength={6}
-          maxLength={6}
+          maxLength={30}
         />
         {displayLabel ? <label>Contraseña incorrecta</label> : <></>}
         <button>Ingresar</button>
@@ -70,6 +75,10 @@ export function Login () {
           <></>
         )}
       </form>
+      <label> ó puedes </label>
+      <button className='login-google-button' onClick={handleGoogleLogin}>
+        Iniciar sesión con <img src={google} />
+      </button>
     </main>
   )
 }
