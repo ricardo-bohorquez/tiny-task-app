@@ -72,14 +72,14 @@ body {
   padding: 1.5rem;
 }
 
-.app-header section img {
-  width: 4rem;
-  padding: 1rem 3.5rem;
+.app-header section>a {
+  display: flex;
+  width: fit-content !important;
 }
 
-.app-header section h1 {
-  margin: 0;
-  height: fit-content;
+.app-header section img {
+  width: 4rem;
+  margin: 1rem 3.5rem;
 }
 
 .app-header>label {
@@ -139,7 +139,8 @@ body {
 
 .register-form,
 .login-form,
-.task-form {
+.task-form,
+.recover-pass-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -152,6 +153,7 @@ body {
 
 .register-form input,
 .login-form input,
+.recover-pass-form input,
 .task-form input,
 .task-form textarea {
   width: 90%;
@@ -172,6 +174,7 @@ body {
   height: 2.5rem;
 }
 
+.recover-pass-form input,
 .register-form input,
 .login-form input {
   min-width: 25rem;
@@ -179,7 +182,7 @@ body {
   max-width: 46rem;
 }
 
-.login-form ~ label  {
+.login-form~label {
   font-family: var(--rg);
   font-size: var(--p-fsz);
   color: var(--grl);
@@ -229,6 +232,7 @@ body {
 
 .register-form input::placeholder,
 .login-form input::placeholder,
+.recover-pass-form input::placeholder,
 .task-form input::placeholder,
 .task-form textarea::placeholder {
   font-family: var(--lt-it);
@@ -236,6 +240,7 @@ body {
   color: var(--grl);
 }
 
+.recover-pass-form button,
 .register-form button,
 .login-form button,
 .task-form button {
@@ -258,8 +263,14 @@ body {
   color: var(--grl);
 }
 
+.login-form>label>a:link,
+.login-form>label>a:visited {
+  font-family: var(--smb);
+  color: var(--gn);
+  text-decoration: none;
+}
+
 .modal-register-error button,
-.modal-success-register button,
 .modal-login-error button {
   background-color: var(--bl) !important;
 }
@@ -320,6 +331,14 @@ body {
   padding: 0;
 }
 
+.app-header section h1>a {
+  font-family: var(--smb) !important;
+  font-size: var(--h1-fsz) !important;
+  color: var(--wt) !important;
+  margin: 0;
+  height: fit-content;
+}
+
 .pending-task,
 .done-task {
   display: flex;
@@ -364,7 +383,7 @@ h1 {
   letter-spacing: 0.1rem;
   text-align: center;
   width: fit-content;
-  margin: 2rem auto 1rem;
+  margin: 1rem auto;
 }
 
 h2 {
@@ -602,8 +621,11 @@ li span {
 }
 
 @media screen and (max-width: 600px) {
-  h1 {
-    font-size: var(--h2-fsz);
+
+  h1,
+  .app-header section h1>a {
+    font-size: var(--h2-fsz) !important;
+    margin: 1rem auto;
   }
 
   h2 {
@@ -620,6 +642,21 @@ li span {
 
   h4 img {
     margin: 0 0 0 1rem;
+  }
+
+  .app-header section img {
+    margin: 1rem 2rem;
+  }
+
+  .app-header section div {
+    width: 8rem;
+    height: 6rem;
+  }
+
+  .app-header section a:link,
+  .app-header section a:visited {
+    font-size: var(--bt-fsz);
+    width: 8rem;
   }
 
   .app-home {
@@ -684,6 +721,14 @@ li span {
   .pending-task,
   .done-task {
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 420px) {
+
+  h1,
+  .app-header section h1>a {
+    font-size: var(--h3-fsz) !important;
   }
 }
 

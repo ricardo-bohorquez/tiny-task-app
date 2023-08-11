@@ -38,7 +38,9 @@ export function Header () {
     <header className='app-header'>
       <section>
         <img src={icon} />
-        <h1>Tiny Task</h1>
+        <Link to={'/tiny-task-app/'}>
+          <h1>Tiny Task</h1>
+        </Link>
         <div>
           {!displayLogin && displayRegister ? (
             <Link to={'/tiny-task-app/register'} style={{ color: 'white' }}>
@@ -55,8 +57,12 @@ export function Header () {
   ) : (
     <header className='app-header'>
       <section>
-        <img src={icon} />
-        <h1>Tiny Task</h1>
+        <Link to={'/tiny-task-app/dashboard'}>
+          <img src={icon} />
+        </Link>
+        <h1>
+          <Link to={'/tiny-task-app/'}>Tiny Task</Link>
+        </h1>
         <div>
           <Link
             to={'/tiny-task-app/login'}

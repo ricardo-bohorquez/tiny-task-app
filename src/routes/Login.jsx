@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate, Link } from 'react-router-dom'
 import ModalLoginError from '../components/modals/ModalLoginError'
+
 import google from '../icons/google.svg'
 
 export function Login () {
@@ -12,8 +13,6 @@ export function Login () {
   const [errorEmail, setErrorEmail] = useState({})
   const [errorPass, setErrorPass] = useState({})
   const [displayLabel, setDisplayLabel] = useState(false)
-
-  const navigate = useNavigate()
 
   const handleLogin = async e => {
     e.preventDefault()
@@ -34,11 +33,7 @@ export function Login () {
     }
   }
 
-  const handleGoogleLogin = async () => {
-    const { _tokenResponse } = await googleLogin()
-    if (_tokenResponse.isNewUser) console.log(_tokenResponse.isNewUser)
-    else console.log(_tokenResponse)
-  }
+  const handleGoogleLogin = async () => await googleLogin()
 
   return user ? (
     <Navigate to='/tiny-task-app/dashboard' />
@@ -68,6 +63,10 @@ export function Login () {
           maxLength={30}
         />
         {displayLabel ? <label>Contraseña incorrecta</label> : <></>}
+        <label>
+          ¿Olvidaste tu contraseña?{' '}
+          <Link to={'/tiny-task-app/password-recovery'}>Recupérala aquí.</Link>
+        </label>
         <button>Ingresar</button>
         {viewModal.state && viewModal.type === 'user-not-found' ? (
           <ModalLoginError />
