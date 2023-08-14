@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { Navigate } from 'react-router-dom'
-import ModalLoginError from '../components/modals/ModalLoginError'
+import ModalError from '../components/modals/ModalError'
 import ModalSuccessResetPass from '../components/modals/ModalSuccessResetPass'
+import ModalLoader from '../components/modals/ModalLoader'
 
 function RecoverPassword () {
   const { recoverPassword, setViewModal, viewModal, user } = useAuth()
@@ -10,12 +11,12 @@ function RecoverPassword () {
 
   const handleRecoverPassword = async e => {
     e.preventDefault()
+    setViewModal({ ...viewModal, state: true, type: 'loader' })
     try {
       await recoverPassword(emailToRecoverPass)
       setViewModal({ ...viewModal, state: true, type: 'success-reset' })
     } catch ({ code }) {
-      console.log(code)
-      if (code === 'auth/missing-email')
+      if (code === 'auth/user-not-found')
         setViewModal({ ...viewModal, state: true, type: 'user-not-found' })
     }
   }
@@ -33,8 +34,13 @@ function RecoverPassword () {
           required
         />
         <button>Reestablecer</button>
+        {viewModal.state && viewModal.type === 'loader' ? (
+          <ModalLoader />
+        ) : (
+          <></>
+        )}
         {viewModal.state && viewModal.type === 'user-not-found' ? (
-          <ModalLoginError />
+          <ModalError type='user-not-found' />
         ) : (
           <></>
         )}

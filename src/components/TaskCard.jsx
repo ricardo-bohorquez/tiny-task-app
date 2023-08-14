@@ -1,13 +1,12 @@
-import { useContext } from 'react'
-import ModalDelete from './modals/ModalDelete'
-import ModalTaskDescription from './modals/ModalTaskDescription'
 import 'animate.css'
 import dots from '../icons/ellipsis-solid.svg'
-import { TaskContext } from '../context/TaskContext'
+import { useTask } from '../context/TaskContext'
 import { useAuth } from '../context/AuthContext'
+import ModalDelete from './modals/ModalDelete'
+import ModalTaskDescription from './modals/ModalTaskDescription'
 
 function TaskCard ({ task = {}, index = '' }) {
-  const { markDone } = useContext(TaskContext)
+  const { markDone } = useTask()
   const { viewModal, setViewModal } = useAuth()
   return (
     <li className='animate__animated' id={index + `-element`}>

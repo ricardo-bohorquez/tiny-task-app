@@ -1,8 +1,6 @@
-import { Link, NavLink } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
+import { Link } from 'react-router-dom'
 
 export function Home () {
-  const { user } = useAuth()
   return (
     <main className='app-home'>
       <p>

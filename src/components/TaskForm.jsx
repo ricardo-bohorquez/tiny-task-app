@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
-import ModalEmptyError from './modals/ModalEmptyError'
+import { useTask } from '../context/TaskContext'
+import ModalError from './modals/ModalError'
 
 function TaskForm () {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const { createTask, viewModal, setViewModal } = useAuth()
+  const { createTask } = useTask()
+  const { viewModal, setViewModal } = useAuth()
 
   function handleSubmit (e) {
     if (title === `` || description === ``) {
@@ -23,20 +25,20 @@ function TaskForm () {
     <form onSubmit={handleSubmit} className='task-form'>
       <input
         placeholder='Escribe el título de la nueva tarea'
-        onChange={e => setTitle(e.target.value)}
+        onChange={({ target: { value } }) => setTitle(value)}
         value={title}
         autoFocus
         maxLength={25}
       />
       <textarea
         placeholder='Escribe una descripción para la nueva tarea'
-        onChange={e => setDescription(e.target.value)}
+        onChange={({ target: { value } }) => setDescription(value)}
         value={description}
         maxLength={250}
       ></textarea>
       <button>Agregar tarea</button>
       {viewModal.state === true && viewModal.type === `error` ? (
-        <ModalEmptyError />
+        <ModalError type={'empty-form-error'} />
       ) : (
         <></>
       )}

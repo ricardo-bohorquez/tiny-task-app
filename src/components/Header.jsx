@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
-import { useAuth } from '../context/AuthContext'
 import icon from '../icons/list-check-solid-light.svg'
+import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 export function Header () {
   const { user, logOut } = useAuth()

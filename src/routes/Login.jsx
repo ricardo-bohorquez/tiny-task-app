@@ -1,12 +1,18 @@
 import { useState } from 'react'
-import { useAuth } from '../context/AuthContext'
 import { Navigate, Link } from 'react-router-dom'
-import ModalLoginError from '../components/modals/ModalLoginError'
-
+import { useAuth } from '../context/AuthContext'
+import ModalError from '../components/modals/ModalError'
 import google from '../icons/google.svg'
 
 export function Login () {
-  const { signIn, viewModal, setViewModal, user, googleLogin } = useAuth()
+  const {
+    signIn,
+    viewModal,
+    setViewModal,
+    resetModalProps,
+    user,
+    googleLogin
+  } = useAuth()
 
   const [userEmail, setUserEmail] = useState('')
   const [userPass, setUserPass] = useState('')
@@ -16,16 +22,20 @@ export function Login () {
 
   const handleLogin = async e => {
     e.preventDefault()
+    setViewModal({ ...viewModal, state: true, type: 'loader' })
     try {
       await signIn(userEmail, userPass)
+      setViewModal(resetModalProps)
     } catch ({ code }) {
       if (code === 'auth/user-not-found') {
+        setViewModal(resetModalProps)
         setDisplayLabel(false)
         setErrorPass({ border: 'none' })
         setViewModal({ ...viewModal, state: true, type: 'user-not-found' })
         setErrorEmail({ border: '1px solid red' })
       }
       if (code === 'auth/wrong-password') {
+        setViewModal(resetModalProps)
         setErrorEmail({ border: 'none' })
         setDisplayLabel(true)
         setErrorPass({ border: '1px solid red' })
@@ -68,8 +78,13 @@ export function Login () {
           <Link to={'/tiny-task-app/password-recovery'}>Recupérala aquí.</Link>
         </label>
         <button>Ingresar</button>
+        {viewModal.state && viewModal.type === 'loader' ? (
+          <ModalLoader />
+        ) : (
+          <></>
+        )}
         {viewModal.state && viewModal.type === 'user-not-found' ? (
-          <ModalLoginError />
+          <ModalError type={'user-not-found'} />
         ) : (
           <></>
         )}

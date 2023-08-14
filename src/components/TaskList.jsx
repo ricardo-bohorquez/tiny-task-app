@@ -1,10 +1,8 @@
-import { useContext } from 'react'
 import TaskCard from './TaskCard'
-
-import { TaskContext } from '../context/TaskContext'
+import { useTask } from '../context/TaskContext'
 
 function TaskList () {
-  const { tasks } = useContext(TaskContext)
+  const { tasks } = useTask()
 
   return tasks.length === 0 ? (
     <h2>No hay tareas agregadas</h2>

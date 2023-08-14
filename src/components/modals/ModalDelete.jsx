@@ -1,9 +1,8 @@
-import { useContext } from 'react'
-import { TaskContext } from '../../context/TaskContext'
+import { useTask } from '../../context/TaskContext'
 import { useAuth } from '../../context/AuthContext'
 
 function ModalDelete ({ task = {}, idx = '' }) {
-  const { deleteTask } = useContext(TaskContext)
+  const { deleteTask } = useTask()
   const { resetModalProps, setViewModal } = useAuth()
   return (
     <section

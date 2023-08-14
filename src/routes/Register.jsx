@@ -1,18 +1,17 @@
 import { useState, useEffect } from 'react'
-import { useAuth } from '../context/AuthContext'
-import { Navigate, useNavigate } from 'react-router-dom'
-import { db } from '../configFirebase'
-import { doc, setDoc } from 'firebase/firestore'
-import ModalRegisterError from '../components/modals/ModalRegisterError'
-import ModalLoader from '../components/modals/ModalLoader'
+import { Navigate } from 'react-router-dom'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 dayjs.extend(customParseFormat)
 dayjs.locale('es')
+import { doc } from 'firebase/firestore'
+import { db } from '../configFirebase'
+import { useAuth } from '../context/AuthContext'
+import ModalError from '../components/modals/ModalError'
+import ModalLoader from '../components/modals/ModalLoader'
 
 export function Register () {
   const { signUp, resetModalProps, viewModal, setViewModal, user } = useAuth()
-  const navigate = useNavigate()
   const [userEmail, setUserEmail] = useState('')
   const [userPass, setUserPass] = useState('')
   const [confirmEmail, setConfirmEmail] = useState('')
@@ -192,12 +191,7 @@ export function Register () {
           <label>Esperando datos correctos...</label>
         )}
         {viewModal.state === true && viewModal.type === 'reg-error' ? (
-          <ModalRegisterError />
-        ) : (
-          <></>
-        )}
-        {viewModal.state === true && viewModal.type === 'success-reg' ? (
-          <ModalSuccesRegister />
+          <ModalError type={'email-in-use'} />
         ) : (
           <></>
         )}
