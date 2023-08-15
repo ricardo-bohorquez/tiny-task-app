@@ -1,7 +1,14 @@
 import { useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { db } from '../configFirebase'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+dayjs.extend(customParseFormat)
+dayjs.locale('es')
 import ModalError from '../components/modals/ModalError'
+import ModalLoader from '../components/modals/ModalLoader'
 import google from '../icons/google.svg'
 
 export function Login () {
@@ -43,7 +50,24 @@ export function Login () {
     }
   }
 
-  const handleGoogleLogin = async () => await googleLogin()
+  const accountCreationDate = dayjs().format('DD/MM/YYYY')
+
+  const newData = {
+    accountCreationDate,
+    listOfTask: {
+      pending: [],
+      performed: []
+    }
+  }
+
+  const handleGoogleLogin = async () => {
+    const { user } = await googleLogin()
+    const { displayName } = user
+    const docRef = doc(db, 'users', displayName)
+    const docSnap = await getDoc(docRef)
+    if (docSnap.exists()) return
+    else await setDoc(docRef, newData)
+  }
 
   return user ? (
     <Navigate to='/tiny-task-app/dashboard' />

@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 dayjs.extend(customParseFormat)
 dayjs.locale('es')
-import { doc } from 'firebase/firestore'
+import { doc, setDoc } from 'firebase/firestore'
 import { db } from '../configFirebase'
 import { useAuth } from '../context/AuthContext'
 import ModalError from '../components/modals/ModalError'
@@ -28,16 +28,14 @@ export function Register () {
 
   const accountCreationDate = dayjs().format('DD/MM/YYYY')
 
-  const emptyData = {
-    password: '',
-    accountCreationDate: '',
-    registrationConfirmed: false,
+  const newData = {
+    accountCreationDate,
     listOfTask: {
       pending: [],
       performed: []
     }
   }
-  const [userData, setUserData] = useState(emptyData)
+  const [userData, setUserData] = useState({})
 
   const resetFields = () => {
     setUserEmail('')
@@ -68,6 +66,7 @@ export function Register () {
     setViewModal({ ...viewModal, state: true, type: 'loader' })
     try {
       await signUp(email, pass)
+      await setDoc(doc(db, 'users', email), userData)
       setViewModal(resetModalProps)
     } catch ({ code }) {
       setViewModal(resetModalProps)
@@ -121,11 +120,7 @@ export function Register () {
 
   useEffect(() => {
     if (ready.em && ready.psw && ready.cpsw)
-      setUserData({
-        ...userData,
-        password: userPass,
-        accountCreationDate
-      })
+      setUserData(newData)
   }, [ready])
 
   return user ? (
