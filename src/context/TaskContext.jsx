@@ -28,14 +28,10 @@ export function TaskContextProvider (props) {
   const docRef = doc(db, 'users', userRef)
 
   const readTask = async () => {
-    try {
-      const docSnap = await getDoc(docRef)
-      const docData = docSnap.data()
-      const { pending, performed } = docData.listOfTask
-      return { pending, performed}
-    } catch (error) {
-
-    }
+    const docSnap = await getDoc(docRef)
+    const docData = docSnap.data()
+    const { pending, performed } = docData.listOfTask
+    return { pending, performed }
   }
 
   const [tasks, setTask] = useState(async () => console.log(await readTask()))
