@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from 'react'
-import { db } from '../configFirebase.js'
+import { db } from '../../configFirebase.js'
 import {
   doc,
   getDoc,

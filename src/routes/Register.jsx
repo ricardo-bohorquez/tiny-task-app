@@ -5,7 +5,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 dayjs.extend(customParseFormat)
 dayjs.locale('es')
 import { doc, setDoc } from 'firebase/firestore'
-import { db } from '../configFirebase'
+import { db } from '../../configFirebase'
 import { useAuth } from '../context/AuthContext'
 import ModalError from '../components/modals/ModalError'
 import ModalLoader from '../components/modals/ModalLoader'

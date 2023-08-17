@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
-import { db } from '../configFirebase'
+import { db } from '../../configFirebase'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 dayjs.extend(customParseFormat)
