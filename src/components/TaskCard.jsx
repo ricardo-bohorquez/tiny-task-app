@@ -1,4 +1,3 @@
-import 'animate.css'
 import dots from '../icons/ellipsis-solid.svg'
 import { useTask } from '../context/TaskContext'
 import { useAuth } from '../context/AuthContext'
@@ -9,7 +8,7 @@ function TaskCard ({ task = {}, index = '' }) {
   const { markDone } = useTask()
   const { viewModal, setViewModal } = useAuth()
   return (
-    <li className='animate__animated' id={index + `-element`}>
+    <li id={index + `-element`}>
       <div>
         <h4>{task.title}</h4>
         <img

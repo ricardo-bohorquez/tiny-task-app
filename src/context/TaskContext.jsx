@@ -27,56 +27,74 @@ export function TaskContextProvider (props) {
   const userRef = !email ? displayName : email
   const docRef = doc(db, 'users', userRef)
 
-  const readTask = async () => {
-    const docSnap = await getDoc(docRef)
-    const docData = docSnap.data()
-    const { pending, performed } = docData.listOfTask
-    return { pending, performed }
+  const [isReading, setIsReading] = useState(true)
+  const [isReadingError, setIsReadingError] = useState(false)
+
+  const readData = async () => {
+    try {
+      const docSnap = await getDoc(docRef)
+      const docData = docSnap.data()
+      const { pending, performed } = docData.listOfTask
+      setTasks({ pending, performed })
+      setIsReading(false)
+      return { pending, performed }
+    } catch (error) {
+      setIsReading(false)
+      setIsReadingError(true)
+      return {}
+    }
   }
 
-  const [tasks, setTask] = useState(async () => console.log(await readTask()))
-
-  useEffect(() => {
-    setTask(tasks)
-  })
-
   const createTask = async (title, description) => {
+    setIsReading(true)
     const creationDate = dayjs().format('DD/MM/YYYY hh:mm a')
-    const done = false
     const id = uuid()
-    const taskObject = new Object()
-    taskObject[id] = {
+    const done = false
+    const taskObject = {
       title,
       description,
       creationDate,
-      done
+      done,
+      id
     }
     await updateDoc(docRef, {
       'listOfTask.pending': arrayUnion(taskObject)
     })
+    readData()
   }
 
-  const deleteTask = async (id, index) => {
-    document.getElementById(`${index}-modal`).style.display = 'none'
-    document
-      .getElementById(`${index}-element`)
-      .classList.add(`animate__backOutRight`)
-    setTimeout(() => {
-      setTask(tasks.filter(tsk => tsk.id !== id))
-      document
-        .getElementById(`${index}-element`)
-        .classList.remove(`animate__backOutRight`)
-    }, 800)
+  const deleteTask = async task => {
+    setIsReading(true)
+    await updateDoc(docRef, { 'listOfTask.pending': arrayRemove(task) })
+    readData()
   }
 
-  function markDone (task) {
-    task.done === false ? (task.done = true) : (task.done = false)
-    setTask(
-      tasks.map(t => {
-        t.id === task.id ?? (t.done = task.done)
-      })
-    )
+  const markDone = async task => {
+    setIsReading(true)
+    try {
+      if (task.done === false) {
+        await updateDoc(docRef, { 'listOfTask.pending': arrayRemove(task) })
+        task.done = !task.done
+        await updateDoc(docRef, { 'listOfTask.performed': arrayUnion(task) })
+      } else {
+        await updateDoc(docRef, { 'listOfTask.performed': arrayRemove(task) })
+        task.done = !task.done
+        await updateDoc(docRef, { 'listOfTask.pending': arrayUnion(task) })
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+    readData()
   }
+
+  const [tasks, setTasks] = useState({
+    pending: [],
+    performed: []
+  })
+
+  useEffect(() => {
+    readData()
+  }, [])
 
   return (
     <TaskContext.Provider
@@ -84,7 +102,10 @@ export function TaskContextProvider (props) {
         tasks,
         createTask,
         deleteTask,
-        markDone
+        markDone,
+        isReading,
+        setIsReading,
+        isReadingError
       }}
     >
       {props.children}

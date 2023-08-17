@@ -21,7 +21,11 @@ function ModalError ({ type = '' }) {
         {type === 'user-not-found' ? <h3>{textOfModal[1]}</h3> : <></>}
         {type === 'email-in-use' ? <h3>{textOfModal[2]}</h3> : <></>}
         <img src={error} style={{ width: '50px' }} />
-        <button onClick={() => setViewModal(resetModalProps)} id='acceptError'>
+        <button
+          onClick={() => setViewModal(resetModalProps)}
+          id='acceptError'
+          autoFocus
+        >
           Aceptar
         </button>
       </div>

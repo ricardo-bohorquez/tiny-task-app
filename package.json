@@ -1,7 +1,7 @@
 {
   "name": "task-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.9.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,6 +11,9 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@emotion/react": "11.11.1",
+    "@emotion/styled": "11.11.0",
+    "@mui/material": "5.14.5",
     "animate.css": "4.1.1",
     "dayjs": "1.11.9",
     "firebase": "10.1.0",

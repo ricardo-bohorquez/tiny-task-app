@@ -18,7 +18,7 @@ function ModalDelete ({ task = {}, idx = '' }) {
             id='confirmDelete'
             onClick={() => {
               setViewModal(resetModalProps)
-              deleteTask(task.id, idx)
+              deleteTask(task)
             }}
           >
             Confirmar
