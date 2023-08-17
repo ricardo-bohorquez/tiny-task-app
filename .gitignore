@@ -15,7 +15,7 @@ dist
 *.local
 .eslintrc.cjs
 
-configFirebase.js
+src/configFirebase.js
 
 # Editor directories and files
 .vscode/*
