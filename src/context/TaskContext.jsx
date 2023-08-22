@@ -1,12 +1,6 @@
 import { createContext, useState, useEffect, useContext } from 'react'
 import { db } from '../../configFirebase.js'
-import {
-  doc,
-  getDoc,
-  updateDoc,
-  arrayUnion,
-  arrayRemove
-} from 'firebase/firestore'
+import { doc, getDoc } from 'firebase/firestore'
 import { useAuth } from '../context/AuthContext'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -22,13 +16,12 @@ export const useTask = () => {
 }
 
 export function TaskContextProvider (props) {
-  const { user } = useAuth()
-  const { email, displayName } = user
-  const userRef = !email ? displayName : email
-  const docRef = doc(db, 'users', userRef)
+  const {
+    user: { uid }
+  } = useAuth()
+  const docRef = doc(db, 'users', uid)
 
   const [isReading, setIsReading] = useState(true)
-  const [isReadingError, setIsReadingError] = useState(false)
 
   const readData = async () => {
     try {
@@ -38,14 +31,15 @@ export function TaskContextProvider (props) {
       setTasks({ pending, performed })
       setIsReading(false)
       return { pending, performed }
-    } catch (error) {
+    } catch ({ message }) {
       setIsReading(false)
-      setIsReadingError(true)
+      console.error(message)
       return {}
     }
   }
 
   const createTask = async (title, description) => {
+    const { updateDoc, arrayUnion } = await import('firebase/firestore')
     setIsReading(true)
     const creationDate = dayjs().format('DD/MM/YYYY hh:mm a')
     const id = uuid()
@@ -65,12 +59,16 @@ export function TaskContextProvider (props) {
 
   const deleteTask = async task => {
     setIsReading(true)
+    const { updateDoc, arrayRemove } = await import('firebase/firestore')
     await updateDoc(docRef, { 'listOfTask.pending': arrayRemove(task) })
     readData()
   }
 
   const markDone = async task => {
     setIsReading(true)
+    const { updateDoc, arrayUnion, arrayRemove } = await import(
+      'firebase/firestore'
+    )
     try {
       if (task.done === false) {
         await updateDoc(docRef, { 'listOfTask.pending': arrayRemove(task) })
@@ -104,8 +102,7 @@ export function TaskContextProvider (props) {
         deleteTask,
         markDone,
         isReading,
-        setIsReading,
-        isReadingError
+        setIsReading
       }}
     >
       {props.children}

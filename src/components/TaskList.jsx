@@ -3,10 +3,10 @@ import { useTask } from '../context/TaskContext'
 import { CircularProgress } from '@mui/material'
 
 function TaskList () {
-  const { tasks, isReading, isReadingError } = useTask()
+  const { tasks, isReading } = useTask()
   const { pending, performed } = tasks
 
-  if (isReading) return <CircularProgress />
+  if (isReading) return <CircularProgress style={{ marginTop: '40px' }} />
   else if (pending.length === 0 && performed.length === 0)
     return <h2>No hay tareas agregadas</h2>
   else

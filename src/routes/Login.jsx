@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { doc } from 'firebase/firestore'
 import { db } from '../../configFirebase'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -53,6 +53,8 @@ export function Login () {
   const accountCreationDate = dayjs().format('DD/MM/YYYY')
 
   const newData = {
+    loginWithGoogle: true,
+    displayName: '',
     accountCreationDate,
     listOfTask: {
       pending: [],
@@ -61,12 +63,14 @@ export function Login () {
   }
 
   const handleGoogleLogin = async () => {
-    const { user } = await googleLogin()
-    const { displayName } = user
-    const docRef = doc(db, 'users', displayName)
+    const { getDoc, setDoc } = await import('firebase/firestore')
+    const {
+      user: { uid, displayName }
+    } = await googleLogin()
+    const docRef = doc(db, 'users', uid)
     const docSnap = await getDoc(docRef)
     if (docSnap.exists()) return
-    else await setDoc(docRef, newData)
+    else await setDoc(docRef, { ...newData, displayName })
   }
 
   return user ? (
