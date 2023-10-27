@@ -7,7 +7,7 @@ function ModalDelete ({ task = {}, idx = '' }) {
   return (
     <section
       className='modal-body'
-      id={idx + `-modal`}
+      id={idx + '-modal'}
       style={{ display: 'flex' }}
     >
       <div className='modal-content'>

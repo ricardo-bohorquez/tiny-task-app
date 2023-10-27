@@ -1,4 +1,3 @@
-
 function ModalLoader () {
   return (
     <section className='modal-body' style={{ display: 'flex' }}>

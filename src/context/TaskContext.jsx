@@ -6,7 +6,6 @@ import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 dayjs.extend(customParseFormat)
 dayjs.locale('es')
-import { v4 as uuid } from 'uuid'
 
 const TaskContext = createContext()
 
@@ -15,13 +14,16 @@ export const useTask = () => {
   return context
 }
 
-export function TaskContextProvider (props) {
-  const {
-    user: { uid }
-  } = useAuth()
+export function TaskContextProvider ({ children }) {
+  const { user: { uid } } = useAuth()
   const docRef = doc(db, 'users', uid)
 
   const [isReading, setIsReading] = useState(true)
+
+  const [tasks, setTasks] = useState({
+    pending: [],
+    performed: []
+  })
 
   const readData = async () => {
     try {
@@ -40,9 +42,10 @@ export function TaskContextProvider (props) {
 
   const createTask = async (title, description) => {
     const { updateDoc, arrayUnion } = await import('firebase/firestore')
+    const { v4 } = await import('uuid')
     setIsReading(true)
     const creationDate = dayjs().format('DD/MM/YYYY hh:mm a')
-    const id = uuid()
+    const id = v4()
     const done = false
     const taskObject = {
       title,
@@ -51,24 +54,18 @@ export function TaskContextProvider (props) {
       done,
       id
     }
-    await updateDoc(docRef, {
-      'listOfTask.pending': arrayUnion(taskObject)
-    })
-    readData()
+    await updateDoc(docRef, { 'listOfTask.pending': arrayUnion(taskObject) })
   }
 
   const deleteTask = async task => {
     setIsReading(true)
     const { updateDoc, arrayRemove } = await import('firebase/firestore')
     await updateDoc(docRef, { 'listOfTask.pending': arrayRemove(task) })
-    readData()
   }
 
   const markDone = async task => {
     setIsReading(true)
-    const { updateDoc, arrayUnion, arrayRemove } = await import(
-      'firebase/firestore'
-    )
+    const { updateDoc, arrayUnion, arrayRemove } = await import('firebase/firestore')
     try {
       if (task.done === false) {
         await updateDoc(docRef, { 'listOfTask.pending': arrayRemove(task) })
@@ -82,17 +79,11 @@ export function TaskContextProvider (props) {
     } catch (error) {
       console.log(error.message)
     }
-    readData()
   }
-
-  const [tasks, setTasks] = useState({
-    pending: [],
-    performed: []
-  })
 
   useEffect(() => {
     readData()
-  }, [])
+  })
 
   return (
     <TaskContext.Provider
@@ -105,7 +96,7 @@ export function TaskContextProvider (props) {
         setIsReading
       }}
     >
-      {props.children}
+      {children}
     </TaskContext.Provider>
   )
 }

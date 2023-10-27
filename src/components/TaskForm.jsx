@@ -10,9 +10,9 @@ function TaskForm () {
   const { viewModal, setViewModal } = useAuth()
 
   function handleSubmit (e) {
-    if (title === `` || description === ``) {
+    if (title === '' || description === '') {
       e.preventDefault()
-      setViewModal({ ...viewModal, state: true, type: `error` })
+      setViewModal({ ...viewModal, state: true, type: 'error' })
     } else {
       e.preventDefault()
       createTask(title, description)
@@ -35,13 +35,11 @@ function TaskForm () {
         onChange={({ target: { value } }) => setDescription(value)}
         value={description}
         maxLength={300}
-      ></textarea>
+      />
       <button>Agregar tarea</button>
-      {viewModal.state === true && viewModal.type === `error` ? (
-        <ModalError type={'empty-form-error'} />
-      ) : (
-        <></>
-      )}
+      {viewModal.state === true && viewModal.type === 'error'
+        ? (<ModalError type='empty-form-error' />)
+        : (<></>)}
     </form>
   )
 }

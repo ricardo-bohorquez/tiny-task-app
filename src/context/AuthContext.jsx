@@ -21,7 +21,7 @@ export function AuthProvider ({ children }) {
   const resetModalProps = {
     state: false,
     id: 0,
-    type: `none`
+    type: 'none'
   }
 
   const [viewModal, setViewModal] = useState(resetModalProps)

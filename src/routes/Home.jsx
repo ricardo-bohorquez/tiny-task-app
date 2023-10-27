@@ -15,7 +15,7 @@ export function Home () {
         almacenamiento de tareas en la nube.
       </p>
       <p>
-        <Link to={'/tiny-task-app/register'}>Registrate! </Link>, y forma parte
+        <Link to='/tiny-task-app/register'>Registrate! </Link>, y forma parte
         de nuestra app para que aproveches las mejoras y funcionalidades que se
         vienen en camino, acompañanos en este recorrido desde el inicio.
       </p>

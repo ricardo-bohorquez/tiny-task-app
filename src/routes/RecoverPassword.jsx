@@ -16,42 +16,35 @@ function RecoverPassword () {
       await recoverPassword(emailToRecoverPass)
       setViewModal({ ...viewModal, state: true, type: 'success-reset' })
     } catch ({ code }) {
-      if (code === 'auth/user-not-found')
-        setViewModal({ ...viewModal, state: true, type: 'user-not-found' })
+      if (code === 'auth/user-not-found') { setViewModal({ ...viewModal, state: true, type: 'user-not-found' }) }
     }
   }
 
-  return user ? (
-    <Navigate to='/tiny-task-app/dashboard' />
-  ) : (
-    <main>
-      <form className='recover-pass-form' onSubmit={handleRecoverPassword}>
-        <input
-          type='email'
-          value={emailToRecoverPass}
-          onChange={({ target: { value } }) => setEmailToRecoverPass(value)}
-          placeholder='Ingrese su correo'
-          required
-        />
-        <button>Reestablecer</button>
-        {viewModal.state && viewModal.type === 'loader' ? (
-          <ModalLoader />
-        ) : (
-          <></>
-        )}
-        {viewModal.state && viewModal.type === 'user-not-found' ? (
-          <ModalError type='user-not-found' />
-        ) : (
-          <></>
-        )}
-        {viewModal.state && viewModal.type === 'success-reset' ? (
-          <ModalSuccessResetPass />
-        ) : (
-          <></>
-        )}
-      </form>
-    </main>
-  )
+  return user
+    ? <Navigate to='/tiny-task-app/dashboard' />
+    : (
+      <main>
+        <form className='recover-pass-form' onSubmit={handleRecoverPassword}>
+          <input
+            type='email'
+            value={emailToRecoverPass}
+            onChange={({ target: { value } }) => setEmailToRecoverPass(value)}
+            placeholder='Ingrese su correo'
+            required
+          />
+          <button>Reestablecer</button>
+          {viewModal.state && viewModal.type === 'loader'
+            ? <ModalLoader />
+            : <></>}
+          {viewModal.state && viewModal.type === 'user-not-found'
+            ? <ModalError type='user-not-found' />
+            : <></>}
+          {viewModal.state && viewModal.type === 'success-reset'
+            ? <ModalSuccessResetPass />
+            : <></>}
+        </form>
+      </main>
+      )
 }
 
 export default RecoverPassword

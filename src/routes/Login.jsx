@@ -5,11 +5,11 @@ import { doc } from 'firebase/firestore'
 import { db } from '../../configFirebase'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-dayjs.extend(customParseFormat)
-dayjs.locale('es')
 import ModalError from '../components/modals/ModalError'
 import ModalLoader from '../components/modals/ModalLoader'
 import google from '../icons/google.svg'
+dayjs.extend(customParseFormat)
+dayjs.locale('es')
 
 export function Login () {
   const {
@@ -73,54 +73,60 @@ export function Login () {
     else await setDoc(docRef, { ...newData, displayName })
   }
 
-  return user ? (
-    <Navigate to='/tiny-task-app/dashboard' />
-  ) : (
-    <main>
-      <section className='title-login-register'>
-        <h2 style={{ height: 'fit-content', margin: 'auto' }}>Inicia sesión</h2>
-      </section>
-      <form onSubmit={handleLogin} className='login-form'>
-        <input
-          type='email'
-          onChange={({ target: { value } }) => setUserEmail(value)}
-          value={userEmail}
-          style={errorEmail}
-          onFocus={() => setErrorEmail({ border: 'none' })}
-          required
-          placeholder='Correo electrónico'
-        />
-        <input
-          type='password'
-          onChange={({ target: { value } }) => setUserPass(value)}
-          value={userPass}
-          style={errorPass}
-          placeholder='Contraseña'
-          required
-          minLength={6}
-          maxLength={30}
-        />
-        {displayLabel ? <label>Contraseña incorrecta</label> : <></>}
-        <label>
-          ¿Olvidaste tu contraseña?{' '}
-          <Link to={'/tiny-task-app/password-recovery'}>Recupérala aquí.</Link>
-        </label>
-        <button>Ingresar</button>
-        {viewModal.state && viewModal.type === 'loader' ? (
-          <ModalLoader />
-        ) : (
-          <></>
-        )}
-        {viewModal.state && viewModal.type === 'user-not-found' ? (
-          <ModalError type={'user-not-found'} />
-        ) : (
-          <></>
-        )}
-      </form>
-      <label> ó puedes </label>
-      <button className='login-google-button' onClick={handleGoogleLogin}>
-        Iniciar sesión con <img src={google} />
-      </button>
-    </main>
-  )
+  return user
+    ? (
+      <Navigate to='/tiny-task-app/dashboard' />
+      )
+    : (
+      <main>
+        <section className='title-login-register'>
+          <h2 style={{ height: 'fit-content', margin: 'auto' }}>Inicia sesión</h2>
+        </section>
+        <form onSubmit={handleLogin} className='login-form'>
+          <input
+            type='email'
+            onChange={({ target: { value } }) => setUserEmail(value)}
+            value={userEmail}
+            style={errorEmail}
+            onFocus={() => setErrorEmail({ border: 'none' })}
+            required
+            placeholder='Correo electrónico'
+          />
+          <input
+            type='password'
+            onChange={({ target: { value } }) => setUserPass(value)}
+            value={userPass}
+            style={errorPass}
+            placeholder='Contraseña'
+            required
+            minLength={6}
+            maxLength={30}
+          />
+          {displayLabel ? <label>Contraseña incorrecta</label> : <></>}
+          <label>
+            ¿Olvidaste tu contraseña?{' '}
+            <Link to='/tiny-task-app/password-recovery'>Recupérala aquí.</Link>
+          </label>
+          <button>Ingresar</button>
+          {viewModal.state && viewModal.type === 'loader'
+            ? (
+              <ModalLoader />
+              )
+            : (
+              <></>
+              )}
+          {viewModal.state && viewModal.type === 'user-not-found'
+            ? (
+              <ModalError type='user-not-found' />
+              )
+            : (
+              <></>
+              )}
+        </form>
+        <label> ó puedes </label>
+        <button className='login-google-button' onClick={handleGoogleLogin}>
+          Iniciar sesión con <img src={google} />
+        </button>
+      </main>
+      )
 }

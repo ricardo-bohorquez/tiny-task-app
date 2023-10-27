@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-dayjs.extend(customParseFormat)
-dayjs.locale('es')
 import { doc } from 'firebase/firestore'
 import { db } from '../../configFirebase'
 import { useAuth } from '../context/AuthContext'
 import ModalError from '../components/modals/ModalError'
 import ModalLoader from '../components/modals/ModalLoader'
+dayjs.extend(customParseFormat)
+dayjs.locale('es')
 
 export function Register () {
   const { signUp, resetModalProps, viewModal, setViewModal, user } = useAuth()
@@ -68,9 +68,7 @@ export function Register () {
     const { setDoc } = await import('firebase/firestore')
     setViewModal({ ...viewModal, state: true, type: 'loader' })
     try {
-      const {
-        user: { uid, email }
-      } = await signUp(mail, pass)
+      const { user: { uid, email } } = await signUp(mail, pass)
       await setDoc(doc(db, 'users', uid), { ...userData, email })
       setViewModal(resetModalProps)
     } catch ({ code }) {
@@ -87,9 +85,7 @@ export function Register () {
   }
 
   useEffect(() => {
-    if (userEmail === '' && confirmEmail === '')
-      setErrorEmail({ border: 'none' })
-    else if (userEmail !== confirmEmail) {
+    if (userEmail === '' && confirmEmail === '') { setErrorEmail({ border: 'none' }) } else if (userEmail !== confirmEmail) {
       setErrorEmail({ border: '1px solid red' })
       setReady({ ...ready, em: false })
     } else {
@@ -127,79 +123,71 @@ export function Register () {
     if (ready.em && ready.psw && ready.cpsw) setUserData(newData)
   }, [ready])
 
-  return user ? (
-    <Navigate to='/tiny-task-app/dashboard' />
-  ) : (
-    <main>
-      <section className='title-login-register'>
-        <h2 style={{ height: 'fit-content', margin: 'auto' }}>Registrate</h2>
-      </section>
-      <form
-        className='register-form'
-        onSubmit={e => handleRegister(e, userEmail, userPass)}
-      >
-        <input
-          type='email'
-          name='email'
-          placeholder='Ingrese su correo de registro '
-          onChange={handleFields}
-          value={userEmail}
-          required
-        />
-        <input
-          type='email'
-          name='confirmEmail'
-          placeholder='Repita el correo ingresado'
-          onChange={handleFields}
-          value={confirmEmail}
-          style={errorEmail}
-          required
-        />
-        <input
-          type='password'
-          name='password'
-          placeholder='Ingrese su clave de acceso'
-          onChange={handleFields}
-          onFocus={() => setDisplayLabel(true)}
-          onBlur={() => setDisplayLabel(false)}
-          value={userPass}
-          style={errorPass}
-          required
-          minLength={6}
-          maxLength={30}
-        />
-        {displayLabel ? (
-          <label>La contraseña debe contar con al menos 6 caracteres</label>
-        ) : (
-          <></>
-        )}
-        <input
-          type='password'
-          name='confirmPassword'
-          placeholder='Repita la clave ingresada'
-          onChange={handleFields}
-          value={confirmPass}
-          style={errorConfirmPass}
-          required
-          minLength={6}
-          maxLength={30}
-        />
-        {ready.em && ready.psw && ready.cpsw ? (
-          <button>Registrarse</button>
-        ) : (
-          <label>Esperando datos correctos...</label>
-        )}
-        {viewModal.state === true && viewModal.type === 'reg-error' ? (
-          <ModalError type={'email-in-use'} />
-        ) : (
-          <></>
-        )}
-        {viewModal.state === true && viewModal.type === 'loader' ? (
-          <ModalLoader />
-        ) : (
-          <></>
-        )}
-      </form>
-    </main>
-  )
+  return user
+    ? <Navigate to='/tiny-task-app/dashboard' />
+    : (
+      <main>
+        <section className='title-login-register'>
+          <h2 style={{ height: 'fit-content', margin: 'auto' }}>Registrate</h2>
+        </section>
+        <form
+          className='register-form'
+          onSubmit={e => handleRegister(e, userEmail, userPass)}
+        >
+          <input
+            type='email'
+            name='email'
+            placeholder='Ingrese su correo de registro '
+            onChange={handleFields}
+            value={userEmail}
+            required
+          />
+          <input
+            type='email'
+            name='confirmEmail'
+            placeholder='Repita el correo ingresado'
+            onChange={handleFields}
+            value={confirmEmail}
+            style={errorEmail}
+            required
+          />
+          <input
+            type='password'
+            name='password'
+            placeholder='Ingrese su clave de acceso'
+            onChange={handleFields}
+            onFocus={() => setDisplayLabel(true)}
+            onBlur={() => setDisplayLabel(false)}
+            value={userPass}
+            style={errorPass}
+            required
+            minLength={6}
+            maxLength={30}
+          />
+          {displayLabel
+            ? <label>La contraseña debe contar con al menos 6 caracteres</label>
+            : <></>}
+          <input
+            type='password'
+            name='confirmPassword'
+            placeholder='Repita la clave ingresada'
+            onChange={handleFields}
+            value={confirmPass}
+            style={errorConfirmPass}
+            required
+            minLength={6}
+            maxLength={30}
+          />
+          {ready.em && ready.psw && ready.cpsw
+            ? <button>Registrarse</button>
+            : <label>Esperando datos correctos...</label>}
+          {viewModal.state === true && viewModal.type === 'reg-error'
+            ? <ModalError type='email-in-use' />
+            : <></>}
+          {viewModal.state === true && viewModal.type === 'loader'
+            ? <ModalLoader />
+            : <></>}
+        </form>
+      </main>
+      )
 }
