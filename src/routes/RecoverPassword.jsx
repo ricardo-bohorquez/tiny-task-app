@@ -21,7 +21,7 @@ function RecoverPassword () {
   }
 
   return user
-    ? <Navigate to='/tiny-task-app/dashboard' />
+    ? <Navigate to='/dashboard' />
     : (
       <main>
         <form className='recover-pass-form' onSubmit={handleRecoverPassword}>

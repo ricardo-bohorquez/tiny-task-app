@@ -7,14 +7,10 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-deploy.sh
-
 node_modules
 public
 dist
 *.local
-.eslintrc.cjs
-
 configFirebase.js
 
 # Editor directories and files

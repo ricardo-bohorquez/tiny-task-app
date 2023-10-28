@@ -38,29 +38,19 @@ function TaskCard ({ task = {}, index = '' }) {
               Eliminar tarea
             </button>
             )
-          : (
-            <></>
-            )}
+          : <></>}
       </div>
       <span>Se creó el {task.creationDate}</span>
       {viewModal.state &&
       viewModal.id === task.id &&
       viewModal.type === 'delete'
-        ? (
-          <ModalDelete task={task} idx={index} />
-          )
-        : (
-          <></>
-          )}
+        ? <ModalDelete task={task} idx={index} />
+        : <></>}
       {viewModal.state &&
       viewModal.id === task.id &&
       viewModal.type === 'description'
-        ? (
-          <ModalTaskDescription task={task} idx={index} />
-          )
-        : (
-          <></>
-          )}
+        ? <ModalTaskDescription task={task} idx={index} />
+        : <></>}
     </li>
   )
 }

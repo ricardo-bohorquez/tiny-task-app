@@ -10,7 +10,7 @@ function ModalSuccessResetPass () {
         <h3>Correo enviado exitosamente, revisa tu bandeja de entrada</h3>
         <button
           onClick={() => {
-            navigate('/tiny-task-app/dashboard')
+            navigate('/dashboard')
             setViewModal(resetModalProps)
           }}
         >

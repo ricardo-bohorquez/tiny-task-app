@@ -124,7 +124,7 @@ export function Register () {
   }, [ready])
 
   return user
-    ? <Navigate to='/tiny-task-app/dashboard' />
+    ? <Navigate to='/dashboard' />
     : (
       <main>
         <section className='title-login-register'>

@@ -17,7 +17,7 @@ function TaskList () {
           <h3>Tareas pendientes:</h3>
           <ul className='list'>
             {pending.length === 0
-              ? (<h4>No hay tareas pendientes</h4>)
+              ? <h4>No hay tareas pendientes</h4>
               : (pending.map((t, i) => {
                   return <TaskCard key={i} task={t} index={i} />
                 }))}
@@ -27,7 +27,7 @@ function TaskList () {
           <h3>Tareas realizadas:</h3>
           <ul className='list'>
             {performed.length === 0
-              ? (<h4>No hay tareas realizadas</h4>)
+              ? <h4>No hay tareas realizadas</h4>
               : (performed.map((t, i) => {
                   return <TaskCard key={i} task={t} index={i} />
                 }))}

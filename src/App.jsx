@@ -12,11 +12,11 @@ function App () {
     <>
       <Header />
       <Routes>
-        <Route path='/tiny-task-app/' element={<Home />} />
-        <Route path='/tiny-task-app/login' element={<Login />} />
-        <Route path='/tiny-task-app/register' element={<Register />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
         <Route
-          path='/tiny-task-app/dashboard'
+          path='/dashboard'
           element={
             <ProtectedRoute>
               <Dashboard />
@@ -24,7 +24,7 @@ function App () {
           }
         />
         <Route
-          path='/tiny-task-app/password-recovery'
+          path='/password-recovery'
           element={<RecoverPassword />}
         />
       </Routes>

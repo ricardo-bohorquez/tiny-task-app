@@ -75,7 +75,7 @@ export function Login () {
 
   return user
     ? (
-      <Navigate to='/tiny-task-app/dashboard' />
+      <Navigate to='/dashboard' />
       )
     : (
       <main>
@@ -105,23 +105,15 @@ export function Login () {
           {displayLabel ? <label>Contraseña incorrecta</label> : <></>}
           <label>
             ¿Olvidaste tu contraseña?{' '}
-            <Link to='/tiny-task-app/password-recovery'>Recupérala aquí.</Link>
+            <Link to='/password-recovery'>Recupérala aquí.</Link>
           </label>
           <button>Ingresar</button>
           {viewModal.state && viewModal.type === 'loader'
-            ? (
-              <ModalLoader />
-              )
-            : (
-              <></>
-              )}
+            ? <ModalLoader />
+            : <></>}
           {viewModal.state && viewModal.type === 'user-not-found'
-            ? (
-              <ModalError type='user-not-found' />
-              )
-            : (
-              <></>
-              )}
+            ? <ModalError type='user-not-found' />
+            : <></>}
         </form>
         <label> ó puedes </label>
         <button className='login-google-button' onClick={handleGoogleLogin}>

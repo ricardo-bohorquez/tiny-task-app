@@ -10,7 +10,7 @@ export function Header () {
   const [displayRegister, setDisplayRegister] = useState(false)
 
   useEffect(() => {
-    if (location.pathname === '/tiny-task-app/login') {
+    if (location.pathname === '/login') {
       setDisplayLogin(false)
       setDisplayRegister(true)
     } else {
@@ -21,8 +21,8 @@ export function Header () {
 
   useEffect(() => {
     if (
-      location.pathname === '/tiny-task-app/register' ||
-      location.pathname === '/tiny-task-app/'
+      location.pathname === '/register' ||
+      location.pathname === '/'
     ) {
       setDisplayRegister(false)
       setDisplayLogin(true)
@@ -39,18 +39,18 @@ export function Header () {
       <header className='app-header'>
         <section>
           <img src={icon} />
-          <Link to='/tiny-task-app/'>
+          <Link to='/'>
             <h1>Tiny Task</h1>
           </Link>
           <div>
             {!displayLogin && displayRegister
               ? (
-                <Link to='/tiny-task-app/register' style={{ color: 'white' }}>
+                <Link to='/register' style={{ color: 'white' }}>
                   Registrate
                 </Link>
                 )
               : (
-                <Link to='/tiny-task-app/login' style={{ color: 'white' }}>
+                <Link to='/login' style={{ color: 'white' }}>
                   Iniciar sesión
                 </Link>
                 )}
@@ -61,15 +61,15 @@ export function Header () {
     : (
       <header className='app-header'>
         <section>
-          <Link to='/tiny-task-app/dashboard'>
+          <Link to='/dashboard'>
             <img src={icon} />
           </Link>
           <h1>
-            <Link to='/tiny-task-app/'>Tiny Task</Link>
+            <Link to='/'>Tiny Task</Link>
           </h1>
           <div>
             <Link
-              to='/tiny-task-app/login'
+              to='/login'
               style={{ color: '#925252' }}
               onClick={handleLogout}
             >
