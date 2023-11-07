@@ -44,16 +44,8 @@ export function Header () {
           </Link>
           <div>
             {!displayLogin && displayRegister
-              ? (
-                <Link to='/register' style={{ color: 'white' }}>
-                  Registrate
-                </Link>
-                )
-              : (
-                <Link to='/login' style={{ color: 'white' }}>
-                  Iniciar sesión
-                </Link>
-                )}
+              ? <Link to='/register' className='text-white'>Registrate</Link>
+              : <Link to='/login' className='text-white'>Iniciar sesión</Link>}
           </div>
         </section>
       </header>

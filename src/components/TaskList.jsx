@@ -10,7 +10,8 @@ function TaskList () {
   // useEffect(() => {})
 
   if (isReading) return <CircularProgress style={{ marginTop: '40px' }} />
-  else if (pending.length === 0 && performed.length === 0) { return <h2>No hay tareas agregadas</h2> } else {
+  else if (pending.length === 0 && performed.length === 0) return <h2>No hay tareas agregadas</h2>
+  else {
     return (
       <section className='task-list'>
         <div className='pending-task'>

@@ -2,19 +2,25 @@ import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useTask } from '../context/TaskContext'
 import ModalError from './modals/ModalError'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 function TaskForm () {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const { createTask } = useTask()
   const { viewModal, setViewModal } = useAuth()
+  const { register, handleSubmit } = useForm()
 
-  function handleSubmit (e) {
+  const schema = z.object({
+    title: z.string().minLength(4).maxLength(30),
+    description: z.string().minLength(10).maxLength(300)
+  })
+
+  function submit (e) {
     if (title === '' || description === '') {
-      e.preventDefault()
       setViewModal({ ...viewModal, state: true, type: 'error' })
     } else {
-      e.preventDefault()
       createTask(title, description)
       setTitle('')
       setDescription('')
@@ -22,19 +28,21 @@ function TaskForm () {
   }
 
   return (
-    <form onSubmit={handleSubmit} className='task-form'>
+    <form
+      onSubmit={handleSubmit((data) => {
+        console.log(data)
+      })} className='task-form'
+    >
       <input
         placeholder='Escribe el título de la nueva tarea'
         onChange={({ target: { value } }) => setTitle(value)}
-        value={title}
         autoFocus
-        maxLength={30}
+        {...register('title', { required: true, minLength: 4, maxLength: 30, value: title })}
       />
       <textarea
         placeholder='Escribe una descripción para la nueva tarea'
         onChange={({ target: { value } }) => setDescription(value)}
-        value={description}
-        maxLength={300}
+        {...register('description', { required: true, minLength: 10, maxLength: 300, value: description })}
       />
       <button>Agregar tarea</button>
       {viewModal.state === true && viewModal.type === 'error'

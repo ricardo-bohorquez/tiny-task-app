@@ -69,7 +69,7 @@ export function Login () {
     } = await googleLogin()
     const docRef = doc(db, 'users', uid)
     const docSnap = await getDoc(docRef)
-    if (docSnap.exists()) return
+    if (docSnap.exists()) return {}
     else await setDoc(docRef, { ...newData, displayName })
   }
 

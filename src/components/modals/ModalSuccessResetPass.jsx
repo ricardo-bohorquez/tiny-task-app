@@ -10,7 +10,7 @@ function ModalSuccessResetPass () {
         <h3>Correo enviado exitosamente, revisa tu bandeja de entrada</h3>
         <button
           onClick={() => {
-            navigate('/dashboard')
+            navigate('/login')
             setViewModal(resetModalProps)
           }}
         >

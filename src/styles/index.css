@@ -127,6 +127,10 @@ body {
   text-decoration: none;
 }
 
+.text-white { 
+  color: var(--wt) !important; 
+}
+
 .task-section {
   display: flex;
   flex-direction: column;

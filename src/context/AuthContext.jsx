@@ -1,13 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-  GoogleAuthProvider,
-  signInWithPopup,
-  sendPasswordResetEmail
-} from 'firebase/auth'
+import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../../configFirebase'
 
 const AuthContext = createContext()
@@ -28,20 +20,31 @@ export function AuthProvider ({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  const signUp = (email, password) =>
-    createUserWithEmailAndPassword(auth, email, password)
-
-  const signIn = (email, password) =>
-    signInWithEmailAndPassword(auth, email, password)
-
-  const logOut = () => signOut(auth)
-
-  const googleLogin = () => {
-    const googleProvider = new GoogleAuthProvider()
-    return signInWithPopup(auth, googleProvider)
+  const signUp = async (email, password) => {
+    const { createUserWithEmailAndPassword } = await import('firebase/auth')
+    await createUserWithEmailAndPassword(auth, email, password)
   }
 
-  const recoverPassword = email => sendPasswordResetEmail(auth, email)
+  const signIn = async (email, password) => {
+    const { signInWithEmailAndPassword } = await import('firebase/auth')
+    await signInWithEmailAndPassword(auth, email, password)
+  }
+
+  const logOut = async () => {
+    const { signOut } = await import('firebase/auth')
+    await signOut(auth)
+  }
+
+  const googleLogin = async () => {
+    const { GoogleAuthProvider, signInWithPopup } = await import('firebase/auth')
+    const googleProvider = new GoogleAuthProvider()
+    return await signInWithPopup(auth, googleProvider)
+  }
+
+  const recoverPassword = async email => {
+    const { sendPasswordResetEmail } = await import('firebase/auth')
+    await sendPasswordResetEmail(auth, email)
+  }
 
   useEffect(() => {
     onAuthStateChanged(auth, currentUser => {

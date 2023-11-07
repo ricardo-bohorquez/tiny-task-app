@@ -2,10 +2,6 @@ import { createContext, useState, useEffect, useContext } from 'react'
 import { db } from '../../configFirebase.js'
 import { doc, getDoc } from 'firebase/firestore'
 import { useAuth } from '../context/AuthContext'
-import dayjs from 'dayjs'
-import customParseFormat from 'dayjs/plugin/customParseFormat'
-dayjs.extend(customParseFormat)
-dayjs.locale('es')
 
 const TaskContext = createContext()
 
@@ -43,8 +39,11 @@ export function TaskContextProvider ({ children }) {
   const createTask = async (title, description) => {
     const { updateDoc, arrayUnion } = await import('firebase/firestore')
     const { v4 } = await import('uuid')
-    setIsReading(true)
-    const creationDate = dayjs().format('DD/MM/YYYY hh:mm a')
+    const dayjs = await import('dayjs')
+    const customParseFormat = await import('dayjs/plugin/customParseFormat.js')
+    dayjs.extend(customParseFormat)
+    dayjs.locale('es')
+    const creationDate = dayjs.default().format('DD/MM/YYYY hh:mm a')
     const id = v4()
     const done = false
     const taskObject = {
@@ -55,16 +54,16 @@ export function TaskContextProvider ({ children }) {
       id
     }
     await updateDoc(docRef, { 'listOfTask.pending': arrayUnion(taskObject) })
+    setIsReading(true)
   }
 
   const deleteTask = async task => {
-    setIsReading(true)
     const { updateDoc, arrayRemove } = await import('firebase/firestore')
     await updateDoc(docRef, { 'listOfTask.pending': arrayRemove(task) })
+    setIsReading(true)
   }
 
   const markDone = async task => {
-    setIsReading(true)
     const { updateDoc, arrayUnion, arrayRemove } = await import('firebase/firestore')
     try {
       if (task.done === false) {
@@ -79,6 +78,7 @@ export function TaskContextProvider ({ children }) {
     } catch (error) {
       console.log(error.message)
     }
+    setIsReading(true)
   }
 
   useEffect(() => {
