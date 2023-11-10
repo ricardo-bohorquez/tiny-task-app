@@ -3,15 +3,11 @@ import { Navigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { doc } from 'firebase/firestore'
 import { db } from '../../configFirebase'
-import dayjs from 'dayjs'
-import customParseFormat from 'dayjs/plugin/customParseFormat'
 import ModalError from '../components/modals/ModalError'
 import ModalLoader from '../components/modals/ModalLoader'
 import google from '../icons/google.svg'
-dayjs.extend(customParseFormat)
-dayjs.locale('es')
 
-export function Login () {
+function Login () {
   const {
     signIn,
     viewModal,
@@ -50,12 +46,10 @@ export function Login () {
     }
   }
 
-  const accountCreationDate = dayjs().format('DD/MM/YYYY')
-
   const newData = {
     loginWithGoogle: true,
     displayName: '',
-    accountCreationDate,
+    accountCreationDate: '',
     listOfTask: {
       pending: [],
       performed: []
@@ -63,14 +57,19 @@ export function Login () {
   }
 
   const handleGoogleLogin = async () => {
-    const { getDoc, setDoc } = await import('firebase/firestore')
     const {
       user: { uid, displayName }
     } = await googleLogin()
+    const { getDoc, setDoc } = await import('firebase/firestore')
+    const dayjs = await import('dayjs')
+    const customParseFormat = await import('dayjs/plugin/customParseFormat.js')
+    dayjs.extend(customParseFormat)
+    dayjs.locale('es')
+    const accountCreationDate = dayjs.default().format('DD/MM/YYYY')
     const docRef = doc(db, 'users', uid)
     const docSnap = await getDoc(docRef)
     if (docSnap.exists()) return {}
-    else await setDoc(docRef, { ...newData, displayName })
+    else await setDoc(docRef, { ...newData, displayName, accountCreationDate })
   }
 
   return user
@@ -122,3 +121,5 @@ export function Login () {
       </main>
       )
 }
+
+export default Login

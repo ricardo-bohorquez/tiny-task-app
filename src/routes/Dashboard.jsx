@@ -1,7 +1,7 @@
 import TaskSection from '../components/TaskSection'
 import { TaskContextProvider } from '../context/TaskContext'
 
-export function Dashboard () {
+function Dashboard () {
   return (
     <TaskContextProvider>
       <main className='dashboard'>
@@ -10,3 +10,5 @@ export function Dashboard () {
     </TaskContextProvider>
   )
 }
+
+export default Dashboard

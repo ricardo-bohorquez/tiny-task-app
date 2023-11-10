@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-export function Home () {
+function Home () {
   return (
     <main className='app-home'>
       <p>
@@ -23,3 +23,5 @@ export function Home () {
     </main>
   )
 }
+
+export default Home

@@ -17,17 +17,17 @@ export function AuthProvider ({ children }) {
   }
 
   const [viewModal, setViewModal] = useState(resetModalProps)
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState({})
   const [loading, setLoading] = useState(true)
 
   const signUp = async (email, password) => {
     const { createUserWithEmailAndPassword } = await import('firebase/auth')
-    await createUserWithEmailAndPassword(auth, email, password)
+    return await createUserWithEmailAndPassword(auth, email, password)
   }
 
   const signIn = async (email, password) => {
     const { signInWithEmailAndPassword } = await import('firebase/auth')
-    await signInWithEmailAndPassword(auth, email, password)
+    return await signInWithEmailAndPassword(auth, email, password)
   }
 
   const logOut = async () => {

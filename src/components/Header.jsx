@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
-export function Header () {
+function Header () {
   const { user, logOut } = useAuth()
   const location = useLocation()
   const [displayLogin, setDisplayLogin] = useState(false)
@@ -73,3 +73,5 @@ export function Header () {
       </header>
       )
 }
+
+export default Header
