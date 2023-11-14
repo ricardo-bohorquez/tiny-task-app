@@ -81,10 +81,6 @@ export function TaskContextProvider ({ children }) {
     setIsReading(true)
   }
 
-  useEffect(async () => {
-    await readData()
-  }, [tasks])
-
   return (
     <TaskContext.Provider
       value={{
