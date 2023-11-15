@@ -1,4 +1,4 @@
-const userRegistrySchema = {
+const userRegistrySchema = Object.freeze({
   mail: {
     required: {
       value: true,
@@ -29,8 +29,8 @@ const userRegistrySchema = {
       message: 'La contraseña debe tener un máximo de 16 caracteres'
     },
     pattern: {
-      value: /^[a-zA-Z0-9._/*-]/,
-      message: 'Contraseña solo puede tener caracteres alfanuméricos y ._/*-'
+      value: /^[a-zA-Z0-9._/*-]{6,16}$/,
+      message: 'Contraseña solo puede tener caracteres alfanuméricos y . _ / * -'
     }
   },
   confirmPassword: {
@@ -39,5 +39,5 @@ const userRegistrySchema = {
       message: 'Confirmación de contraseña requerida'
     }
   }
-}
+})
 export default userRegistrySchema

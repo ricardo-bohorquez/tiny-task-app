@@ -5,10 +5,7 @@ import { db } from '../../configFirebase'
 import { useAuth } from '../context/AuthContext'
 import { useForm } from 'react-hook-form'
 import userRegistrySchema from '../schemas/userRegistry.schema'
-import dayjs from 'dayjs'
-import customParseFormat from 'dayjs/plugin/customParseFormat'
-dayjs.extend(customParseFormat)
-dayjs.locale('es')
+import ModalLoader from '../components/modals/ModalLoader'
 
 function Register () {
   const { signUp, resetModalProps, viewModal, setViewModal, user } = useAuth()
@@ -16,19 +13,22 @@ function Register () {
   const { mail, confirmMail, password, confirmPassword } = userRegistrySchema
   const [inUse, setInUse] = useState(false)
 
-  const userData = {
-    loginWithGoogle: false,
-    email: '',
-    accountCreationDate: dayjs().format('DD/MM/YYYY'),
-    listOfTask: {
-      pending: [],
-      performed: []
-    }
-  }
-
   const handleRegister = async (mail, pass) => {
     setViewModal({ ...viewModal, state: true, type: 'loader' })
     const { setDoc } = await import('firebase/firestore')
+    const dayjs = await import('dayjs')
+    const customParseFormat = await import('dayjs/plugin/customParseFormat')
+    dayjs.extend(customParseFormat)
+    dayjs.locale('es')
+    const userData = {
+      loginWithGoogle: false,
+      email: '',
+      accountCreationDate: dayjs.default().format('DD/MM/YYYY'),
+      listOfTask: {
+        pending: [],
+        performed: []
+      }
+    }
     try {
       const { user: { uid, email } } = await signUp(mail, pass)
       await setDoc(doc(db, 'users', uid), { ...userData, email })
@@ -57,7 +57,7 @@ function Register () {
             type='email'
             placeholder='Ingrese su correo de registro '
             {...register('mail', mail)}
-            onBlur={() => setInUse(false)}
+            style={inUse ? { border: '1px solid red' } : {}}
           />
           {errors.mail &&
             <span className='text-white span-error-taskform'>{errors.mail.message}</span>}
@@ -94,6 +94,9 @@ function Register () {
             <span className='text-white span-error-taskform'>{errors.confirmPassword.message}</span>}
           <button>Registrarse</button>
         </form>
+        {viewModal.state && viewModal.type === 'loader'
+          ? <ModalLoader />
+          : <></>}
       </main>
       )
 }
