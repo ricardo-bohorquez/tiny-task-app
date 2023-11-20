@@ -2,6 +2,10 @@ import { createContext, useState, useEffect, useContext } from 'react'
 import { db } from '../../configFirebase.js'
 import { doc } from 'firebase/firestore'
 import { useAuth } from '../context/AuthContext'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+dayjs.extend(customParseFormat)
+dayjs.locale('es')
 
 const TaskContext = createContext()
 
@@ -23,30 +27,18 @@ export function TaskContextProvider ({ children }) {
 
   const readData = async () => {
     const { getDoc } = await import('firebase/firestore')
-    try {
-      const docSnap = await getDoc(docRef)
-      const docData = docSnap.data()
-      const { pending, performed } = docData.listOfTask
-      setTasks({ pending, performed })
-      setIsReading(false)
-    } catch ({ message }) {
-      setIsReading(false)
-      console.error(message)
-    }
+    const docSnap = await getDoc(docRef)
+    const docData = docSnap.data()
+    const { pending, performed } = docData.listOfTask
+    setTasks({ pending, performed })
+    setIsReading(false)
   }
 
   const createTask = async (title, description) => {
     setIsReading(true)
-    const { updateDoc, arrayUnion, getDoc } = await import('firebase/firestore')
+    const { updateDoc, arrayUnion } = await import('firebase/firestore')
     const { v4 } = await import('uuid')
-    const dayjs = await import('dayjs')
-    const customParseFormat = await import('dayjs/plugin/customParseFormat.js')
-    dayjs.extend(customParseFormat)
-    dayjs.locale('es')
-    const docSnap = await getDoc(docRef)
-    const docData = docSnap.data()
-    const { pending, performed } = docData.listOfTask
-    const creationDate = dayjs.default().format('DD/MM/YYYY hh:mm a')
+    const creationDate = dayjs().format('DD/MM/YYYY hh:mm a')
     const id = v4()
     const done = false
     const taskObject = {
@@ -57,39 +49,45 @@ export function TaskContextProvider ({ children }) {
       id
     }
     await updateDoc(docRef, { 'listOfTask.pending': arrayUnion(taskObject) })
-    setTasks({ pending, performed })
-    setIsReading(false)
+    await readData()
   }
 
   const deleteTask = async task => {
     setIsReading(true)
     const { updateDoc, arrayRemove } = await import('firebase/firestore')
     await updateDoc(docRef, { 'listOfTask.pending': arrayRemove(task) })
+    await readData()
   }
 
   const markDone = async task => {
     setIsReading(true)
     const { updateDoc, arrayUnion, arrayRemove } = await import('firebase/firestore')
-    try {
-      if (task.done === false) {
-        await updateDoc(docRef, { 'listOfTask.pending': arrayRemove(task) })
-        task.done = !task.done
-        await updateDoc(docRef, { 'listOfTask.performed': arrayUnion(task) })
-      } else {
-        await updateDoc(docRef, { 'listOfTask.performed': arrayRemove(task) })
-        task.done = !task.done
-        await updateDoc(docRef, { 'listOfTask.pending': arrayUnion(task) })
-      }
-    } catch (error) {
-      console.log(error.message)
+    const t = task
+    if (task.done === false) {
+      t.done = !t.done
+      await updateDoc(docRef, {
+        listOfTask: {
+          pending: arrayRemove(task),
+          performed: arrayUnion(t)
+        }
+      })
+    } else {
+      t.done = !t.done
+      await updateDoc(docRef, {
+        listOfTask: {
+          pending: arrayUnion(t),
+          performed: arrayRemove(task)
+        }
+      })
     }
+    await readData()
   }
 
   useEffect(() => {
-    async function read () {
+    async function firstRead () {
       await readData()
     }
-    read()
+    firstRead()
   }, [])
 
   return (

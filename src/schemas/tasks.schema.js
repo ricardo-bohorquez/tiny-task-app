@@ -5,7 +5,7 @@ const taskSchema = Object.freeze({
       message: 'No se permite crear tareas sin títulos'
     },
     pattern: {
-      value: /^[a-zA-Z0-9.,()*+-_= ]{4,24}$/,
+      value: /^[a-zá-źA-ZÁ-Ź0-9.,()*+-_= ]{4,24}$/,
       message: 'Solo se permiten caracteres alfanuméricos y . , () * + - _ = /'
     },
     minLength: {
@@ -19,7 +19,7 @@ const taskSchema = Object.freeze({
   },
   description: {
     pattern: {
-      value: /^[a-zA-Z0-9.,()*+-_= ]{10,250}$/,
+      value: /^[a-zá-źA-ZÁ-Ź0-9.,()*+-_= ]{10,250}$/,
       message: 'Solo se permiten caracteres alfanuméricos y . , () * + - _ = /'
     },
     minLength: {
