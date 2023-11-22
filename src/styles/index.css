@@ -260,16 +260,16 @@ body {
   cursor: pointer;
 }
 
-.span-error-taskform {
-  font-family: var(--lt-it);
-  font-size: var(--p-fsz);
-}
-
 .register-form>label,
 .login-form>label {
   font-family: var(--lt);
   font-size: var(--bt-fsz);
   color: var(--grl);
+}
+
+.span-error-taskform {
+  font-family: var(--lt-it) !important;
+  font-size: var(--p-fsz) !important;
 }
 
 .login-form>label>a:link,

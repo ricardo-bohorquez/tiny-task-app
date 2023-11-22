@@ -5,7 +5,7 @@ const userRegistrySchema = Object.freeze({
       message: 'Correo electrónico requerido'
     },
     pattern: {
-      value: /^[a-z0-9._%+-]+@[a-z0-9._]+\.[a-z]{2,4}$/,
+      value: /^[a-z0-9._-]+@[a-z0-9._]+\.[a-z]{2,4}$/g,
       message: 'Correo inválido'
     }
   },
@@ -29,7 +29,7 @@ const userRegistrySchema = Object.freeze({
       message: 'La contraseña debe tener un máximo de 16 caracteres'
     },
     pattern: {
-      value: /^[a-zA-Z0-9._/*-]{6,16}$/,
+      value: /^[a-zA-Z0-9._/*-]{6,16}$/g,
       message: 'Contraseña solo puede tener caracteres alfanuméricos y . _ / * -'
     }
   },

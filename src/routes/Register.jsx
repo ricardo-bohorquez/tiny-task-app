@@ -6,12 +6,14 @@ import { useAuth } from '../context/AuthContext'
 import { useForm } from 'react-hook-form'
 import userRegistrySchema from '../schemas/userRegistry.schema'
 import ModalLoader from '../components/modals/ModalLoader'
+import ModalError from '../components/modals/ModalError'
 
 function Register () {
   const { signUp, resetModalProps, viewModal, setViewModal, user } = useAuth()
   const { register, handleSubmit, watch, formState: { errors } } = useForm()
   const { mail, confirmMail, password, confirmPassword } = userRegistrySchema
-  const [inUse, setInUse] = useState(false)
+  const [errorEmail, setErrorEmail] = useState({})
+  const [errorPass, setErrorPass] = useState({})
 
   const handleRegister = async (mail, pass) => {
     setViewModal({ ...viewModal, state: true, type: 'loader' })
@@ -33,10 +35,13 @@ function Register () {
       const { user: { uid, email } } = await signUp(mail, pass)
       await setDoc(doc(db, 'users', uid), { ...userData, email })
       setViewModal(resetModalProps)
+      setErrorEmail({ border: 'none' })
+      setErrorPass({ border: 'none' })
     } catch ({ code }) {
       setViewModal(resetModalProps)
       code === 'auth/email-already-in-use' &&
-        setInUse(true)
+      setErrorEmail({ border: '1px solid red' })
+      setViewModal({ ...viewModal, state: true, type: 'email-in-use' })
     }
   }
 
@@ -56,20 +61,27 @@ function Register () {
           <input
             type='email'
             placeholder='Ingrese su correo de registro '
+            autoComplete='off'
             {...register('mail', mail)}
-            style={inUse ? { border: '1px solid red' } : {}}
           />
           {errors.mail &&
             <span className='text-white span-error-taskform'>{errors.mail.message}</span>}
-          {inUse &&
-            <span className='text-white span-error-taskform'>El correo ya se encuentra en uso</span>}
           <input
             type='email'
             placeholder='Repita el correo ingresado'
+            autoComplete='off'
+            style={errorEmail}
+            onFocus={() => setErrorEmail({ border: 'none' })}
             {...register('confirmMail',
               {
                 ...confirmMail,
-                validate: (value) => value === watch('mail') || 'Los correos deben coincidir'
+                validate: function (value) {
+                  if (value === watch('mail')) return {}
+                  else {
+                    setErrorEmail({ border: '1px solid red' })
+                    return 'Los correos deben coincidir'
+                  }
+                }
               })}
           />
           {errors.confirmMail &&
@@ -84,10 +96,18 @@ function Register () {
           <input
             type='password'
             placeholder='Repita la clave ingresada'
+            style={errorPass}
+            onFocus={() => setErrorEmail({ border: 'none' })}
             {...register('confirmPassword',
               {
                 ...confirmPassword,
-                validate: (value) => value === watch('password') || 'Las contraseñas deben coincidir'
+                validate: function (value) {
+                  if (value === watch('password')) return {}
+                  else {
+                    setErrorPass({ border: '1px solid red' })
+                    return 'Las contraseñas deben coincidir'
+                  }
+                }
               })}
           />
           {errors.confirmPassword &&
@@ -96,6 +116,9 @@ function Register () {
         </form>
         {viewModal.state && viewModal.type === 'loader'
           ? <ModalLoader />
+          : <></>}
+        {viewModal.state && viewModal.type === 'email-in-use'
+          ? <ModalError type={viewModal.type} />
           : <></>}
       </main>
       )

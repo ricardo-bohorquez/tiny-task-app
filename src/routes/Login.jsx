@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
 import { doc } from 'firebase/firestore'
 import { db } from '../../configFirebase'
+import { useAuth } from '../context/AuthContext'
+import { useForm } from 'react-hook-form'
+import userLoginSchema from '../schemas/userLogin.schema'
 import ModalError from '../components/modals/ModalError'
 import ModalLoader from '../components/modals/ModalLoader'
 import google from '../icons/google.svg'
@@ -17,17 +19,16 @@ function Login () {
     googleLogin
   } = useAuth()
 
-  const [userEmail, setUserEmail] = useState('')
-  const [userPass, setUserPass] = useState('')
+  const { register, handleSubmit, formState: { errors } } = useForm()
+  const { mail, password } = userLoginSchema
   const [errorEmail, setErrorEmail] = useState({})
   const [errorPass, setErrorPass] = useState({})
   const [displayLabel, setDisplayLabel] = useState(false)
 
-  const handleLogin = async e => {
-    e.preventDefault()
+  const handleLogin = async (email, pass) => {
     setViewModal({ ...viewModal, state: true, type: 'loader' })
     try {
-      await signIn(userEmail, userPass)
+      await signIn(email, pass)
       setViewModal(resetModalProps)
     } catch ({ code }) {
       if (code === 'auth/user-not-found') {
@@ -46,16 +47,6 @@ function Login () {
     }
   }
 
-  const newData = {
-    loginWithGoogle: true,
-    displayName: '',
-    accountCreationDate: '',
-    listOfTask: {
-      pending: [],
-      performed: []
-    }
-  }
-
   const handleGoogleLogin = async () => {
     const {
       user: { uid, displayName }
@@ -66,10 +57,19 @@ function Login () {
     dayjs.extend(customParseFormat)
     dayjs.locale('es')
     const accountCreationDate = dayjs.default().format('DD/MM/YYYY')
+    const newData = {
+      loginWithGoogle: true,
+      displayName: '',
+      accountCreationDate,
+      listOfTask: {
+        pending: [],
+        performed: []
+      }
+    }
     const docRef = doc(db, 'users', uid)
     const docSnap = await getDoc(docRef)
     if (docSnap.exists()) return {}
-    else await setDoc(docRef, { ...newData, displayName, accountCreationDate })
+    else await setDoc(docRef, { ...newData, displayName })
   }
 
   return user
@@ -81,29 +81,30 @@ function Login () {
         <section className='title-login-register'>
           <h2 style={{ height: 'fit-content', margin: 'auto' }}>Inicia sesión</h2>
         </section>
-        <form onSubmit={handleLogin} className='login-form'>
+        <form
+          onSubmit={handleSubmit(({ mail, password }) => {
+            handleLogin(mail, password)
+          })} className='login-form'
+        >
           <input
             type='email'
-            onChange={({ target: { value } }) => setUserEmail(value)}
-            value={userEmail}
             style={errorEmail}
             onFocus={() => setErrorEmail({ border: 'none' })}
-            required
             placeholder='Correo electrónico'
+            {...register('mail', mail)}
           />
+          {errors.mail &&
+            <span className='text-white span-error-taskform'>{errors.mail.message}</span>}
           <input
             type='password'
-            onChange={({ target: { value } }) => setUserPass(value)}
-            value={userPass}
             style={errorPass}
+            onFocus={() => setErrorPass({ border: 'none' })}
             placeholder='Contraseña'
-            required
-            minLength={6}
-            maxLength={30}
+            {...register('password', password)}
           />
-          {displayLabel ? <label>Contraseña incorrecta</label> : <></>}
+          {displayLabel ? <label className='text-white span-error-taskform'>Contraseña incorrecta</label> : <></>}
           <label>
-            ¿Olvidaste tu contraseña?{' '}
+            ¿Olvidaste tu contraseña?{'  '}
             <Link to='/password-recovery'>Recupérala aquí.</Link>
           </label>
           <button>Ingresar</button>

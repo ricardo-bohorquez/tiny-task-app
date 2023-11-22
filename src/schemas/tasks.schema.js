@@ -5,22 +5,22 @@ const taskSchema = Object.freeze({
       message: 'No se permite crear tareas sin títulos'
     },
     pattern: {
-      value: /^[a-zá-źA-ZÁ-Ź0-9.,()*+-_= ]{4,24}$/,
-      message: 'Solo se permiten caracteres alfanuméricos y . , () * + - _ = /'
+      value: /^([^<>{}[\]\\/]{4,30})$/g,
+      message: 'Titulo inválido'
     },
     minLength: {
       value: 4,
       message: 'El título debe tener un mínimo de 4 caracteres'
     },
     maxLength: {
-      value: 24,
-      message: 'El título debe tener un máximo de 24 caracteres'
+      value: 30,
+      message: 'El título debe tener un máximo de 30 caracteres'
     }
   },
   description: {
     pattern: {
-      value: /^[a-zá-źA-ZÁ-Ź0-9.,()*+-_= ]{10,250}$/,
-      message: 'Solo se permiten caracteres alfanuméricos y . , () * + - _ = /'
+      value: /^([^<>{}[\]\\/]{10,250})$/g,
+      message: 'Descripción inválida'
     },
     minLength: {
       value: 10,
