@@ -64,20 +64,16 @@ export function TaskContextProvider ({ children }) {
     const { updateDoc, arrayUnion, arrayRemove } = await import('firebase/firestore')
     const t = task
     if (task.done === false) {
-      t.done = !t.done
+      task.done = !task.done
       await updateDoc(docRef, {
-        listOfTask: {
-          pending: arrayRemove(task),
-          performed: arrayUnion(t)
-        }
+        'listOfTask.pending': arrayRemove(t),
+        'listOfTask.performed': arrayUnion(task)
       })
     } else {
-      t.done = !t.done
+      task.done = !task.done
       await updateDoc(docRef, {
-        listOfTask: {
-          pending: arrayUnion(t),
-          performed: arrayRemove(task)
-        }
+        'listOfTask.pending': arrayUnion(t),
+        'listOfTask.performed': arrayRemove(task)
       })
     }
     await readData()

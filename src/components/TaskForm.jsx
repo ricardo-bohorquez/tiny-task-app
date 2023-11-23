@@ -4,13 +4,14 @@ import taskSchema from '../schemas/tasks.schema'
 
 function TaskForm () {
   const { createTask } = useTask()
-  const { register, handleSubmit, formState: { errors } } = useForm()
+  const { register, handleSubmit, formState: { errors }, reset } = useForm()
   const { title, description } = taskSchema
 
   return (
     <form
       onSubmit={handleSubmit(({ title, description }) => {
         createTask(title, description)
+        reset()
       })} className='task-form'
     >
       <input
