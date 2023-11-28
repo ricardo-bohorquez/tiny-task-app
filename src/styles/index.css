@@ -32,7 +32,7 @@
   --lt-it: "mont-lt-it";
   --rg: "mont-rg";
   --smb: "mont-smb";
-  --rd: #925252;
+  --rd: #EA8B8B;
   --gn: #4a6e43;
   --bk: #000000;
   --bl: #111829;
@@ -82,7 +82,11 @@ body {
   margin: 1rem 3.5rem;
 }
 
-.app-header>label {
+.app-header section:nth-child(2){
+  display: flex;
+}
+
+.app-header section:nth-child(2)>label {
   font-family: var(--lt-it);
   font-size: var(--p-fsz);
   color: var(--grl);

@@ -1,13 +1,16 @@
 import icon from '../icons/list-check-solid-light.svg'
+import gears from '../icons/gears-solid.svg'
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { HEADER_STRING } from '../constants/headerConstants'
 
 function Header () {
   const { user, logOut } = useAuth()
   const location = useLocation()
   const [displayLogin, setDisplayLogin] = useState(false)
   const [displayRegister, setDisplayRegister] = useState(false)
+  const { APP_NAME, LOG_OUT, SING_IN, SING_UP } = HEADER_STRING
 
   useEffect(() => {
     if (location.pathname === '/login') {
@@ -40,12 +43,12 @@ function Header () {
         <section>
           <img src={icon} />
           <Link to='/'>
-            <h1>Tiny Task</h1>
+            <h1>{APP_NAME}</h1>
           </Link>
           <div>
             {!displayLogin && displayRegister
-              ? <Link to='/register' className='text-white'>Registrate</Link>
-              : <Link to='/login' className='text-white'>Iniciar sesión</Link>}
+              ? <Link to='/register' className='text-white'>{SING_UP}</Link>
+              : <Link to='/login' className='text-white'>{SING_IN}</Link>}
           </div>
         </section>
       </header>
@@ -57,19 +60,24 @@ function Header () {
             <img src={icon} />
           </Link>
           <h1>
-            <Link to='/'>Tiny Task</Link>
+            <Link to='/'>{APP_NAME}</Link>
           </h1>
           <div>
             <Link
               to='/login'
-              style={{ color: '#925252' }}
+              style={{ color: '#EA8B8B' }}
               onClick={handleLogout}
             >
-              Cerrar sesión
+              {LOG_OUT}
             </Link>
           </div>
         </section>
-        <label>{user.displayName || user.email}</label>
+        <section>
+          <label>{user.displayName || user.email}</label>
+          <Link to='/settings'>
+            <img src={gears} />
+          </Link>
+        </section>
       </header>
       )
 }

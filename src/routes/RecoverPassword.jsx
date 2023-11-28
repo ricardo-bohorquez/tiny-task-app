@@ -1,22 +1,29 @@
-import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { Navigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import userResetPass from '../schemas/userResetPass.schema'
 import ModalError from '../components/modals/ModalError'
 import ModalSuccessResetPass from '../components/modals/ModalSuccessResetPass'
 import ModalLoader from '../components/modals/ModalLoader'
+import { MODAL_TYPE } from '../constants/modalsConstants'
+import { ERROR_STRING } from '../constants/errorsConstants'
+import { LOGIN_FORM_STRING } from '../constants/loginConstants'
 
 function RecoverPassword () {
   const { recoverPassword, setViewModal, viewModal, user } = useAuth()
-  const [emailToRecoverPass, setEmailToRecoverPass] = useState('')
+  const { register, handleSubmit, formState: { errors } } = useForm()
+  const { emailToResetPass } = userResetPass
+  const { TYPE_SUCCESS_RESET, TYPE_LOADER } = MODAL_TYPE
+  const { USER_NOT_FOUND } = ERROR_STRING
+  const { EMAIL_PLACEHOLDER, RESET } = LOGIN_FORM_STRING
 
-  const handleRecoverPassword = async e => {
-    e.preventDefault()
-    setViewModal({ ...viewModal, state: true, type: 'loader' })
+  const handleRecoverPassword = async email => {
+    setViewModal({ ...viewModal, state: true, type: TYPE_LOADER })
     try {
-      await recoverPassword(emailToRecoverPass)
-      setViewModal({ ...viewModal, state: true, type: 'success-reset' })
+      await recoverPassword(email)
+      setViewModal({ ...viewModal, state: true, type: TYPE_SUCCESS_RESET })
     } catch ({ code }) {
-      if (code === 'auth/user-not-found') { setViewModal({ ...viewModal, state: true, type: 'user-not-found' }) }
+      if (code === `auth/${USER_NOT_FOUND}`) { setViewModal({ ...viewModal, state: true, type: USER_NOT_FOUND }) }
     }
   }
 
@@ -24,22 +31,27 @@ function RecoverPassword () {
     ? <Navigate to='/dashboard' />
     : (
       <main>
-        <form className='recover-pass-form' onSubmit={handleRecoverPassword}>
+        <form
+          className='recover-pass-form' onSubmit={handleSubmit(({ emailToResetPass }) => {
+            handleRecoverPassword(emailToResetPass)
+          })}
+        >
           <input
             type='email'
-            value={emailToRecoverPass}
-            onChange={({ target: { value } }) => setEmailToRecoverPass(value)}
-            placeholder='Ingrese su correo'
-            required
+            placeholder={EMAIL_PLACEHOLDER}
+            autoComplete='off'
+            {...register('emailToResetPass', emailToResetPass)}
           />
-          <button>Reestablecer</button>
-          {viewModal.state && viewModal.type === 'loader'
+          {errors.emailToResetPass &&
+            <span className='text-white span-error-taskform'>{errors.emailToResetPass.message}</span>}
+          <button>{RESET}</button>
+          {viewModal.state && viewModal.type === TYPE_LOADER
             ? <ModalLoader />
             : <></>}
-          {viewModal.state && viewModal.type === 'user-not-found'
-            ? <ModalError type='user-not-found' />
+          {viewModal.state && viewModal.type === USER_NOT_FOUND
+            ? <ModalError type={USER_NOT_FOUND} />
             : <></>}
-          {viewModal.state && viewModal.type === 'success-reset'
+          {viewModal.state && viewModal.type === TYPE_SUCCESS_RESET
             ? <ModalSuccessResetPass />
             : <></>}
         </form>

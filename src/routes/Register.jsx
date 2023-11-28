@@ -7,6 +7,10 @@ import { useForm } from 'react-hook-form'
 import userRegistrySchema from '../schemas/userRegistry.schema'
 import ModalLoader from '../components/modals/ModalLoader'
 import ModalError from '../components/modals/ModalError'
+import { ERROR_STRING, ERROR_TEXT_LABEL } from '../constants/errorsConstants'
+import { MODAL_TYPE } from '../constants/modalsConstants'
+import { LOGIN_FORM_STRING } from '../constants/loginConstants'
+import { HEADER_STRING } from '../constants/headerConstants'
 
 function Register () {
   const { signUp, resetModalProps, viewModal, setViewModal, user } = useAuth()
@@ -14,9 +18,14 @@ function Register () {
   const { mail, confirmMail, password, confirmPassword } = userRegistrySchema
   const [errorEmail, setErrorEmail] = useState({})
   const [errorPass, setErrorPass] = useState({})
+  const { EMAIL_IN_USE } = ERROR_STRING
+  const { EMAIL_NOT_MATCH, PASS_NOT_MATCH } = ERROR_TEXT_LABEL
+  const { TYPE_LOADER } = MODAL_TYPE
+  const { EMAIL_PLACEHOLDER, EMAIL_CONFIRM_PLACEHOLDER, PASS_PLACEHOLDER, PASS_CONFIRM_PLACEHOLDER, REGISTER } = LOGIN_FORM_STRING
+  const { SING_UP } = HEADER_STRING
 
   const handleRegister = async (mail, pass) => {
-    setViewModal({ ...viewModal, state: true, type: 'loader' })
+    setViewModal({ ...viewModal, state: true, type: TYPE_LOADER })
     const { setDoc } = await import('firebase/firestore')
     const dayjs = await import('dayjs')
     const customParseFormat = await import('dayjs/plugin/customParseFormat')
@@ -39,9 +48,9 @@ function Register () {
       setErrorPass({ border: 'none' })
     } catch ({ code }) {
       setViewModal(resetModalProps)
-      code === 'auth/email-already-in-use' &&
+      code === `auth/${EMAIL_IN_USE}` &&
       setErrorEmail({ border: '1px solid red' })
-      setViewModal({ ...viewModal, state: true, type: 'email-in-use' })
+      setViewModal({ ...viewModal, state: true, type: EMAIL_IN_USE })
     }
   }
 
@@ -50,7 +59,7 @@ function Register () {
     : (
       <main>
         <section className='title-login-register'>
-          <h2 style={{ height: 'fit-content', margin: 'auto' }}>Registrate</h2>
+          <h2 style={{ height: 'fit-content', margin: 'auto' }}>{SING_UP}</h2>
         </section>
         <form
           className='register-form'
@@ -60,7 +69,7 @@ function Register () {
         >
           <input
             type='email'
-            placeholder='Ingrese su correo de registro '
+            placeholder={EMAIL_PLACEHOLDER}
             autoComplete='off'
             {...register('mail', mail)}
           />
@@ -68,18 +77,19 @@ function Register () {
             <span className='text-white span-error-taskform'>{errors.mail.message}</span>}
           <input
             type='email'
-            placeholder='Repita el correo ingresado'
+            placeholder={EMAIL_CONFIRM_PLACEHOLDER}
             autoComplete='off'
             style={errorEmail}
-            onFocus={() => setErrorEmail({ border: 'none' })}
             {...register('confirmMail',
               {
                 ...confirmMail,
                 validate: function (value) {
-                  if (value === watch('mail')) return {}
-                  else {
+                  if (value === watch('mail')) {
+                    setErrorEmail({ border: 'none' })
+                    return {}
+                  } else {
                     setErrorEmail({ border: '1px solid red' })
-                    return 'Los correos deben coincidir'
+                    return EMAIL_NOT_MATCH
                   }
                 }
               })}
@@ -88,36 +98,37 @@ function Register () {
             <span className='text-white span-error-taskform'>{errors.confirmMail.message}</span>}
           <input
             type='password'
-            placeholder='Ingrese su clave de acceso'
+            placeholder={PASS_PLACEHOLDER}
             {...register('password', password)}
           />
           {errors.password &&
             <span className='text-white span-error-taskform'>{errors.password.message}</span>}
           <input
             type='password'
-            placeholder='Repita la clave ingresada'
+            placeholder={PASS_CONFIRM_PLACEHOLDER}
             style={errorPass}
-            onFocus={() => setErrorEmail({ border: 'none' })}
             {...register('confirmPassword',
               {
                 ...confirmPassword,
                 validate: function (value) {
-                  if (value === watch('password')) return {}
-                  else {
+                  if (value === watch('password')) {
+                    setErrorPass({ border: 'none' })
+                    return {}
+                  } else {
                     setErrorPass({ border: '1px solid red' })
-                    return 'Las contraseñas deben coincidir'
+                    return PASS_NOT_MATCH
                   }
                 }
               })}
           />
           {errors.confirmPassword &&
             <span className='text-white span-error-taskform'>{errors.confirmPassword.message}</span>}
-          <button>Registrarse</button>
+          <button>{REGISTER}</button>
         </form>
-        {viewModal.state && viewModal.type === 'loader'
+        {viewModal.state && viewModal.type === TYPE_LOADER
           ? <ModalLoader />
           : <></>}
-        {viewModal.state && viewModal.type === 'email-in-use'
+        {viewModal.state && viewModal.type === EMAIL_IN_USE
           ? <ModalError type={viewModal.type} />
           : <></>}
       </main>

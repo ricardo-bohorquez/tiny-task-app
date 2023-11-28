@@ -8,6 +8,10 @@ import userLoginSchema from '../schemas/userLogin.schema'
 import ModalError from '../components/modals/ModalError'
 import ModalLoader from '../components/modals/ModalLoader'
 import google from '../icons/google.svg'
+import { ERROR_STRING } from '../constants/errorsConstants'
+import { MODAL_TYPE } from '../constants/modalsConstants'
+import { LOGIN_STRING, LOGIN_FORM_STRING } from '../constants/loginConstants'
+import { HEADER_STRING } from '../constants/headerConstants'
 
 function Login () {
   const {
@@ -21,24 +25,29 @@ function Login () {
 
   const { register, handleSubmit, formState: { errors } } = useForm()
   const { mail, password } = userLoginSchema
+  const { USER_NOT_FOUND, WRONG_PASSWORD } = ERROR_STRING
+  const { TYPE_LOADER } = MODAL_TYPE
+  const { GOOGLE_LOGIN, OPTION_TEXT } = LOGIN_STRING
+  const { EMAIL_PLACEHOLDER, PASS_PLACEHOLDER, ENTRY, WRONG, LOST_PASS, RECOVER_HERE } = LOGIN_FORM_STRING
+  const { SING_IN } = HEADER_STRING
   const [errorEmail, setErrorEmail] = useState({})
   const [errorPass, setErrorPass] = useState({})
   const [displayLabel, setDisplayLabel] = useState(false)
 
   const handleLogin = async (email, pass) => {
-    setViewModal({ ...viewModal, state: true, type: 'loader' })
+    setViewModal({ ...viewModal, state: true, type: TYPE_LOADER })
     try {
       await signIn(email, pass)
       setViewModal(resetModalProps)
     } catch ({ code }) {
-      if (code === 'auth/user-not-found') {
+      if (code === `auth/${USER_NOT_FOUND}`) {
         setViewModal(resetModalProps)
         setDisplayLabel(false)
         setErrorPass({ border: 'none' })
-        setViewModal({ ...viewModal, state: true, type: 'user-not-found' })
+        setViewModal({ ...viewModal, state: true, type: USER_NOT_FOUND })
         setErrorEmail({ border: '1px solid red' })
       }
-      if (code === 'auth/wrong-password') {
+      if (code === `auth/${WRONG_PASSWORD}`) {
         setViewModal(resetModalProps)
         setErrorEmail({ border: 'none' })
         setDisplayLabel(true)
@@ -79,7 +88,7 @@ function Login () {
     : (
       <main>
         <section className='title-login-register'>
-          <h2 style={{ height: 'fit-content', margin: 'auto' }}>Inicia sesión</h2>
+          <h2 style={{ height: 'fit-content', margin: 'auto' }}>{SING_IN}</h2>
         </section>
         <form
           onSubmit={handleSubmit(({ mail, password }) => {
@@ -90,7 +99,7 @@ function Login () {
             type='email'
             style={errorEmail}
             onFocus={() => setErrorEmail({ border: 'none' })}
-            placeholder='Correo electrónico'
+            placeholder={EMAIL_PLACEHOLDER}
             {...register('mail', mail)}
           />
           {errors.mail &&
@@ -99,25 +108,25 @@ function Login () {
             type='password'
             style={errorPass}
             onFocus={() => setErrorPass({ border: 'none' })}
-            placeholder='Contraseña'
+            placeholder={PASS_PLACEHOLDER}
             {...register('password', password)}
           />
-          {displayLabel ? <label className='text-white span-error-taskform'>Contraseña incorrecta</label> : <></>}
+          {displayLabel ? <label className='text-white span-error-taskform'>{WRONG}</label> : <></>}
           <label>
-            ¿Olvidaste tu contraseña?{'  '}
-            <Link to='/password-recovery'>Recupérala aquí.</Link>
+            {LOST_PASS}
+            <Link to='/password-recovery'>{RECOVER_HERE}</Link>
           </label>
-          <button>Ingresar</button>
-          {viewModal.state && viewModal.type === 'loader'
+          <button>{ENTRY}</button>
+          {viewModal.state && viewModal.type === TYPE_LOADER
             ? <ModalLoader />
             : <></>}
-          {viewModal.state && viewModal.type === 'user-not-found'
-            ? <ModalError type='user-not-found' />
+          {viewModal.state && viewModal.type === USER_NOT_FOUND
+            ? <ModalError type={USER_NOT_FOUND} />
             : <></>}
         </form>
-        <label> ó puedes </label>
+        <label>{OPTION_TEXT}</label>
         <button className='login-google-button' onClick={handleGoogleLogin}>
-          Iniciar sesión con <img src={google} />
+          {GOOGLE_LOGIN}<img src={google} />
         </button>
       </main>
       )

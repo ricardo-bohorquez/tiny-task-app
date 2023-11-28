@@ -1,14 +1,13 @@
 import { useAuth } from '../../context/AuthContext'
 import error from '../../icons/circle-xmark-regular.svg'
+import { MODAL_BUTTON_STRING, MODAL_ERROR_MESSAGE } from '../../constants/modalsConstants'
+import { ERROR_STRING } from '../../constants/errorsConstants'
 
 function ModalError ({ type = '' }) {
   const { resetModalProps, setViewModal } = useAuth()
-
-  const textOfModal = [
-    'No puede crear tareas con títulos ni descripciones vacías',
-    'El correo ingresado no se encuentra asociado a ninguna cuenta',
-    'El correo ingresado ya se encuentra asociado a otra cuenta'
-  ]
+  const { EMAIL_IN_USE, USER_NOT_FOUND } = ERROR_STRING
+  const { IN_USE_MSG, NOT_FOUND_MSG } = MODAL_ERROR_MESSAGE
+  const { ACCEPT } = MODAL_BUTTON_STRING
 
   return (
     <section
@@ -17,16 +16,15 @@ function ModalError ({ type = '' }) {
       style={{ display: 'flex' }}
     >
       <div className='modal-content'>
-        {type === 'empty-form-error' ? <h3>{textOfModal[0]}</h3> : <></>}
-        {type === 'user-not-found' ? <h3>{textOfModal[1]}</h3> : <></>}
-        {type === 'email-in-use' ? <h3>{textOfModal[2]}</h3> : <></>}
+        {type === USER_NOT_FOUND ? <h3>{NOT_FOUND_MSG}</h3> : <></>}
+        {type === EMAIL_IN_USE ? <h3>{IN_USE_MSG}</h3> : <></>}
         <img src={error} style={{ width: '50px' }} />
         <button
           onClick={() => setViewModal(resetModalProps)}
           id='acceptError'
           autoFocus
         >
-          Aceptar
+          {ACCEPT}
         </button>
       </div>
     </section>

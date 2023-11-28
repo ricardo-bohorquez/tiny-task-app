@@ -6,6 +6,8 @@ import Dashboard from './routes/Dashboard'
 import Header from './components/Header'
 import RecoverPassword from './routes/RecoverPassword'
 import ProtectedRoute from './routes/ProtectedRoute'
+import Settings from './routes/Settings'
+import NotFound from './routes/NotFound'
 
 function App () {
   return (
@@ -16,6 +18,10 @@ function App () {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route
+          path='/password-recovery'
+          element={<RecoverPassword />}
+        />
+        <Route
           path='/dashboard'
           element={
             <ProtectedRoute>
@@ -24,9 +30,14 @@ function App () {
           }
         />
         <Route
-          path='/password-recovery'
-          element={<RecoverPassword />}
+          path='/settings'
+          element={
+            <ProtectedRoute>
+              <Settings />
+            </ProtectedRoute>
+          }
         />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </>
   )
