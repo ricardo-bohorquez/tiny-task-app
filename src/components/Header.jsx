@@ -56,8 +56,8 @@ function Header () {
     : (
       <header className='app-header'>
         <section>
-          <Link to='/dashboard'>
-            <img src={icon} />
+          <Link to='/dashboard' className='dashboard-link'>
+            <img src={icon} className='dashboard-link-ico' />
           </Link>
           <h1>
             <Link to='/'>{APP_NAME}</Link>
@@ -65,7 +65,6 @@ function Header () {
           <div>
             <Link
               to='/login'
-              style={{ color: '#EA8B8B' }}
               onClick={handleLogout}
             >
               {LOG_OUT}
@@ -74,8 +73,8 @@ function Header () {
         </section>
         <section>
           <label>{user.displayName || user.email}</label>
-          <Link to='/settings'>
-            <img src={gears} />
+          <Link to='/settings' className='settings-link'>
+            <img src={gears} className='settings-link-ico' />
           </Link>
         </section>
       </header>
