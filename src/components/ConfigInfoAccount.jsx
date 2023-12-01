@@ -1,7 +1,7 @@
 function ConfigInfoAccount () {
   return (
     <section>
-      <h1>Información de la cuenta</h1>
+      <h2>Información</h2>
     </section>
   )
 }

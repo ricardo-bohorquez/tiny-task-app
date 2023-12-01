@@ -1,7 +1,7 @@
 function ConfigEmail () {
   return (
     <section>
-      <h1>Correo Electrónico</h1>
+      <h2>Correo Electrónico</h2>
     </section>
   )
 }

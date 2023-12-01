@@ -13,7 +13,7 @@ function TaskCard ({ task, index }) {
   const { TYPE_DELETE, TYPE_DESCRIPTION } = MODAL_TYPE
 
   return (
-    <li id={index + '-element'}>
+    <li id={index + '-element'} className='element-list'>
       <div>
         <h4>{task.title}</h4>
         <img

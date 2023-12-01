@@ -1,7 +1,7 @@
 function ConfigPassword () {
   return (
     <section>
-      <h1>Contraseña</h1>
+      <h2>Contraseña</h2>
     </section>
   )
 }

@@ -32,6 +32,7 @@
   --lt-it: "mont-lt-it";
   --rg: "mont-rg";
   --smb: "mont-smb";
+  --rd-dk: #b65050;
   --rd: #EA8B8B;
   --gn: #4a6e43;
   --bk: #000000;
@@ -70,7 +71,7 @@ body {
   align-items: center;
   width: 90%;
   max-width: 102.4rem;
-  padding: 1.5rem;
+  margin: 1.5rem;
 }
 
 .dashboard-link{
@@ -79,7 +80,7 @@ body {
   margin: 0.5rem 3rem
 }
 
-.dashboard-link .dashboard-link-ico{
+.dashboard-link-ico{
   width: 5rem;
 }
 
@@ -157,7 +158,8 @@ body {
   gap: 1rem;
   height: auto;
   margin: auto;
-  padding: 0 1.5rem 1.5rem;
+  width: 90%;
+  max-width: 102.4rem;
 }
 
 .register-form,
@@ -168,7 +170,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
-  width: 95%;
+  width: 90%;
   max-width: 102.4rem;
   height: auto;
   margin: auto;
@@ -318,7 +320,8 @@ body {
   text-align: center;
 }
 
-.are-logged p {
+.are-logged p {  width: 95%;
+  max-width: 102.4rem;
   font-family: var(--lt);
   font-size: var(--p-desc-fsz);
   color: var(--grl);
@@ -388,16 +391,30 @@ body {
   padding: 0;
 }
 
-.list>li>div {
+.element-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 95%;
+  max-width: 102.4rem;
+  height: 6.5rem;
+  list-style: none;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: var(--gr);
+}
+
+.element-list>div {
   display: flex;
 }
 
-.list>li>div>h4 {
+.element-list>div>h4 {
   width: fit-content;
   margin: 0 0 0.5rem 0;
 }
 
-.list>li>div>img {
+.element-list>div>img {
   width: 1.7rem;
   height: 2.5rem;
   margin: 0 0 0 0.5rem;
@@ -444,20 +461,6 @@ h4 {
   margin: 0;
 }
 
-li:not(li:last-child span) {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  width: 95%;
-  max-width: 102.4rem;
-  height: 6.5rem;
-  list-style: none;
-  padding: 1rem;
-  border-radius: 1rem;
-  background-color: var(--gr);
-}
-
 .buttons-container {
   display: flex;
   justify-content: flex-end;
@@ -488,7 +491,7 @@ li:not(li:last-child span) {
 }
 
 .buttons-container button:last-child {
-  background-color: var(--rd);
+  background-color: var(--rd-dk);
 }
 
 .buttons-container button:only-child {
@@ -573,7 +576,7 @@ li span {
 }
 
 .modal-task-description button {
-  background-color: var(--rd);
+  background-color: var(--rd-dk);
   margin: 0 0 0 auto;
 }
 
@@ -586,7 +589,7 @@ li span {
 }
 
 #confirmDelete {
-  background-color: var(--rd);
+  background-color: var(--rd-dk);
 }
 
 #cancelDelete {
@@ -613,6 +616,35 @@ li span {
   justify-content: center;
   align-items: center;
   margin: 1rem 0;
+}
+
+.settings-block{
+  display: flex;
+  margin: 4rem auto;
+  width: 90%;
+  max-width: 102.4rem;
+}
+
+.aside-settings{
+  width: 30%;
+}
+
+.aside-settings ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  gap: 2rem;
+  padding: 0;
+}
+
+.aside-settings ul li {
+  font-family: var(--rg);
+  font-size: var(--h4-fsz);
+  color: var(--wt)
+}
+
+.frame-settings{
+  width: 70%;
 }
 
 @media screen and (max-width: 780px) {

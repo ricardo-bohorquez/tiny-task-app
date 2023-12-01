@@ -41,10 +41,12 @@ function Header () {
     ? (
       <header className='app-header'>
         <section>
-          <img src={icon} />
-          <Link to='/'>
-            <h1>{APP_NAME}</h1>
-          </Link>
+          <div className='dashboard-link'>
+            <img src={icon} className='dashboard-link-ico' />
+          </div>
+          <h1>
+            <Link to='/'>{APP_NAME}</Link>
+          </h1>
           <div>
             {!displayLogin && displayRegister
               ? <Link to='/register' className='text-white'>{SING_UP}</Link>
