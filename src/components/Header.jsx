@@ -1,19 +1,19 @@
 import icon from '../icons/list-check-solid-light.svg'
 import gears from '../icons/gears-solid.svg'
 import { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'wouter'
 import { useAuth } from '../context/AuthContext'
 import { HEADER_STRING } from '../constants/headerConstants'
 
 function Header () {
   const { user, logOut } = useAuth()
-  const location = useLocation()
+  const [location] = useLocation()
   const [displayLogin, setDisplayLogin] = useState(false)
   const [displayRegister, setDisplayRegister] = useState(false)
   const { APP_NAME, LOG_OUT, SING_IN, SING_UP } = HEADER_STRING
 
   useEffect(() => {
-    if (location.pathname === '/login') {
+    if (location === '/login') {
       setDisplayLogin(false)
       setDisplayRegister(true)
     } else {
@@ -24,8 +24,8 @@ function Header () {
 
   useEffect(() => {
     if (
-      location.pathname === '/register' ||
-      location.pathname === '/'
+      location === '/register' ||
+      location === '/'
     ) {
       setDisplayRegister(false)
       setDisplayLogin(true)
@@ -45,12 +45,12 @@ function Header () {
             <img src={icon} className='dashboard-link-ico' />
           </div>
           <h1>
-            <Link to='/'>{APP_NAME}</Link>
+            <Link href='/'>{APP_NAME}</Link>
           </h1>
           <div>
             {!displayLogin && displayRegister
-              ? <Link to='/register' className='text-white'>{SING_UP}</Link>
-              : <Link to='/login' className='text-white'>{SING_IN}</Link>}
+              ? <Link href='/register' className='text-white'>{SING_UP}</Link>
+              : <Link href='/login' className='text-white'>{SING_IN}</Link>}
           </div>
         </section>
       </header>
@@ -58,15 +58,15 @@ function Header () {
     : (
       <header className='app-header'>
         <section>
-          <Link to='/dashboard' className='dashboard-link'>
+          <Link href='/dashboard' className='dashboard-link'>
             <img src={icon} className='dashboard-link-ico' />
           </Link>
           <h1>
-            <Link to='/'>{APP_NAME}</Link>
+            <Link href='/'>{APP_NAME}</Link>
           </h1>
           <div>
             <Link
-              to='/login'
+              href='/login'
               onClick={handleLogout}
             >
               {LOG_OUT}
@@ -75,7 +75,7 @@ function Header () {
         </section>
         <section>
           <label>{user.displayName || user.email}</label>
-          <Link to='/settings' className='settings-link'>
+          <Link href='/settings' className='settings-link'>
             <img src={gears} className='settings-link-ico' />
           </Link>
         </section>

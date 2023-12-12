@@ -1,7 +1,7 @@
 export const TASK_CARD_STRING = Object.freeze({
   PENDING: 'Marcar pendiente',
-  PERFORMED: 'Marcar lista',
-  DELETE: 'Eliminar tarea',
+  PERFORMED: 'Realizada',
+  DELETE: 'Eliminar',
   CREATED_AT: 'Se creó el '
 })
 

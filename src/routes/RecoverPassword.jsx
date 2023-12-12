@@ -1,5 +1,5 @@
 import { useAuth } from '../context/AuthContext'
-import { Navigate } from 'react-router-dom'
+import { Redirect } from 'wouter'
 import { useForm } from 'react-hook-form'
 import userResetPass from '../schemas/userResetPass.schema'
 import ModalError from '../components/modals/ModalError'
@@ -28,7 +28,7 @@ function RecoverPassword () {
   }
 
   return user
-    ? <Navigate to='/dashboard' />
+    ? <Redirect to='/dashboard' />
     : (
       <main>
         <form

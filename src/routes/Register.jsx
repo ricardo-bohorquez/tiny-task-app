@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Navigate } from 'react-router-dom'
+import { Redirect } from 'wouter'
 import { doc } from 'firebase/firestore'
 import { db } from '../../configFirebase'
 import { useAuth } from '../context/AuthContext'
@@ -55,7 +55,7 @@ function Register () {
   }
 
   return user
-    ? <Navigate to='/dashboard' />
+    ? <Redirect to='/dashboard' />
     : (
       <main>
         <section className='title-login-register'>

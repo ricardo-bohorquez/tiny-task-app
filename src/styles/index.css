@@ -62,7 +62,7 @@ body {
   min-height: 22rem;
   height: 15vh;
   max-height: 20rem;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .app-header section:first-child {
@@ -72,16 +72,15 @@ body {
   width: 90%;
   max-width: 102.4rem;
   margin: 1.5rem;
+  border-bottom: 0.05rem solid var(--grl);
+  padding-bottom: 1rem;
 }
 
-.dashboard-link{
+.dashboard-link, 
+.dashboard-link-ico{
   width: 5rem !important;
   height: 5rem !important;
-  margin: 0.5rem 3rem
-}
-
-.dashboard-link-ico{
-  width: 5rem;
+  margin: 0.5rem 6rem 0.5rem 0;
 }
 
 .app-header section:nth-child(2){
@@ -99,16 +98,11 @@ body {
   padding: 0;
 }
 
-.settings-link{
+.settings-link,
+.settings-link-ico{
   width: 4rem !important;
   height: 4rem !important;
   margin: 0 0 0 1.5rem;
-}
-
-.settings-link .settings-link-ico{
-  width: 4rem;
-  height: 4rem;
-  margin: 0;
 }
 
 .app-header section div {
@@ -155,7 +149,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 2.5rem;
   height: auto;
   margin: auto;
   width: 90%;
@@ -174,6 +168,19 @@ body {
   max-width: 102.4rem;
   height: auto;
   margin: auto;
+  border-bottom: 0.05rem solid var(--grl);
+  padding-bottom: 2.5rem;
+}
+
+.register-form,
+.login-form,
+.recover-pass-form {
+  border-bottom: none;
+  padding-bottom: none;
+}
+
+.task-form{
+  width: 100%;
 }
 
 .register-form input,
@@ -508,7 +515,8 @@ li span {
   margin: 0.5rem 0 0;
 }
 
-.modal-body {
+.modal-body,
+.loader {
   display: flex;
   place-items: center;
   place-content: center;
@@ -518,6 +526,22 @@ li span {
   width: 100%;
   height: 100vh;
   background-color: #00000050;
+}
+
+.loader {
+  background-color: var(--bl);
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  height: auto;
+  gap: 1.5rem;
+}
+
+.loader-content img{
+  width: 5rem;
 }
 
 .modal-content {
@@ -623,10 +647,14 @@ li span {
   margin: 4rem auto;
   width: 90%;
   max-width: 102.4rem;
+  border-top: 0.1rem solid var(--grl);
+  padding: 2rem 0 0;
 }
 
 .aside-settings{
   width: 30%;
+  height: 50vh;
+  border-right: 0.1rem solid var(--grl);
 }
 
 .aside-settings ul {
@@ -641,6 +669,10 @@ li span {
   font-family: var(--rg);
   font-size: var(--h4-fsz);
   color: var(--wt)
+}
+
+.aside-settings ul li:hover {
+  cursor: pointer;
 }
 
 .frame-settings{
@@ -692,28 +724,20 @@ li span {
     font-size: var(--p-inter-fsz);
   }
 
-  .dashboard-link{
+  .dashboard-link,
+  .dashboard-link-ico {
     width: 4.5rem !important;
     height: 4.5rem !important;
-    margin: 0.5rem 1.75rem
-  }
-  
-  .dashboard-link .dashboard-link-ico{
-    width: 4.5rem;
-    margin: 0;
+    margin: 0.5rem 3.5rem 0.5rem 0;
   }
 
-  .settings-link{
+  .settings-link, 
+  .settings-link-ico{
     width: 3.5rem !important;
     height: 3.5rem !important;
     margin: 0 0 0 1rem;
   }
-  
-  .settings-link .settings-link-ico{
-    width: 3.5rem;
-    height: 3.5rem;
-  }
-  
+    
   h2 {
     font-size: var(--h3-fsz);
   }
@@ -728,10 +752,6 @@ li span {
 
   h4 img {
     margin: 0 0 0 1rem;
-  }
-
-  .app-header section img {
-    margin: 1rem 2rem;
   }
 
   .app-header section div {
@@ -826,28 +846,20 @@ li span {
     width: 5rem;
   }
 
-  .dashboard-link{
+  .dashboard-link,
+  .dashboard-link-ico{
     width: 3.5rem !important;
     height: 3.5rem !important;
-    margin: 1.5rem 0.75rem;
+    margin: 1.5rem 1.5rem 1.5rem 0;
   }
   
-  .dashboard-link .dashboard-link-ico{
-    width: 3.5rem;
-    height: 3.5rem;
-    margin: 0;
-  }
-
-  .settings-link{
+  .settings-link,
+  .settings-link-ico{
     width: 3rem !important;
     height: 3rem !important;
     margin: 0 0 0 1rem;
   }
   
-  .settings-link .settings-link-ico{
-    width: 3rem;
-    height: 3rem;
-  }
 }
 
 @media screen and (max-width: 320px) {

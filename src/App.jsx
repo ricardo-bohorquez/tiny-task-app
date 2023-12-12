@@ -1,45 +1,54 @@
-import { Route, Routes } from 'react-router-dom'
-import Home from './routes/Home'
-import Login from './routes/Login'
-import Register from './routes/Register'
-import Dashboard from './routes/Dashboard'
-import Header from './components/Header'
-import RecoverPassword from './routes/RecoverPassword'
-import ProtectedRoute from './routes/ProtectedRoute'
-import Settings from './routes/Settings'
-import NotFound from './routes/NotFound'
+import { lazy, Suspense } from 'react'
+import { Route, Router, Switch } from 'wouter'
+import { useLocationProperty, navigate } from 'wouter/use-location'
+import ModalLoader from './components/modals/ModalLoader'
+
+const Header = lazy(() => import('./components/Header'))
+const Home = lazy(() => import('./routes/Home'))
+const Login = lazy(() => import('./routes/Login'))
+const Register = lazy(() => import('./routes/Register'))
+const RecoverPassword = lazy(() => import('./routes/RecoverPassword'))
+const Dashboard = lazy(() => import('./routes/Dashboard'))
+const Settings = lazy(() => import('./routes/Settings'))
+const NotFound = lazy(() => import('./routes/NotFound'))
+const ProtectedRoute = lazy(() => import('./routes/ProtectedRoute'))
+
+const hashLocation = () => window.location.hash.replace(/^#/, '') || '/'
+
+const hashNavigate = (to) => navigate('#' + to)
+
+const useHashLocation = () => {
+  const location = useLocationProperty(hashLocation)
+  return [location, hashNavigate]
+}
 
 function App () {
   return (
-    <>
-      <Header />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route
-          path='/password-recovery'
-          element={<RecoverPassword />}
-        />
-        <Route
-          path='/dashboard'
-          element={
+    <Suspense fallback={<ModalLoader />}>
+      <Switch>
+        <Router hook={useHashLocation}>
+          <Header />
+          <Route path='/' component={Home} />
+          <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} />
+          <Route
+            path='/password-recovery'
+            component={RecoverPassword}
+          />
+          <Route path='/dashboard'>
             <ProtectedRoute>
               <Dashboard />
             </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/settings'
-          element={
+          </Route>
+          <Route path='/settings'>
             <ProtectedRoute>
               <Settings />
             </ProtectedRoute>
-          }
-        />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
-    </>
+          </Route>
+          <Route path='*' component={NotFound} />
+        </Router>
+      </Switch>
+    </Suspense>
   )
 }
 

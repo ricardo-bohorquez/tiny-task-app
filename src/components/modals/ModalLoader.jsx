@@ -1,11 +1,12 @@
-import { MODAL_LOADER_MESSAGE } from '../../constants/modalsConstants'
+import ico from '../../icons/list-check-solid-light.svg'
+import { CircularProgress } from '@mui/material'
 
 function ModalLoader () {
-  const { LOAD_MSG } = MODAL_LOADER_MESSAGE
   return (
-    <section className='modal-body' style={{ display: 'flex' }}>
-      <div className='modal-content'>
-        <label>{LOAD_MSG}</label>
+    <section className='loader' style={{ display: 'flex' }}>
+      <div className='loader-content'>
+        <img src={ico} />
+        <CircularProgress />
       </div>
     </section>
   )
