@@ -1,7 +1,5 @@
-import { useState } from 'react'
-import ConfigInfoAccount from '../components/ConfigInfoAccount'
-import ConfigEmail from '../components/ConfigEmail'
-import ConfigPassword from '../components/ConfigPassword'
+import { useState, lazy, Suspense } from 'react'
+import { CircularProgress } from '@mui/material'
 import { SETTINGS_STRING } from '../constants/settingsConstans'
 
 function Settings () {
@@ -11,6 +9,10 @@ function Settings () {
     cfgEmail: false,
     cfgPass: false
   })
+
+  const InfoAccount = lazy(() => import('../components/ConfigInfoAccount'))
+  const ConfigEmail = lazy(() => import('../components/ConfigEmail'))
+  const ConfigPassword = lazy(() => import('../components/ConfigPassword'))
 
   return (
     <main>
@@ -24,9 +26,11 @@ function Settings () {
           </ul>
         </aside>
         <section className='frame-settings'>
-          {viewConfig.cfgInfo ? <ConfigInfoAccount /> : <></>}
-          {viewConfig.cfgEmail ? <ConfigEmail /> : <></>}
-          {viewConfig.cfgPass ? <ConfigPassword /> : <></>}
+          <Suspense fallback={<CircularProgress style={{}} />}>
+            {viewConfig.cfgInfo ? <InfoAccount /> : <></>}
+            {viewConfig.cfgEmail ? <ConfigEmail /> : <></>}
+            {viewConfig.cfgPass ? <ConfigPassword /> : <></>}
+          </Suspense>
         </section>
       </section>
     </main>

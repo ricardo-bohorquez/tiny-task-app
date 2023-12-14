@@ -76,13 +76,6 @@ body {
   padding-bottom: 1rem;
 }
 
-.dashboard-link, 
-.dashboard-link-ico{
-  width: 5rem !important;
-  height: 5rem !important;
-  margin: 0.5rem 6rem 0.5rem 0;
-}
-
 .app-header section:nth-child(2){
   display: flex;
   justify-content: center;
@@ -111,6 +104,22 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.dashboard-link, 
+.dashboard-link-ico,
+.app-logo{
+  width: 5rem !important;
+  height: 5rem !important;
+  margin: 0.5rem 6rem 0.5rem 0 !important;
+  display: flex;
+  justify-content: flex-start !important;
+  align-items: center;
+}
+
+.dashboard-link, 
+.dashboard-link-ico{
+  cursor: pointer;
 }
 
 .app-home {
@@ -677,6 +686,10 @@ li span {
 
 .frame-settings{
   width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 @media screen and (max-width: 780px) {
@@ -725,14 +738,15 @@ li span {
   }
 
   .dashboard-link,
-  .dashboard-link-ico {
+  .dashboard-link-ico,
+  .app-logo {
     width: 4.5rem !important;
     height: 4.5rem !important;
-    margin: 0.5rem 3.5rem 0.5rem 0;
+    margin: 0.5rem 3.5rem 0.5rem 0 !important;
   }
 
   .settings-link, 
-  .settings-link-ico{
+  .settings-link-ico {
     width: 3.5rem !important;
     height: 3.5rem !important;
     margin: 0 0 0 1rem;
@@ -843,14 +857,15 @@ li span {
   .app-header section>div,
   .app-header section>div>a:link,
   .app-header section>div>a:visited {
-    width: 5rem;
+    width: 6rem;
   }
 
   .dashboard-link,
-  .dashboard-link-ico{
+  .dashboard-link-ico, 
+  .app-logo {
     width: 3.5rem !important;
     height: 3.5rem !important;
-    margin: 1.5rem 1.5rem 1.5rem 0;
+    margin: 1.5rem 2.5rem 1.5rem 0 !important;
   }
   
   .settings-link,

@@ -20,7 +20,7 @@ function Home () {
           de Google.
         </p>
         <p>
-          <Link href='/register'>Registrate! </Link>, y forma parte
+          <Link href='/register'>Registrate</Link> y forma parte
           de nuestra app para que aproveches nuestras pequeñas funciones y nos ayudes
           a mejorar.
         </p>

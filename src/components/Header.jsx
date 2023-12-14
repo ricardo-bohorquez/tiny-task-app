@@ -41,8 +41,8 @@ function Header () {
     ? (
       <header className='app-header'>
         <section>
-          <div className='dashboard-link'>
-            <img src={icon} className='dashboard-link-ico' />
+          <div>
+            <img src={icon} className='app-logo' />
           </div>
           <h1>
             <Link href='/'>{APP_NAME}</Link>
