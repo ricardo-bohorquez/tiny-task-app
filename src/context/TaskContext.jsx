@@ -14,7 +14,7 @@ export const useTask = () => {
   return context
 }
 
-export function TaskContextProvider ({ children }) {
+export function TaskProvider ({ children }) {
   const { user: { uid } } = useAuth()
   const docRef = doc(db, 'users', uid)
 

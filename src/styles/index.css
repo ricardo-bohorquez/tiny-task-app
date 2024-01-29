@@ -185,7 +185,7 @@ body {
 .login-form,
 .recover-pass-form {
   border-bottom: none;
-  padding-bottom: none;
+  padding-bottom: 0;
 }
 
 .task-form{
@@ -660,36 +660,91 @@ li span {
   padding: 2rem 0 0;
 }
 
-.aside-settings{
+.aside-settings,
+.frame-settings {
   width: 30%;
   height: 50vh;
+}
+
+.aside-settings {
   border-right: 0.1rem solid var(--grl);
 }
 
-.aside-settings ul {
+.aside-settings ul,
+.frame-settings ul {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   list-style: none;
   gap: 2rem;
   padding: 0;
 }
 
-.aside-settings ul li {
+.aside-settings ul li,
+.frame-settings ul li {
   font-family: var(--rg);
   font-size: var(--h4-fsz);
-  color: var(--wt)
+  color: var(--wt);
+  height: fit-content !important;
+  margin: 0 1.5rem 0 0;
 }
 
 .aside-settings ul li:hover {
   cursor: pointer;
 }
 
-.frame-settings{
+.frame-settings {
   width: 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+@media screen and (max-width: 850px) {
+  
+  .settings-block{
+    flex-direction: column;
+    padding-top: 1rem;
+  }
+
+  .aside-settings,
+  .frame-settings {
+    width: 100%;
+  }
+
+  .aside-settings {
+    display: flex;
+    height: 13rem;
+    border-right: none;
+    border-bottom: 0.1rem solid var(--grl);
+    padding-bottom: 1rem;
+  }
+
+  .aside-settings ul,
+  .frame-settings ul {
+    margin: auto 0;
+    gap: 1.2rem;
+  }
+
+  .frame-settings {
+    display: flex;
+    align-items: flex-start;
+    height: fit-content;
+  }
+
+  .frame-settings ul {
+    padding: 3rem 0;
+  }
+
+  .frame-settings h2{
+    padding: 3rem 0 0;
+  }
+
+  h3{
+    margin: 1rem auto;
+  }
+
 }
 
 @media screen and (max-width: 780px) {
@@ -750,6 +805,11 @@ li span {
     width: 3.5rem !important;
     height: 3.5rem !important;
     margin: 0 0 0 1rem;
+  }
+
+  .aside-settings ul li,
+  .frame-settings ul li {
+    font-size: var(--p-inter-fsz);
   }
     
   h2 {
@@ -873,6 +933,19 @@ li span {
     width: 3rem !important;
     height: 3rem !important;
     margin: 0 0 0 1rem;
+  }
+
+  .aside-settings ul li,
+  .frame-settings ul li {
+    font-size: var(--p-fsz);
+  }
+
+  .frame-settings h2 {
+    font-size: var(--p-desc-fsz);
+  }
+
+  .frame-settings h3 {
+    font-size: var(--p-fsz);
   }
   
 }

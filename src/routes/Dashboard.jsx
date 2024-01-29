@@ -1,13 +1,13 @@
 import TaskSection from '../components/TaskSection'
-import { TaskContextProvider } from '../context/TaskContext'
+import { TaskProvider } from '../context/TaskContext'
 
 function Dashboard () {
   return (
-    <TaskContextProvider>
+    <TaskProvider>
       <main className='dashboard'>
         <TaskSection />
       </main>
-    </TaskContextProvider>
+    </TaskProvider>
   )
 }
 

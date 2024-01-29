@@ -1,8 +1,9 @@
 function ConfigPassword () {
   return (
-    <section>
-      <h2>Contraseña</h2>
-    </section>
+    <>
+      <h2>Configura tu contraseña</h2>
+      <h3>Estamos trabajando en esta sección</h3>
+    </>
   )
 }
 

@@ -19,6 +19,10 @@ export function AuthProvider ({ children }) {
   const [viewModal, setViewModal] = useState(resetModalProps)
   const [user, setUser] = useState({})
   const [loading, setLoading] = useState(true)
+  const [info, setInfo] = useState({
+    accountCreationDate: '',
+    loginWithGoogle: false
+  })
 
   const signUp = async (email, password) => {
     const { createUserWithEmailAndPassword } = await import('firebase/auth')
@@ -46,12 +50,30 @@ export function AuthProvider ({ children }) {
     await sendPasswordResetEmail(auth, email)
   }
 
+  const readRegisterInfo = async () => {
+    const { doc, getDoc } = await import('firebase/firestore')
+    const { db } = await import('../../configFirebase')
+    if (user === null) {
+      return {}
+    } else {
+      const { uid } = user
+      const docRef = doc(db, 'users', uid)
+      const docSnap = await getDoc(docRef)
+      const { accountCreationDate, loginWithGoogle } = docSnap.data()
+      setInfo({ accountCreationDate, loginWithGoogle })
+    }
+  }
+
   useEffect(() => {
     onAuthStateChanged(auth, currentUser => {
       setUser(currentUser)
       setLoading(false)
     })
   })
+
+  useEffect(() => {
+    readRegisterInfo()
+  }, [user])
 
   return (
     <AuthContext.Provider
@@ -63,6 +85,7 @@ export function AuthProvider ({ children }) {
         signIn,
         logOut,
         user,
+        info,
         loading,
         setLoading,
         googleLogin,
