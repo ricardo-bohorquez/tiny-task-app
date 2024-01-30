@@ -11,6 +11,10 @@ import { ERROR_STRING, ERROR_TEXT_LABEL } from '../constants/errorsConstants'
 import { MODAL_TYPE } from '../constants/modalsConstants'
 import { LOGIN_FORM_STRING } from '../constants/loginConstants'
 import { HEADER_STRING } from '../constants/headerConstants'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+dayjs.extend(customParseFormat)
+dayjs.locale('es')
 
 function Register () {
   const { signUp, resetModalProps, viewModal, setViewModal, user } = useAuth()
@@ -26,31 +30,28 @@ function Register () {
 
   const handleRegister = async (mail, pass) => {
     setViewModal({ ...viewModal, state: true, type: TYPE_LOADER })
-    const { setDoc } = await import('firebase/firestore')
-    const dayjs = await import('dayjs')
-    const customParseFormat = await import('dayjs/plugin/customParseFormat')
-    dayjs.extend(customParseFormat)
-    dayjs.locale('es')
-    const userData = {
-      loginWithGoogle: false,
-      email: '',
-      accountCreationDate: dayjs.default().format('DD/MM/YYYY'),
-      listOfTask: {
-        pending: [],
-        performed: []
-      }
-    }
     try {
+      const { setDoc } = await import('firebase/firestore')
+      const userData = {
+        loginWithGoogle: false,
+        email: '',
+        accountCreationDate: dayjs().default().format('DD/MM/YYYY'),
+        listOfTask: {
+          pending: [],
+          performed: []
+        }
+      }
       const { user: { uid, email } } = await signUp(mail, pass)
       await setDoc(doc(db, 'users', uid), { ...userData, email })
       setViewModal(resetModalProps)
       setErrorEmail({ border: 'none' })
       setErrorPass({ border: 'none' })
-    } catch ({ code }) {
-      setViewModal(resetModalProps)
-      code === `auth/${EMAIL_IN_USE}` &&
-      setErrorEmail({ border: '1px solid red' })
-      setViewModal({ ...viewModal, state: true, type: EMAIL_IN_USE })
+    } catch (error) {
+      if (error.code === `auth/${EMAIL_IN_USE}`) {
+        setViewModal(resetModalProps)
+        setErrorEmail({ border: '1px solid red' })
+        setViewModal({ ...viewModal, state: true, type: EMAIL_IN_USE })
+      } else console.log(error)
     }
   }
 
