@@ -35,7 +35,7 @@ function Register () {
       const userData = {
         loginWithGoogle: false,
         email: '',
-        accountCreationDate: dayjs().default().format('DD/MM/YYYY'),
+        accountCreationDate: dayjs().format('DD/MM/YYYY'),
         listOfTask: {
           pending: [],
           performed: []
