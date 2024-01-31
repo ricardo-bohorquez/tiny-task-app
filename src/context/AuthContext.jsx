@@ -24,6 +24,8 @@ export function AuthProvider ({ children }) {
     loginWithGoogle: false
   })
 
+  const ref = {}
+
   const signUp = async (email, password) => {
     const { createUserWithEmailAndPassword } = await import('firebase/auth')
     return await createUserWithEmailAndPassword(auth, email, password)
@@ -53,13 +55,14 @@ export function AuthProvider ({ children }) {
   const readRegisterInfo = async () => {
     const { doc, getDoc } = await import('firebase/firestore')
     const { db } = await import('../../configFirebase')
-    if (user === null) {
+    if (user === null || user === ref) {
       return {}
     } else {
       const { uid } = user
       const docRef = doc(db, 'users', uid)
       const docSnap = await getDoc(docRef)
-      const { accountCreationDate, loginWithGoogle } = docSnap.data()
+      const docData = docSnap.data()
+      const { accountCreationDate, loginWithGoogle } = docData
       setInfo({ accountCreationDate, loginWithGoogle })
     }
   }

@@ -29,7 +29,7 @@ export function TaskProvider ({ children }) {
     const { getDoc } = await import('firebase/firestore')
     const docSnap = await getDoc(docRef)
     const docData = docSnap.data()
-    const { pending, performed } = docData.listOfTask
+    const { listOfTask: { pending, performed } } = docData
     setTasks({ pending, performed })
     setIsReading(false)
   }

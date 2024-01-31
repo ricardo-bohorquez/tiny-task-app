@@ -12,6 +12,10 @@ import { ERROR_STRING } from '../constants/errorsConstants'
 import { MODAL_TYPE } from '../constants/modalsConstants'
 import { LOGIN_STRING, LOGIN_FORM_STRING } from '../constants/loginConstants'
 import { HEADER_STRING } from '../constants/headerConstants'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+dayjs.extend(customParseFormat)
+dayjs.locale('es')
 
 function Login () {
   const {
@@ -61,11 +65,7 @@ function Login () {
       user: { uid, displayName }
     } = await googleLogin()
     const { getDoc, setDoc } = await import('firebase/firestore')
-    const dayjs = await import('dayjs')
-    const customParseFormat = await import('dayjs/plugin/customParseFormat.js')
-    dayjs.extend(customParseFormat)
-    dayjs.locale('es')
-    const accountCreationDate = dayjs.default().format('DD/MM/YYYY')
+    const accountCreationDate = dayjs().format('DD/MM/YYYY')
     const newData = {
       loginWithGoogle: true,
       displayName: '',
