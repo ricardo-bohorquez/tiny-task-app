@@ -1,0 +1,1 @@
+import{cf as r}from"./index-AUmvy9ZB.js";function e(){return r.jsxs(r.Fragment,{children:[r.jsx("h2",{children:"Configura tu correo"}),r.jsx("h3",{children:"Estamos trabajando en esta sección"})]})}export{e as default};

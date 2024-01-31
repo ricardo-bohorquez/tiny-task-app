@@ -1,0 +1,1 @@
+import{ce as c,cf as n}from"./index-AUmvy9ZB.js";import{S as l}from"./Settings-NEOCT_UW.js";function u(){const{info:{accountCreationDate:o,loginWithGoogle:t}}=c(),{REG_DATE:s,REG_METHOD:e,TYPE_EMAIL:i,TYPE_GOOGLE:r}=l;return n.jsx(n.Fragment,{children:n.jsxs("ul",{children:[n.jsxs("li",{children:[s,": ",o]}),n.jsxs("li",{children:[e,": ",t?r:i]})]})})}export{u as default};
