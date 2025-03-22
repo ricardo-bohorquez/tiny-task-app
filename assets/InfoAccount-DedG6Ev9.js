@@ -1,0 +1,1 @@
+import{u as c,j as n}from"./index-DraJqHaJ.js";import{S as l}from"./Settings-CWgdk_4g.js";function a(){const{info:{accountCreationDate:o,loginWithGoogle:t}}=c(),{REG_DATE:s,REG_METHOD:i,TYPE_EMAIL:r,TYPE_GOOGLE:e}=l;return n.jsx(n.Fragment,{children:n.jsxs("ul",{children:[n.jsxs("li",{children:[s,": ",o]}),n.jsxs("li",{children:[i,": ",t?e:r]})]})})}export{a as default};

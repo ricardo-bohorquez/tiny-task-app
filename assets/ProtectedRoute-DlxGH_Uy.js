@@ -1,0 +1,1 @@
+import{u as o,j as t,M as a,R as n}from"./index-DraJqHaJ.js";function i({children:e}){const{user:r,loading:s}=o();return s?t.jsx(a,{}):r?t.jsx(t.Fragment,{children:e}):t.jsx(n,{to:"/tiny-task-app/login"})}export{i as default};
