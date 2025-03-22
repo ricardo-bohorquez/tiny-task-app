@@ -13,7 +13,7 @@ function Header () {
   const { APP_NAME, LOG_OUT, SING_IN, SING_UP } = HEADER_STRING
 
   useEffect(() => {
-    if (location === '/login') {
+    if (location === '/tiny-task-app/login') {
       setDisplayLogin(false)
       setDisplayRegister(true)
     } else {
@@ -24,8 +24,8 @@ function Header () {
 
   useEffect(() => {
     if (
-      location === '/register' ||
-      location === '/'
+      location === '/tiny-task-app/register' ||
+      location === '/tiny-task-app/'
     ) {
       setDisplayRegister(false)
       setDisplayLogin(true)
@@ -45,12 +45,12 @@ function Header () {
             <img src={icon} className='app-logo' />
           </div>
           <h1>
-            <Link href='/'>{APP_NAME}</Link>
+            <Link href='/tiny-task-app/'>{APP_NAME}</Link>
           </h1>
           <div>
             {!displayLogin && displayRegister
-              ? <Link href='/register' className='text-white'>{SING_UP}</Link>
-              : <Link href='/login' className='text-white'>{SING_IN}</Link>}
+              ? <Link href='/tiny-task-app/register' className='text-white'>{SING_UP}</Link>
+              : <Link href='/tiny-task-app/login' className='text-white'>{SING_IN}</Link>}
           </div>
         </section>
       </header>
@@ -58,15 +58,15 @@ function Header () {
     : (
       <header className='app-header'>
         <section>
-          <Link href='/dashboard' className='dashboard-link'>
+          <Link href='/tiny-task-app/dashboard' className='dashboard-link'>
             <img src={icon} className='dashboard-link-ico' />
           </Link>
           <h1>
-            <Link href='/'>{APP_NAME}</Link>
+            <Link href='/tiny-task-app/'>{APP_NAME}</Link>
           </h1>
           <div>
             <Link
-              href='/login'
+              href='/tiny-task-app/login'
               onClick={handleLogout}
             >
               {LOG_OUT}
@@ -75,7 +75,7 @@ function Header () {
         </section>
         <section>
           <label>{user.displayName || user.email}</label>
-          <Link href='/settings' className='settings-link'>
+          <Link href='/tiny-task-app/settings' className='settings-link'>
             <img src={gears} className='settings-link-ico' />
           </Link>
         </section>
