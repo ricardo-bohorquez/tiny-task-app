@@ -56,7 +56,7 @@ function Register () {
   }
 
   return user
-    ? <Redirect to='/tiny-task-app/dashboard' />
+    ? <Redirect to='/dashboard' />
     : (
       <main>
         <section className='title-login-register'>

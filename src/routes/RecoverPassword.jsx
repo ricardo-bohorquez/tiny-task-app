@@ -28,7 +28,7 @@ function RecoverPassword () {
   }
 
   return user
-    ? <Redirect to='/tiny-task-app/dashboard' />
+    ? <Redirect to='/dashboard' />
     : (
       <main>
         <form

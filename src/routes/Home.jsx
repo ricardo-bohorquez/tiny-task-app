@@ -20,7 +20,7 @@ function Home () {
           de Google.
         </p>
         <p>
-          <Link href='/tiny-task-app/register'>Registrate</Link> y forma parte
+          <Link href='/register'>Registrate</Link> y forma parte
           de nuestra app para que aproveches nuestras pequeñas funciones y nos ayudes
           a mejorar.
         </p>
@@ -41,7 +41,7 @@ function Home () {
           de Google.
         </p>
         <p>Si encuentras alguna falla en la aplicación o quieres dar alguna sugerencia déjanos
-          un <Link href='/tiny-task-app/'>mensaje</Link> y lo estaremos atendiendo lo más pronto posible.
+          un <Link href='/'>mensaje</Link> y lo estaremos atendiendo lo más pronto posible.
         </p>
       </main>
       )

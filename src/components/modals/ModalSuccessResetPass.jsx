@@ -3,7 +3,7 @@ import { useAuth } from '../../context/AuthContext'
 import { MODAL_RESET_PASS_MESSAGE, MODAL_BUTTON_STRING } from '../../constants/modalsConstants'
 
 function ModalSuccessResetPass () {
-  const [navigate] = useLocation()
+  const [, setLocation] = useLocation()
   const { resetModalProps, setViewModal } = useAuth()
   const { RESET_MSG } = MODAL_RESET_PASS_MESSAGE
   const { ACCEPT } = MODAL_BUTTON_STRING
@@ -15,7 +15,7 @@ function ModalSuccessResetPass () {
         <button
           onClick={() => {
             setViewModal(resetModalProps)
-            navigate('/tiny-task-app/login')
+            setLocation('/login', { replace: true })
           }}
         >
           {ACCEPT}

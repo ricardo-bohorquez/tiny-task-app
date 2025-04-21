@@ -83,7 +83,7 @@ function Login () {
 
   return user
     ? (
-      <Redirect to='/tiny-task-app/dashboard' />
+      <Redirect to='/dashboard' />
       )
     : (
       <main>
@@ -114,7 +114,7 @@ function Login () {
           {displayLabel ? <label className='text-white span-error-taskform'>{WRONG}</label> : <></>}
           <label>
             {LOST_PASS}
-            <Link href='/tiny-task-app/password-recovery'>{RECOVER_HERE}</Link>
+            <Link href='/password-recovery'>{RECOVER_HERE}</Link>
           </label>
           <button>{ENTRY}</button>
           {viewModal.state && viewModal.type === TYPE_LOADER

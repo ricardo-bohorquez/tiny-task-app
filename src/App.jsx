@@ -18,16 +18,16 @@ function App () {
       <Header />
       <Suspense fallback={<ModalLoader />}>
         <Switch>
-          <Route path='/tiny-task-app/' component={Home} />
-          <Route path='/tiny-task-app/login' component={Login} />
-          <Route path='/tiny-task-app/register' component={Register} />
-          <Route path='/tiny-task-app/password-recovery' component={RecoverPassword} />
-          <Route path='/tiny-task-app/dashboard'>
+          <Route path='/' component={Home} />
+          <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} />
+          <Route path='/password-recovery' component={RecoverPassword} />
+          <Route path='/dashboard'>
             <ProtectedRoute>
               <Dashboard />
             </ProtectedRoute>
           </Route>
-          <Route path='/tiny-task-app/settings'>
+          <Route path='/settings'>
             <ProtectedRoute>
               <Settings />
             </ProtectedRoute>

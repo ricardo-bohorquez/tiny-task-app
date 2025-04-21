@@ -7,27 +7,25 @@
     "dev": "vite",
     "host": "vite --host",
     "build": "vite build",
-    "preview": "vite preview --port 8080",
-    "deploy": "gh-pages -d dist"
+    "preview": "vite preview --port 8080"
   },
   "dependencies": {
     "@emotion/styled": "11.14.0",
-    "@mui/material": "6.4.8",
+    "@mui/material": "7.0.2",
     "dayjs": "1.11.13",
-    "firebase": "11.5.0",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "react-hook-form": "7.54.2",
+    "firebase": "11.6.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-hook-form": "7.56.0",
     "uuid": "11.1.0",
-    "wouter": "3.6.0"
+    "wouter": "3.7.0"
   },
   "devDependencies": {
-    "@types/react": "19.0.12",
-    "@types/react-dom": "19.0.4",
-    "@vitejs/plugin-react": "4.3.4",
-    "gh-pages": "6.3.0",
+    "@types/react": "19.1.2",
+    "@types/react-dom": "19.1.2",
+    "@vitejs/plugin-react": "4.4.1",
     "standard": "17.1.2",
-    "vite": "6.2.2"
+    "vite": "6.3.2"
   },
   "eslintConfig": {
     "extends": "standard"

@@ -759,7 +759,7 @@ li span {
 
   li:not(li:last-child span) {
     justify-content: space-around;
-    height: 9rem;
+    height: fit-content;
   }
 
   .buttons-container {

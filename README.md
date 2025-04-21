@@ -1,11 +1,9 @@
 # tiny-task-app
-This an app for write and storage your tasks in your browser quickly
 
-the following link going to app:
-https://ricardo-bohorquez.github.io/tiny-task-app/
+This is a personal project that have as objetive develop a 
+little app for create and manage ours task into the browser.
 
-This works with the local storage API that our browser has, where our created tasks will be stored which will persist if the tab or even the window is closed. Tasks will be lost the moment the browsing data of our browser is emptied.
+The storage of this tasks will be in Google Firebase, in previous
+versions were storage in the Local Storage of browser.
 
-This works on desktops, laptops and mobile devices. 
-
-We are working on implementing a login and that in this way we can access the tasks simply with the user and the password created, obtaining the data not from the local storage but from a database.
+You can create an account with your email or connect your Google Account.
