@@ -12,6 +12,7 @@ public
 dist
 *.local
 configFirebase.js
+firebase.env
 
 # Editor directories and files
 .vscode/*
