@@ -1,16 +1,16 @@
 import { lazy, Suspense } from 'react'
 import { Route, Switch } from 'wouter'
-import ModalLoader from './components/modals/ModalLoader'
+import ModalLoader from '@/components/modals/ModalLoader'
 
-const Header = lazy(() => import('./components/Header'))
-const Home = lazy(() => import('./routes/Home'))
-const Login = lazy(() => import('./routes/Login'))
-const Register = lazy(() => import('./routes/Register'))
-const RecoverPassword = lazy(() => import('./routes/RecoverPassword'))
-const Dashboard = lazy(() => import('./routes/Dashboard'))
-const Settings = lazy(() => import('./routes/Settings'))
-const NotFound = lazy(() => import('./routes/NotFound'))
-const ProtectedRoute = lazy(() => import('./routes/ProtectedRoute'))
+const Header = lazy(() => import('@/components/Header'))
+const Home = lazy(() => import('@/routes/Home'))
+const Login = lazy(() => import('@/routes/Login'))
+const Register = lazy(() => import('@/routes/Register'))
+const RecoverPassword = lazy(() => import('@/routes/RecoverPassword'))
+const Dashboard = lazy(() => import('@/routes/Dashboard'))
+const Settings = lazy(() => import('@/routes/Settings'))
+const NotFound = lazy(() => import('@/routes/NotFound'))
+const ProtectedRoute = lazy(() => import('@/routes/ProtectedRoute'))
 
 function App () {
   return (

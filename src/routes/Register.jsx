@@ -1,18 +1,20 @@
 import { useState } from 'react'
 import { Redirect } from 'wouter'
 import { doc } from 'firebase/firestore'
-import { db } from '@/config/configFirebase'
-import { useAuth } from '../context/AuthContext'
-import { useForm } from 'react-hook-form'
-import userRegistrySchema from '../schemas/userRegistry.schema'
-import ModalLoader from '../components/modals/ModalLoader'
-import ModalError from '../components/modals/ModalError'
-import { ERROR_STRING, ERROR_TEXT_LABEL } from '../constants/errorsConstants'
-import { MODAL_TYPE } from '../constants/modalsConstants'
-import { LOGIN_FORM_STRING } from '../constants/loginConstants'
-import { HEADER_STRING } from '../constants/headerConstants'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
+import { useForm } from 'react-hook-form'
+
+import { db } from '@/config/configFirebase'
+import { useAuth } from '@/context/AuthContext'
+import userRegistrySchema from '@/schemas/userRegistry.schema'
+import ModalLoader from '@/components/modals/ModalLoader'
+import ModalError from '@/components/modals/ModalError'
+import { ERROR_STRING, ERROR_TEXT_LABEL } from '@/constants/errorsConstants'
+import { MODAL_TYPE } from '@/constants/modalsConstants'
+import { LOGIN_FORM_STRING } from '@/constants/loginConstants'
+import { HEADER_STRING } from '@/constants/headerConstants'
+
 dayjs.extend(customParseFormat)
 dayjs.locale('es')
 

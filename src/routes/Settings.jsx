@@ -1,5 +1,5 @@
-import { SettingsProvider } from '../context/SettingsContext'
-import SettingsMain from '../components/SettingsMain'
+import { SettingsProvider } from '@/context/SettingsContext'
+import SettingsMain from '@/components/SettingsMain'
 
 function Settings () {
   return (

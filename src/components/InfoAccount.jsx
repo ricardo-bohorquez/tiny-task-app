@@ -1,5 +1,5 @@
-import { useAuth } from '../context/AuthContext'
-import { SETTINGS_STRING } from '../constants/settingsConstans'
+import { useAuth } from '@/context/AuthContext'
+import { SETTINGS_STRING } from '@/constants/settingsConstans'
 
 function InfoAccount () {
   const { info: { accountCreationDate, loginWithGoogle } } = useAuth()

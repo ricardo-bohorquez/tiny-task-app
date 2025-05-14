@@ -1,10 +1,10 @@
-import dots from '../icons/ellipsis-solid.svg'
-import { useTask } from '../context/TaskContext'
-import { useAuth } from '../context/AuthContext'
+import dots from '@/icons/ellipsis-solid.svg'
+import { useTask } from '@/context/TaskContext'
+import { useAuth } from '@/context/AuthContext'
 import ModalDelete from './modals/ModalDelete'
 import ModalTaskDescription from './modals/ModalTaskDescription'
-import { TASK_CARD_STRING } from '../constants/tasksConstants'
-import { MODAL_TYPE } from '../constants/modalsConstants'
+import { TASK_CARD_STRING } from '@/constants/tasksConstants'
+import { MODAL_TYPE } from '@/constants/modalsConstants'
 
 function TaskCard ({ task, index }) {
   const { markDone } = useTask()

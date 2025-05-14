@@ -1,7 +1,7 @@
-import { useAuth } from '../../context/AuthContext'
-import error from '../../icons/circle-xmark-regular.svg'
-import { MODAL_BUTTON_STRING, MODAL_ERROR_MESSAGE } from '../../constants/modalsConstants'
-import { ERROR_STRING } from '../../constants/errorsConstants'
+import { useAuth } from '@/context/AuthContext'
+import error from '@/icons/circle-xmark-regular.svg'
+import { MODAL_BUTTON_STRING, MODAL_ERROR_MESSAGE } from '@/constants/modalsConstants'
+import { ERROR_STRING } from '@/constants/errorsConstants'
 
 function ModalError ({ type = '' }) {
   const { resetModalProps, setViewModal } = useAuth()

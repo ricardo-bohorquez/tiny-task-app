@@ -1,4 +1,4 @@
-import ico from '../../icons/list-check-solid-light.svg'
+import ico from '@/icons/list-check-solid-light.svg'
 import { CircularProgress } from '@mui/material'
 
 function ModalLoader () {

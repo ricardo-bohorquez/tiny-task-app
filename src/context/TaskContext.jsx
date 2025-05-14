@@ -1,9 +1,10 @@
 import { createContext, useState, useEffect, useContext } from 'react'
-import { db } from '@/config/configFirebase'
-import { doc } from 'firebase/firestore'
-import { useAuth } from '../context/AuthContext'
 import dayjs from 'dayjs'
+import { doc } from 'firebase/firestore'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
+import { db } from '@/config/configFirebase'
+import { useAuth } from '@/context/AuthContext'
+
 dayjs.extend(customParseFormat)
 dayjs.locale('es')
 

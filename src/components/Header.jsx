@@ -1,9 +1,9 @@
-import icon from '../icons/list-check-solid-light.svg'
-import gears from '../icons/gears-solid.svg'
+import icon from '@/icons/list-check-solid-light.svg'
+import gears from '@/icons/gears-solid.svg'
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'wouter'
-import { useAuth } from '../context/AuthContext'
-import { HEADER_STRING } from '../constants/headerConstants'
+import { useAuth } from '@/context/AuthContext'
+import { HEADER_STRING } from '@/constants/headerConstants'
 
 function Header () {
   const { user, logOut } = useAuth()

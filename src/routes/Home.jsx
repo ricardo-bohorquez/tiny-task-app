@@ -1,5 +1,5 @@
 import { Link } from 'wouter'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '@/context/AuthContext'
 
 function Home () {
   const { user } = useAuth()

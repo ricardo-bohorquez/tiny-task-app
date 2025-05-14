@@ -1,11 +1,11 @@
 import { lazy, Suspense } from 'react'
 import { CircularProgress } from '@mui/material'
-import { SETTINGS_STRING } from '../constants/settingsConstans'
-import { useSettings } from '../context/SettingsContext'
+import { SETTINGS_STRING } from '@/constants/settingsConstans'
+import { useSettings } from '@/context/SettingsContext'
 
-const InfoAccount = lazy(() => import('../components/InfoAccount'))
-const ConfigEmail = lazy(() => import('../components/ConfigEmail'))
-const ConfigPassword = lazy(() => import('../components/ConfigPassword'))
+const InfoAccount = lazy(() => import('@/components/InfoAccount'))
+const ConfigEmail = lazy(() => import('@/components/ConfigEmail'))
+const ConfigPassword = lazy(() => import('@/components/ConfigPassword'))
 
 function SettingsMain () {
   const { viewInfoAccount, viewEmailInfo, viewPasswordInfo, viewConfig: { cfgEmail, cfgInfo, cfgPass } } = useSettings()

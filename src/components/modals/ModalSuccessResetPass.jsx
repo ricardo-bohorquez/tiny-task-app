@@ -1,6 +1,6 @@
 import { useLocation } from 'wouter'
-import { useAuth } from '../../context/AuthContext'
-import { MODAL_RESET_PASS_MESSAGE, MODAL_BUTTON_STRING } from '../../constants/modalsConstants'
+import { useAuth } from '@/context/AuthContext'
+import { MODAL_RESET_PASS_MESSAGE, MODAL_BUTTON_STRING } from '@/constants/modalsConstants'
 
 function ModalSuccessResetPass () {
   const [, setLocation] = useLocation()

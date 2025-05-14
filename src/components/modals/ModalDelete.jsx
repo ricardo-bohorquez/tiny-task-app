@@ -1,6 +1,6 @@
-import { useTask } from '../../context/TaskContext'
-import { useAuth } from '../../context/AuthContext'
-import { MODAL_BUTTON_STRING, MODAL_DELETE_TASK_MESSAGE } from '../../constants/modalsConstants'
+import { useTask } from '@/context/TaskContext'
+import { useAuth } from '@/context/AuthContext'
+import { MODAL_BUTTON_STRING, MODAL_DELETE_TASK_MESSAGE } from '@/constants/modalsConstants'
 
 function ModalDelete ({ task = {}, idx = '' }) {
   const { deleteTask } = useTask()

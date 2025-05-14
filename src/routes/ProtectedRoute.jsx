@@ -1,6 +1,6 @@
 import { Redirect } from 'wouter'
-import { useAuth } from '../context/AuthContext'
-import ModalLoader from '../components/modals/ModalLoader'
+import { useAuth } from '@/context/AuthContext'
+import ModalLoader from '@/components/modals/ModalLoader'
 
 function ProtectedRoute ({ children }) {
   const { user, loading } = useAuth()

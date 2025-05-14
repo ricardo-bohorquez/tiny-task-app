@@ -1,7 +1,7 @@
 import TaskCard from './TaskCard'
-import { useTask } from '../context/TaskContext'
+import { useTask } from '@/context/TaskContext'
 import { CircularProgress } from '@mui/material'
-import { TASK_LIST_STRING } from '../constants/tasksConstants'
+import { TASK_LIST_STRING } from '@/constants/tasksConstants'
 
 function TaskList () {
   const { tasks, isReading } = useTask()

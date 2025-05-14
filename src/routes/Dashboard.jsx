@@ -1,5 +1,5 @@
-import TaskSection from '../components/TaskSection'
-import { TaskProvider } from '../context/TaskContext'
+import TaskSection from '@/components/TaskSection'
+import { TaskProvider } from '@/context/TaskContext'
 
 function Dashboard () {
   return (

@@ -1,5 +1,5 @@
-import { useAuth } from '../../context/AuthContext'
-import { MODAL_BUTTON_STRING, MODAL_TASK_STRING } from '../../constants/modalsConstants'
+import { useAuth } from '@/context/AuthContext'
+import { MODAL_BUTTON_STRING, MODAL_TASK_STRING } from '@/constants/modalsConstants'
 
 function ModalTaskDescription ({ task = {}, idx = '' }) {
   const { resetModalProps, setViewModal } = useAuth()

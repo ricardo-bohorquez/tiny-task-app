@@ -1,13 +1,13 @@
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '@/context/AuthContext'
 import { Redirect } from 'wouter'
 import { useForm } from 'react-hook-form'
-import userResetPass from '../schemas/userResetPass.schema'
-import ModalError from '../components/modals/ModalError'
-import ModalSuccessResetPass from '../components/modals/ModalSuccessResetPass'
-import ModalLoader from '../components/modals/ModalLoader'
-import { MODAL_TYPE } from '../constants/modalsConstants'
-import { ERROR_STRING } from '../constants/errorsConstants'
-import { LOGIN_FORM_STRING } from '../constants/loginConstants'
+import userResetPass from '@/schemas/userResetPass.schema'
+import ModalError from '@/components/modals/ModalError'
+import ModalSuccessResetPass from '@/components/modals/ModalSuccessResetPass'
+import ModalLoader from '@/components/modals/ModalLoader'
+import { MODAL_TYPE } from '@/constants/modalsConstants'
+import { ERROR_STRING } from '@/constants/errorsConstants'
+import { LOGIN_FORM_STRING } from '@/constants/loginConstants'
 
 function RecoverPassword () {
   const { recoverPassword, setViewModal, viewModal, user } = useAuth()

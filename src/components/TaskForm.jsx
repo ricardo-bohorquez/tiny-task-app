@@ -1,7 +1,7 @@
-import { useTask } from '../context/TaskContext'
+import { useTask } from '@/context/TaskContext'
 import { useForm } from 'react-hook-form'
-import taskSchema from '../schemas/tasks.schema'
-import { TASK_FORM_STRING } from '../constants/tasksConstants'
+import taskSchema from '@/schemas/tasks.schema'
+import { TASK_FORM_STRING } from '@/constants/tasksConstants'
 
 function TaskForm () {
   const { createTask } = useTask()
