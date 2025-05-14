@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
-import { auth } from '../../configFirebase'
+import { auth } from '@/config/configFirebase'
 
 const AuthContext = createContext()
 
@@ -54,7 +54,7 @@ export function AuthProvider ({ children }) {
 
   const readRegisterInfo = async () => {
     const { doc, getDoc } = await import('firebase/firestore')
-    const { db } = await import('../../configFirebase')
+    const { db } = await import('@/config/configFirebase')
     if (user === null || user === ref) {
       return {}
     } else {

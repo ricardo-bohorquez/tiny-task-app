@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Redirect, Link } from 'wouter'
 import { doc } from 'firebase/firestore'
-import { db } from '../../configFirebase'
+import { db } from '@/config/configFirebase'
 import { useAuth } from '../context/AuthContext'
 import { useForm } from 'react-hook-form'
 import userLoginSchema from '../schemas/userLogin.schema'

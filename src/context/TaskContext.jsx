@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from 'react'
-import { db } from '../../configFirebase.js'
+import { db } from '@/config/configFirebase'
 import { doc } from 'firebase/firestore'
 import { useAuth } from '../context/AuthContext'
 import dayjs from 'dayjs'
