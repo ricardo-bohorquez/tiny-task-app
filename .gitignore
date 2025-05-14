@@ -11,8 +11,7 @@ node_modules
 public
 dist
 *.local
-configFirebase.js
-firebase.env
+.env
 
 # Editor directories and files
 .vscode/*
