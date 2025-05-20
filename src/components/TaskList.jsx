@@ -8,9 +8,19 @@ function TaskList () {
   const { pending, performed } = tasks
   const { NO_TASK, NO_PENDING, NO_PERFORMED, PENDING_TITLE, PERFORMED_TITLE } = TASK_LIST_STRING
 
-  if (isReading) return <CircularProgress style={{ marginTop: '40px' }} />
-  else if (pending.length === 0 && performed.length === 0) return <h2>{NO_TASK}</h2>
-  else {
+  if (isReading) {
+    return (
+      <section className='task-list'>
+        <CircularProgress style={{ marginTop: '40px' }} />
+      </section>
+    )
+  } else if (pending.length === 0 && performed.length === 0) {
+    return (
+      <section className='task-list'>
+        <h2>{NO_TASK}</h2>
+      </section>
+    )
+  } else {
     return (
       <section className='task-list'>
         <div className='pending-task'>
