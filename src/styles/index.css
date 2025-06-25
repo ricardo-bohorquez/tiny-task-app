@@ -174,6 +174,7 @@ body {
   max-width: 102.4rem;
 }
 
+.change-email-form,
 .register-form,
 .login-form,
 .task-form,
@@ -195,13 +196,27 @@ body {
   margin-bottom: 3rem;
 }
 
+.change-email-form {
+  width: 100%;
+}
+
+.change-email-form,
 .login-form {
   border-bottom: none;
 }
 
+.main-recover-pass {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 102.4rem;
+  height: 34rem;
+  margin: auto;
+  gap: 1.5rem;
+}
+
 .recover-pass-form {
-  height: 50vh;
-  max-height: 50rem;
+  margin: 0 auto;
   justify-content: center;
 }
 
@@ -209,13 +224,12 @@ body {
   width: 100%;
 }
 
+.change-email-form input,
+.recover-pass-form input,
 .register-form input,
 .login-form input,
-.recover-pass-form input,
 .task-form input,
 .task-form textarea {
-  width: 90%;
-  max-width: 68rem;
   font-family: var(--lt);
   font-size: var(--p-fsz);
   color: var(--wt);
@@ -226,8 +240,12 @@ body {
   background-color: var(--gr);
 }
 
-.register-form input,
-.login-form input,
+.task-form input,
+.task-form textarea {
+  width: 90%;
+  max-width: 68rem;
+}
+
 .task-form input {
   height: 2.5rem;
 }
@@ -238,6 +256,14 @@ body {
   min-width: 25rem;
   width: 60%;
   max-width: 46rem;
+  height: 2.5rem;
+}
+
+.change-email-form input {
+  max-width: 48rem;
+  width: 85%;
+  min-width: 24rem;
+  height: 2.5rem;
 }
 
 .login-form~label {
@@ -288,9 +314,10 @@ body {
   resize: none;
 }
 
+.change-email-form input::placeholder,
+.recover-pass-form input::placeholder,
 .register-form input::placeholder,
 .login-form input::placeholder,
-.recover-pass-form input::placeholder,
 .task-form input::placeholder,
 .task-form textarea::placeholder {
   font-family: var(--lt-it);
@@ -298,6 +325,7 @@ body {
   color: var(--grl);
 }
 
+.change-email-form button,
 .recover-pass-form button,
 .register-form button,
 .login-form button,
@@ -312,6 +340,10 @@ body {
   box-shadow: none;
   border-radius: 0.5rem;
   cursor: pointer;
+}
+
+.task-form button {
+  margin-bottom: 2rem;
 }
 
 .register-form>label,
@@ -703,7 +735,7 @@ li span {
   padding: 0.3rem 0.3rem 0;
 }
 
-.title-login-register {
+.title-login-register-recover {
   height: 6rem;
   display: flex;
   justify-content: center;
@@ -716,6 +748,7 @@ li span {
   margin: 4rem auto 0;
   width: 90%;
   max-width: 102.4rem;
+  min-height: 35rem;
   border-top: 0.1rem solid var(--grl);
   padding: 2rem 0 0;
 }
@@ -724,6 +757,7 @@ li span {
 .frame-settings {
   width: 30%;
   height: 50vh;
+  min-height: 25rem;
 }
 
 .aside-settings {
@@ -740,6 +774,7 @@ li span {
   padding: 0;
 }
 
+.title-change,
 .aside-settings ul li,
 .frame-settings ul li {
   font-family: var(--rg);
@@ -761,6 +796,13 @@ li span {
   justify-content: center;
 }
 
+.section-chg-em {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 @media screen and (max-width: 850px) {
   
   .settings-block{
@@ -771,6 +813,7 @@ li span {
   .aside-settings,
   .frame-settings {
     width: 100%;
+    min-height: 15rem;
   }
 
   .aside-settings {

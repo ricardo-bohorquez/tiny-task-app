@@ -11,10 +11,6 @@ import userLoginSchema from '@/schemas/userLogin.schema'
 import ModalError from '@/components/modals/ModalError'
 import ModalLoader from '@/components/modals/ModalLoader'
 import google from '@/icons/google.svg'
-import { ERROR_STRING } from '@/constants/errorsConstants'
-import { MODAL_TYPE } from '@/constants/modalsConstants'
-import { LOGIN_STRING, LOGIN_FORM_STRING } from '@/constants/loginConstants'
-import { HEADER_STRING } from '@/constants/headerConstants'
 
 dayjs.extend(customParseFormat)
 dayjs.locale('es')
@@ -30,35 +26,26 @@ function Login () {
   } = useAuth()
 
   const { register, handleSubmit, formState: { errors } } = useForm()
+
   const { mail, password } = userLoginSchema
-  const { USER_NOT_FOUND, WRONG_PASSWORD } = ERROR_STRING
-  const { TYPE_LOADER } = MODAL_TYPE
-  const { GOOGLE_LOGIN, OPTION_TEXT } = LOGIN_STRING
-  const { EMAIL_PLACEHOLDER, PASS_PLACEHOLDER, ENTRY, WRONG, LOST_PASS, RECOVER_HERE } = LOGIN_FORM_STRING
-  const { SING_IN } = HEADER_STRING
+
   const [errorEmail, setErrorEmail] = useState({})
   const [errorPass, setErrorPass] = useState({})
-  const [displayLabel, setDisplayLabel] = useState(false)
+
+  const INVALID_CREDENTIAL = 'invalid-credential'
 
   const handleLogin = async (email, pass) => {
-    setViewModal({ ...viewModal, state: true, type: TYPE_LOADER })
+    setViewModal({ ...viewModal, state: true, type: 'loader' })
     try {
       await signIn(email, pass)
       setViewModal(resetModalProps)
-    } catch ({ code }) {
-      if (code === `auth/${USER_NOT_FOUND}`) {
+    } catch (error) {
+      if (error.code === `auth/${INVALID_CREDENTIAL}`) {
         setViewModal(resetModalProps)
-        setDisplayLabel(false)
-        setErrorPass({ border: 'none' })
-        setViewModal({ ...viewModal, state: true, type: USER_NOT_FOUND })
-        setErrorEmail({ border: '1px solid red' })
-      }
-      if (code === `auth/${WRONG_PASSWORD}`) {
-        setViewModal(resetModalProps)
-        setErrorEmail({ border: 'none' })
-        setDisplayLabel(true)
+        setViewModal({ ...viewModal, state: true, type: INVALID_CREDENTIAL })
         setErrorPass({ border: '1px solid red' })
-      }
+        setErrorEmail({ border: '1px solid red' })
+      } else console.error(error)
     }
   }
 
@@ -89,8 +76,8 @@ function Login () {
       )
     : (
       <main>
-        <section className='title-login-register'>
-          <h2 style={{ height: 'fit-content', margin: '0 0 1rem' }}>{SING_IN}</h2>
+        <section className='title-login-register-recover'>
+          <h2 style={{ height: 'fit-content', margin: '0 0 1rem' }}>Iniciar sesión</h2>
         </section>
         <form
           onSubmit={handleSubmit(({ mail, password }) => {
@@ -101,7 +88,7 @@ function Login () {
             type='email'
             style={errorEmail}
             onFocus={() => setErrorEmail({ border: 'none' })}
-            placeholder={EMAIL_PLACEHOLDER}
+            placeholder='Correo electrónico'
             {...register('mail', mail)}
           />
           {errors.mail &&
@@ -110,25 +97,26 @@ function Login () {
             type='password'
             style={errorPass}
             onFocus={() => setErrorPass({ border: 'none' })}
-            placeholder={PASS_PLACEHOLDER}
+            placeholder='Contraseña'
             {...register('password', password)}
           />
-          {displayLabel ? <label className='text-white span-error-taskform'>{WRONG}</label> : <></>}
+          {errors.password &&
+            <span className='text-white span-error-taskform'>{errors.password.message}</span>}
           <label>
-            {LOST_PASS}
-            <Link href='/password-recovery'>{RECOVER_HERE}</Link>
+            ¿Olvidaste tu contraseña?
+            <Link href='/password-recovery'> Recuperala aquí</Link>
           </label>
-          <button>{ENTRY}</button>
-          {viewModal.state && viewModal.type === TYPE_LOADER
+          <button>Ingresar</button>
+          {viewModal.state && viewModal.type === 'loader'
             ? <ModalLoader />
             : <></>}
-          {viewModal.state && viewModal.type === USER_NOT_FOUND
-            ? <ModalError type={USER_NOT_FOUND} />
+          {viewModal.state && viewModal.type === INVALID_CREDENTIAL
+            ? <ModalError type={INVALID_CREDENTIAL} />
             : <></>}
         </form>
-        <label>{OPTION_TEXT}</label>
+        <label> ó puedes </label>
         <button className='login-google-button' onClick={handleGoogleLogin}>
-          {GOOGLE_LOGIN}<img src={google} />
+          Iniciar sesión con <img src={google} />
         </button>
       </main>
       )

@@ -52,6 +52,19 @@ export function AuthProvider ({ children }) {
     await sendPasswordResetEmail(auth, email)
   }
 
+  const changeEmail = async (newEmail) => {
+    const { verifyBeforeUpdateEmail } = await import('firebase/auth')
+    await verifyBeforeUpdateEmail(auth.currentUser, newEmail)
+
+    const { db } = await import('@/config/configFirebase')
+    const { doc, getDoc } = await import('firebase/firestore')
+    const { uid } = user
+
+    const docRef = doc(db, 'users', uid)
+    const docSnap = await getDoc(docRef)
+    const docData = docSnap.data()
+  }
+
   const readRegisterInfo = async () => {
     const { doc, getDoc } = await import('firebase/firestore')
     const { db } = await import('@/config/configFirebase')
@@ -92,7 +105,8 @@ export function AuthProvider ({ children }) {
         loading,
         setLoading,
         googleLogin,
-        recoverPassword
+        recoverPassword,
+        changeEmail
       }}
     >
       {children}

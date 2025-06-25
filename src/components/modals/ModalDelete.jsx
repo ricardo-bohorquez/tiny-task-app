@@ -1,12 +1,10 @@
 import { useTask } from '@/context/TaskContext'
 import { useAuth } from '@/context/AuthContext'
-import { MODAL_BUTTON_STRING, MODAL_DELETE_TASK_MESSAGE } from '@/constants/modalsConstants'
 
 function ModalDelete ({ task = {}, idx = '' }) {
   const { deleteTask } = useTask()
   const { resetModalProps, setViewModal } = useAuth()
-  const { DEL_TASK_MSG } = MODAL_DELETE_TASK_MESSAGE
-  const { ACCEPT, CANCEL } = MODAL_BUTTON_STRING
+
   return (
     <section
       className='modal-body'
@@ -14,7 +12,7 @@ function ModalDelete ({ task = {}, idx = '' }) {
       style={{ display: 'flex' }}
     >
       <div className='modal-content'>
-        <h3>{DEL_TASK_MSG}</h3>
+        <h3>¿Está seguro que desea eliminar la siguiente tarea?</h3>
         <label>{task.title}</label>
         <div className='selection-container'>
           <button
@@ -24,13 +22,13 @@ function ModalDelete ({ task = {}, idx = '' }) {
               deleteTask(task)
             }}
           >
-            {ACCEPT}
+            Aceptar
           </button>
           <button
             id='cancelDelete'
             onClick={() => setViewModal(resetModalProps)}
           >
-            {CANCEL}
+            Cancelar
           </button>
         </div>
       </div>

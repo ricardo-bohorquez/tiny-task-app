@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { CircularProgress } from '@mui/material'
-import { SETTINGS_STRING } from '@/constants/settingsConstans'
+
 import { useSettings } from '@/context/SettingsContext'
 
 const InfoAccount = lazy(() => import('@/components/InfoAccount'))
@@ -8,17 +8,22 @@ const ConfigEmail = lazy(() => import('@/components/ConfigEmail'))
 const ConfigPassword = lazy(() => import('@/components/ConfigPassword'))
 
 function SettingsMain () {
-  const { viewInfoAccount, viewEmailInfo, viewPasswordInfo, viewConfig: { cfgEmail, cfgInfo, cfgPass } } = useSettings()
-  const { INFO_ACCOUNT, INFO_EMAIL, INFO_PASS, TITLE } = SETTINGS_STRING
+  const {
+    viewInfoAccount,
+    viewEmailInfo,
+    viewPasswordInfo,
+    viewConfig: { cfgEmail, cfgInfo, cfgPass }
+  } = useSettings()
+
   return (
     <>
-      <h2>{TITLE}</h2>
+      <h2>Configuración</h2>
       <section className='settings-block'>
         <aside className='aside-settings'>
           <ul>
-            <li onClick={viewInfoAccount}>{INFO_ACCOUNT}</li>
-            <li onClick={viewEmailInfo}>{INFO_EMAIL}</li>
-            <li onClick={viewPasswordInfo}>{INFO_PASS}</li>
+            <li onClick={viewInfoAccount}>Información de la cuenta</li>
+            <li onClick={viewEmailInfo}>Correo</li>
+            <li onClick={viewPasswordInfo}>Contraseña</li>
           </ul>
         </aside>
         <section className='frame-settings'>

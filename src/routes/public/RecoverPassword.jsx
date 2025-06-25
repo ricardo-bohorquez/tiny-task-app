@@ -1,36 +1,37 @@
 import { useAuth } from '@/context/AuthContext'
 import { Redirect } from 'wouter'
 import { useForm } from 'react-hook-form'
+
 import userResetPass from '@/schemas/userResetPass.schema'
-import ModalError from '@/components/modals/ModalError'
-import ModalSuccessResetPass from '@/components/modals/ModalSuccessResetPass'
+
 import ModalLoader from '@/components/modals/ModalLoader'
-import { MODAL_TYPE } from '@/constants/modalsConstants'
-import { ERROR_STRING } from '@/constants/errorsConstants'
-import { LOGIN_FORM_STRING } from '@/constants/loginConstants'
+import ModalSuccessResetPass from '@/components/modals/ModalSuccessResetPass'
 
 function RecoverPassword () {
   const { recoverPassword, setViewModal, viewModal, user } = useAuth()
   const { register, handleSubmit, formState: { errors } } = useForm()
+
   const { emailToResetPass } = userResetPass
-  const { TYPE_SUCCESS_RESET, TYPE_LOADER } = MODAL_TYPE
-  const { USER_NOT_FOUND } = ERROR_STRING
-  const { EMAIL_PLACEHOLDER, RESET } = LOGIN_FORM_STRING
+
+  const SUCCESS_RESET = 'success-reset'
 
   const handleRecoverPassword = async email => {
-    setViewModal({ ...viewModal, state: true, type: TYPE_LOADER })
+    setViewModal({ ...viewModal, state: true, type: 'loader' })
     try {
       await recoverPassword(email)
-      setViewModal({ ...viewModal, state: true, type: TYPE_SUCCESS_RESET })
-    } catch ({ code }) {
-      if (code === `auth/${USER_NOT_FOUND}`) { setViewModal({ ...viewModal, state: true, type: USER_NOT_FOUND }) }
+      setViewModal({ ...viewModal, state: true, type: SUCCESS_RESET })
+    } catch (error) {
+      console.error(error)
     }
   }
 
   return user
     ? <Redirect to='/dashboard' />
     : (
-      <main>
+      <main className='main-recover-pass'>
+        <section className='title-login-register-recover'>
+          <h2 style={{ height: 'fit-content', margin: '0 0 1rem' }}>Recuperar contraseña</h2>
+        </section>
         <form
           className='recover-pass-form' onSubmit={handleSubmit(({ emailToResetPass }) => {
             handleRecoverPassword(emailToResetPass)
@@ -38,20 +39,17 @@ function RecoverPassword () {
         >
           <input
             type='email'
-            placeholder={EMAIL_PLACEHOLDER}
+            placeholder='Correo electrónico'
             autoComplete='off'
             {...register('emailToResetPass', emailToResetPass)}
           />
           {errors.emailToResetPass &&
             <span className='text-white span-error-taskform'>{errors.emailToResetPass.message}</span>}
-          <button>{RESET}</button>
-          {viewModal.state && viewModal.type === TYPE_LOADER
+          <button>Reestablecer</button>
+          {viewModal.state && viewModal.type === 'loader'
             ? <ModalLoader />
             : <></>}
-          {viewModal.state && viewModal.type === USER_NOT_FOUND
-            ? <ModalError type={USER_NOT_FOUND} />
-            : <></>}
-          {viewModal.state && viewModal.type === TYPE_SUCCESS_RESET
+          {viewModal.state && viewModal.type === SUCCESS_RESET
             ? <ModalSuccessResetPass />
             : <></>}
         </form>

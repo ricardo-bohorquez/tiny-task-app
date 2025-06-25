@@ -1,16 +1,16 @@
-import icon from '@/icons/list-check-solid-light.svg'
-import gears from '@/icons/gears-solid.svg'
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'wouter'
 import { useAuth } from '@/context/AuthContext'
-import { HEADER_STRING } from '@/constants/headerConstants'
+
+import icon from '@/icons/list-check-solid-light.svg'
+import gears from '@/icons/gears-solid.svg'
 
 function Header () {
   const { user, logOut } = useAuth()
   const [location] = useLocation()
+
   const [displayLogin, setDisplayLogin] = useState(false)
   const [displayRegister, setDisplayRegister] = useState(false)
-  const { APP_NAME, LOG_OUT, SING_IN, SING_UP } = HEADER_STRING
 
   useEffect(() => {
     if (location === '/login') {
@@ -45,12 +45,12 @@ function Header () {
             <img src={icon} className='app-logo' />
           </div>
           <h1>
-            <Link href='/'>{APP_NAME}</Link>
+            <Link href='/'>Tiny Task</Link>
           </h1>
           <div>
             {!displayLogin && displayRegister
-              ? <Link href='/register' className='text-white'>{SING_UP}</Link>
-              : <Link href='/login' className='text-white'>{SING_IN}</Link>}
+              ? <Link href='/register' className='text-white'>Registrarse</Link>
+              : <Link href='/login' className='text-white'>Iniciar sesión</Link>}
           </div>
         </section>
       </header>
@@ -62,14 +62,14 @@ function Header () {
             <img src={icon} className='dashboard-link-ico' />
           </Link>
           <h1>
-            <Link href='/'>{APP_NAME}</Link>
+            <Link href='/'>Tiny Task</Link>
           </h1>
           <div>
             <Link
               href='/login'
               onClick={handleLogout}
             >
-              {LOG_OUT}
+              Cerrar sesión
             </Link>
           </div>
         </section>

@@ -1,19 +1,17 @@
 import { useState } from 'react'
 import { Redirect } from 'wouter'
 import { doc } from 'firebase/firestore'
+import { useForm } from 'react-hook-form'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-import { useForm } from 'react-hook-form'
 
 import { db } from '@/config/configFirebase'
 import { useAuth } from '@/context/AuthContext'
+
 import userRegistrySchema from '@/schemas/userRegistry.schema'
+
 import ModalLoader from '@/components/modals/ModalLoader'
 import ModalError from '@/components/modals/ModalError'
-import { ERROR_STRING, ERROR_TEXT_LABEL } from '@/constants/errorsConstants'
-import { MODAL_TYPE } from '@/constants/modalsConstants'
-import { LOGIN_FORM_STRING } from '@/constants/loginConstants'
-import { HEADER_STRING } from '@/constants/headerConstants'
 
 dayjs.extend(customParseFormat)
 dayjs.locale('es')
@@ -21,17 +19,16 @@ dayjs.locale('es')
 function Register () {
   const { signUp, resetModalProps, viewModal, setViewModal, user } = useAuth()
   const { register, handleSubmit, watch, formState: { errors } } = useForm()
+
   const { mail, confirmMail, password, confirmPassword } = userRegistrySchema
+
   const [errorEmail, setErrorEmail] = useState({})
   const [errorPass, setErrorPass] = useState({})
-  const { EMAIL_IN_USE } = ERROR_STRING
-  const { EMAIL_NOT_MATCH, PASS_NOT_MATCH } = ERROR_TEXT_LABEL
-  const { TYPE_LOADER } = MODAL_TYPE
-  const { EMAIL_PLACEHOLDER, EMAIL_CONFIRM_PLACEHOLDER, PASS_PLACEHOLDER, PASS_CONFIRM_PLACEHOLDER, REGISTER } = LOGIN_FORM_STRING
-  const { SING_UP } = HEADER_STRING
+
+  const EMAIL_IN_USE = 'email-already-in-use'
 
   const handleRegister = async (mail, pass) => {
-    setViewModal({ ...viewModal, state: true, type: TYPE_LOADER })
+    setViewModal({ ...viewModal, state: true, type: 'loader' })
     try {
       const { setDoc } = await import('firebase/firestore')
       const userData = {
@@ -51,9 +48,9 @@ function Register () {
     } catch (error) {
       if (error.code === `auth/${EMAIL_IN_USE}`) {
         setViewModal(resetModalProps)
-        setErrorEmail({ border: '1px solid red' })
         setViewModal({ ...viewModal, state: true, type: EMAIL_IN_USE })
-      } else console.log(error)
+        setErrorEmail({ border: '1px solid red' })
+      } else console.error(error)
     }
   }
 
@@ -61,8 +58,8 @@ function Register () {
     ? <Redirect to='/dashboard' />
     : (
       <main>
-        <section className='title-login-register'>
-          <h2 style={{ height: 'fit-content', margin: '0 0 1rem' }}>{SING_UP}</h2>
+        <section className='title-login-register-recover'>
+          <h2 style={{ height: 'fit-content', margin: '0 0 1rem' }}>Registrarse</h2>
         </section>
         <form
           className='register-form'
@@ -72,7 +69,7 @@ function Register () {
         >
           <input
             type='email'
-            placeholder={EMAIL_PLACEHOLDER}
+            placeholder='Correo electrónico'
             autoComplete='off'
             {...register('mail', mail)}
           />
@@ -80,7 +77,7 @@ function Register () {
             <span className='text-white span-error-taskform'>{errors.mail.message}</span>}
           <input
             type='email'
-            placeholder={EMAIL_CONFIRM_PLACEHOLDER}
+            placeholder='Confirme correo electrónico'
             autoComplete='off'
             style={errorEmail}
             {...register('confirmMail',
@@ -92,7 +89,7 @@ function Register () {
                     return {}
                   } else {
                     setErrorEmail({ border: '1px solid red' })
-                    return EMAIL_NOT_MATCH
+                    return 'Los correos deben coincidir'
                   }
                 }
               })}
@@ -101,14 +98,14 @@ function Register () {
             <span className='text-white span-error-taskform'>{errors.confirmMail.message}</span>}
           <input
             type='password'
-            placeholder={PASS_PLACEHOLDER}
+            placeholder='Contraseña'
             {...register('password', password)}
           />
           {errors.password &&
             <span className='text-white span-error-taskform'>{errors.password.message}</span>}
           <input
             type='password'
-            placeholder={PASS_CONFIRM_PLACEHOLDER}
+            placeholder='Confirme contraseña'
             style={errorPass}
             {...register('confirmPassword',
               {
@@ -119,16 +116,16 @@ function Register () {
                     return {}
                   } else {
                     setErrorPass({ border: '1px solid red' })
-                    return PASS_NOT_MATCH
+                    return 'Las constraseñas deben coincidir'
                   }
                 }
               })}
           />
           {errors.confirmPassword &&
             <span className='text-white span-error-taskform'>{errors.confirmPassword.message}</span>}
-          <button>{REGISTER}</button>
+          <button>Registrarse</button>
         </form>
-        {viewModal.state && viewModal.type === TYPE_LOADER
+        {viewModal.state && viewModal.type === 'loader'
           ? <ModalLoader />
           : <></>}
         {viewModal.state && viewModal.type === EMAIL_IN_USE

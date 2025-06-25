@@ -1,5 +1,5 @@
-import ico from '@/icons/list-check-solid-light.svg'
 import { CircularProgress } from '@mui/material'
+import ico from '@/icons/list-check-solid-light.svg'
 
 function ModalLoader () {
   return (
